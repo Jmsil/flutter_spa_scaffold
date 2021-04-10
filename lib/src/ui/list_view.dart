@@ -1,0 +1,27 @@
+import 'package:flutter/material.dart';
+import 'package:spa_scaffold/src/ui/separator.dart';
+
+class SpaListView extends StatelessWidget {
+  final List<Widget> children;
+
+  SpaListView(this.children);
+
+  @override
+  Widget build(BuildContext context) {
+    ScrollController controller = ScrollController(keepScrollOffset: false);
+
+    return Scrollbar(
+      key: GlobalKey(),
+      controller: controller,
+      isAlwaysShown: true,
+      thickness: 4,
+      child: ListView(
+        controller: controller,
+        children: [
+          ...children,
+          SpaSeparator(4)
+        ]
+      )
+    );
+  }
+}
