@@ -3,10 +3,10 @@ import 'dart:ui';
 import 'package:meta/meta.dart';
 
 class SpaStrings {
-  late final String _lang;
-  late final String _langScript;
-  late final String _langCountry;
-  late final String _fullCode;
+  final String _lang;
+  final String _langScript;
+  final String _langCountry;
+  final String _fullCode;
 
   late final String appName;
   late final String openPages;
@@ -20,12 +20,12 @@ class SpaStrings {
         required Map<String, String> userPreferences
       }
     )
+    :
+    _lang = locale.languageCode,
+    _langScript = '${locale.languageCode}_${locale.scriptCode}',
+    _langCountry = '${locale.languageCode}_${locale.countryCode}',
+    _fullCode = '${locale.languageCode}_${locale.scriptCode}_${locale.countryCode}'
   {
-    _lang = locale.languageCode;
-    _langScript = '${locale.languageCode}_${locale.scriptCode}';
-    _langCountry = '${locale.languageCode}_${locale.countryCode}';
-    _fullCode = '${locale.languageCode}_${locale.scriptCode}_${locale.countryCode}';
-
     this.appName = parse(appName);
     this.openPages = parse(activePages);
     this.userPreferences = parse(userPreferences);

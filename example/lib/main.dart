@@ -9,6 +9,6 @@ void main() {
     (locale) => Strings(locale),
     () => BlueGreyTheme(),
     () => HomePage(),
-    (strings) => getMainMenuItems(strings)
+    getMainMenuItems
   );
 }
