@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/page.dart';
-import 'package:spa_scaffold/src/page/settings_page.dart';
+import 'package:spa_scaffold/src/page/settings_page.dart' deferred as sets_page;
 import 'package:spa_scaffold/src/scaffold/main_menu_item.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu_model.dart';
 import 'package:spa_scaffold/src/scaffold/pages_controller_model.dart';
@@ -22,6 +22,7 @@ class MainMenuWidget extends StatelessWidget {
   static final EdgeInsets _tallHeaderPaddings = SpaWindow.parsePaddings(-1, 36, -1, -1);
   static final BorderRadius _headerBorders = SpaWindow.parseBorders(-1, -1, 0, 0);
 
+
   final GlobalKey<DrawerControllerState> _drawerKey;
 
   MainMenuWidget(this._drawerKey);
@@ -39,10 +40,10 @@ class MainMenuWidget extends StatelessWidget {
     final bool isTallScreen = context.isTallScreen;
 
     final List<Widget> menuChildren = [];
-    final List<SpaMainMenuItem>? currentMenu = menuModel.currentMenu;
+    final SpaMainMenuGroup? currentMenu = menuModel.currentMenu;
 
     if (currentMenu != null) {
-      for (SpaMainMenuItem item in currentMenu) {
+      for (SpaMainMenuItem item in currentMenu.items) {
         menuChildren.add(
           SpaMenuItem(
             item.icon, item.text,
@@ -84,6 +85,14 @@ class MainMenuWidget extends StatelessWidget {
     if (settings.mainMenuHeaderHasShadow)
       menuChildren.insert(0, Container(height: 3, color: (menuChildren[0] as SpaMenuItem).color));
 
+    final BoxShadow? headerShadow = settings.mainMenuHeaderHasShadow
+      ? currentMenu != null
+        ? theme.mainMenuHeaderShadow
+        : controllerModel.isHome
+          ? theme.pagesMenuHeaderFirstSelectedShadow
+          : theme.pagesMenuHeaderFirstUnselectedShadow
+      : null;
+
     // TODO: Adapt menu's width dynamically.
     return DrawerController(
       key: _drawerKey,
@@ -107,13 +116,7 @@ class MainMenuWidget extends StatelessWidget {
             // Header
             SpaPanel(
               color: theme.headerPanelColor,
-              shadow: settings.mainMenuHeaderHasShadow
-                ? currentMenu != null
-                  ? theme.mainMenuHeaderShadow
-                  : controllerModel.isHome
-                    ? theme.pagesMenuHeaderFirstSelectedShadow
-                    : theme.pagesMenuHeaderFirstUnselectedShadow
-                : null,
+              shadow: headerShadow,
               paddings: isTallScreen ? _tallHeaderPaddings : _headerPaddings,
               borders: settings.floatingPanels ? _headerBorders : null,
               child: Column(
@@ -181,29 +184,30 @@ class MainMenuWidget extends StatelessWidget {
     )
   {
     controller.openPageFromMainMenu(item);
-    Navigator.of(context).pop();
+    _drawerKey.currentState?.close();
   }
 
   void _drawerCallback(bool isOpened, MainMenuModel model) {
     if (! isOpened)
-      model.reset();
+      Future.delayed(Duration(milliseconds: 250), () => model.reset());
   }
 
   void _setActivePage(BuildContext context, int idx, PagesControllerModel model) {
     model.setActivePage(idx);
-    Navigator.of(context).pop();
+    _drawerKey.currentState?.close();
   }
 
   void _openSettingsPage(
       BuildContext context, PagesControllerModel controller, SpaStrings strings
     )
   {
-    controller.openPageFromMainMenu(
-      SpaMainMenuAction<SettingsPage>(
+    _openPageFromMainMenu(
+      context, controller,
+      SpaMainMenuAction(
         Icons.settings, '',
-        (icon) => SettingsPage(icon, strings.userPreferences)
+        sets_page.loadLibrary,
+        (icon) => sets_page.SettingsPage(icon, strings.userPreferences)
       )
     );
-    Navigator.of(context).pop();
   }
 }

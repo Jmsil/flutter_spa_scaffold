@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu_item.dart';
 
 class MainMenuModel with ChangeNotifier {
-  final List<SpaMainMenuItem> _root;
-  final List<List<SpaMainMenuItem>?> _stack = [];
+  final SpaMainMenuGroup _root;
+  final List<SpaMainMenuGroup?> _stack = [];
 
   MainMenuModel(this._root) {
     _stack.add(_root);
@@ -11,11 +11,11 @@ class MainMenuModel with ChangeNotifier {
 
   bool get isRoot => _stack.length == 1;
 
-  List<SpaMainMenuItem>? get currentMenu => _stack.last;
+  SpaMainMenuGroup? get currentMenu => _stack.last;
 
 
   void openGroup(SpaMainMenuGroup group) {
-    _stack.add(group.items);
+    _stack.add(group);
     notifyListeners();
   }
 

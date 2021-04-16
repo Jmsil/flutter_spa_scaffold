@@ -5,21 +5,20 @@ import 'package:spa_scaffold/src/page/page.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu_item.dart';
 
 class PagesControllerModel with ChangeNotifier {
+  bool _isOpeningPage = false;
   int _pageIdx = 0;
-  final List<SpaPage> _pages = [];
+  final List<SpaPage> _pages;
 
-  PagesControllerModel(SpaPage homePage) {
-    _pages.add(homePage);
-  }
+  PagesControllerModel(SpaPage homePage) : _pages = [homePage];
 
 
-  int get currentIdx => _pageIdx;
+  int get pageIdx => _pageIdx;
 
   UnmodifiableListView<SpaPage> get pages => UnmodifiableListView(_pages);
 
-  int get pagesCount => _pages.length;
-
   bool get isHome => _pageIdx == 0;
+
+  int get pagesCount => _pages.length;
 
   SpaPage get currentPage => _pages[_pageIdx];
 
@@ -45,22 +44,26 @@ class PagesControllerModel with ChangeNotifier {
     notifyListeners();
   }
 
-  // TODO: Open pages asynchronously.
-  void openPageFromMainMenu(SpaMainMenuAction action) {
+  void openPageFromMainMenu(SpaMainMenuAction action) async {
+    if (_isOpeningPage)
+      return;
+
+    _isOpeningPage = true;
+
     int newIdx = -1;
     for (int i = 0; i < _pages.length; i++) {
-      if (_pages[i].runtimeType == action.pageType) {
+      if (action.isPageType(_pages[i].runtimeType)) {
         newIdx = i;
         break;
       }
     }
 
-    //for (int i = 1; i <= 20; i++)
-    //if (newIdx == -1) {
-      _pages.add(action.builder(action.icon));
+    if (newIdx == -1) {
+      _pages.add(await action.buildPage());
       newIdx = _pages.length - 1;
-    //}
+    }
 
     setActivePage(newIdx);
+    _isOpeningPage = false;
   }
 }

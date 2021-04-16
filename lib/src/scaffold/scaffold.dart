@@ -14,7 +14,7 @@ void spaRun<STR extends SpaStrings, THM extends SpaTheme>(
     STR Function(Locale) stringsBuilder,
     THM Function() themeBuilder,
     SpaPage Function() homePageBuilder,
-    List<SpaMainMenuItem> Function(STR) mainMenuItemsBuilder
+    SpaMainMenuGroup Function(STR) mainMenuItemsBuilder
   )
 {
   final STR providedStrings = stringsBuilder(Locale('en'));

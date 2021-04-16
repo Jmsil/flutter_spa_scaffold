@@ -89,7 +89,7 @@ class PagesControllerWidget extends StatelessWidget {
 
                 double appNameWidth = appName.getTextWidth();
                 Widget bar = CupertinoSegmentedControl(
-                  groupValue: controllerModel.currentIdx,
+                  groupValue: controllerModel.pageIdx,
                   onValueChanged: controllerModel.setActivePage,
                   selectedColor: theme.activePagesBarTheme.selectedColor,
                   unselectedColor: theme.activePagesBarTheme.unselectedColor,
@@ -149,7 +149,7 @@ class PagesControllerWidget extends StatelessWidget {
       children: [
         Expanded(
           child: IndexedStack(
-            index: controllerModel.currentIdx,
+            index: controllerModel.pageIdx,
             children: controllerPages
           )
         ),

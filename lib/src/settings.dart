@@ -2,6 +2,10 @@ import 'package:flutter/foundation.dart';
 
 class SpaSettings with ChangeNotifier {
   bool _floatingPanels;
+  bool _mainMenuHeaderHasShadow;
+
+  SpaSettings(this._floatingPanels, this._mainMenuHeaderHasShadow);
+
 
   bool get floatingPanels => _floatingPanels;
 
@@ -13,8 +17,6 @@ class SpaSettings with ChangeNotifier {
   }
 
 
-  bool _mainMenuHeaderHasShadow;
-
   bool get mainMenuHeaderHasShadow => _mainMenuHeaderHasShadow;
 
   set mainMenuHeaderHasShadow(bool value) {
@@ -23,6 +25,4 @@ class SpaSettings with ChangeNotifier {
       notifyListeners();
     }
   }
-
-  SpaSettings(this._floatingPanels, this._mainMenuHeaderHasShadow);
 }
