@@ -1,23 +1,35 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/page.dart';
 import 'package:spa_scaffold/src/settings.dart';
 import 'package:spa_scaffold/src/ui/list_view.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
+import 'package:spa_scaffold/src/ui/separator.dart';
 import 'package:spa_scaffold/src/ui/theme.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
 
-abstract class SpaSidebarPage<T extends SpaSidebarPageState> extends SpaPage<T> {
+abstract class SpaSidebarPage extends SpaPage {
+  final GlobalKey<DrawerControllerState> _menuKey = GlobalKey();
+
   SpaSidebarPage(IconData icon, String title) : super(icon, title);
 
   @override
-  Function()? get overflowMenuAction => () => state._menuKey.currentState?.open();
+  SpaSidebarPageState createState();
 
-  @override
-  void resetOverflowMenuAction() => state.popDrawer();
+  @override @nonVirtual
+  Function()? get overflowMenuAction => () => _menuKey.currentState?.open();
+
+  @override @nonVirtual
+  void resetOverflowMenuAction() => _menuKey.currentState?.close();
 }
 
-abstract class SpaSidebarPageState extends State {
+abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends State<T> {
+  @protected
+  static final SpaSeparator defaultSeparator = SpaSeparator(0.5);
+
   static final EdgeInsets _fixedMenuMargins = SpaWindow.parseMargins(-1, 0, 0, -1);
   static final EdgeInsets _drawerMenuMargins = SpaWindow.parseMargins(0, 0, -1, -1);
   static final BorderRadius _fixedMenuBorders = SpaWindow.parseBorders(-1, 0, -1, 0);
@@ -26,9 +38,6 @@ abstract class SpaSidebarPageState extends State {
   static final EdgeInsets _flatMenuPaddings = SpaWindow.parsePaddings(0, 0, 0, -1);
   static final EdgeInsets _contentMargins = SpaWindow.parseMargins(-1, 0, -1, -1);
   static final BorderRadius _contentWithMenuBorders = SpaWindow.parseBorders(0, -1, 0, -1);
-
-
-  final GlobalKey<DrawerControllerState> _menuKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -69,19 +78,18 @@ abstract class SpaSidebarPageState extends State {
         ]
       );
     }
-    else {
-      return Stack(
-        children: [
-          content,
-          DrawerController(
-            key: _menuKey,
-            alignment: DrawerAlignment.end,
-            scrimColor: Colors.transparent,
-            child: menu
-          )
-        ]
-      );
-    }
+
+    return Stack(
+      children: [
+        content,
+        DrawerController(
+          key: widget._menuKey,
+          alignment: DrawerAlignment.end,
+          scrimColor: Colors.transparent,
+          child: menu
+        )
+      ]
+    );
   }
 
   @protected
@@ -90,5 +98,13 @@ abstract class SpaSidebarPageState extends State {
   @protected
   Widget contentBuilder(BuildContext context);
 
-  void popDrawer() => _menuKey.currentState?.close();
+  @protected @nonVirtual
+  void performAction(Function() action) async {
+    if (widget._menuKey.currentState == null)
+      action();
+    else {
+      widget.resetOverflowMenuAction();
+      Timer(Duration(milliseconds: SpaWindow.drawerClosingWait), action);
+    }
+  }
 }

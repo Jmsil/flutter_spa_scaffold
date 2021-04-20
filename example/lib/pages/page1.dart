@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/spa_scaffold.dart';
 
-class Page1 extends SpaSidebarPage<_Page1State> {
+class Page1 extends SpaSidebarPage {
   Page1(IconData icon, String title) : super(icon, title);
 
   @override
@@ -18,14 +18,18 @@ class _Page1State extends SpaSidebarPageState {
     final Strings strings = context.read<Strings>();
 
     return [
-      SpaTextButton(Icons.add, strings.newAction, theme.textButtonBarTheme, () => popDrawer()),
-      SpaSeparator(0.5),
-      SpaTextButton(Icons.edit, strings.editAction, theme.textButtonBarTheme, () => popDrawer()),
-      SpaSeparator(0.5),
       SpaTextButton(
-        Icons.delete_forever, strings.deleteAction, theme.textButtonXBarTheme, () => popDrawer()
+        Icons.add, strings.newAction, theme.textButtonBarTheme, () => performAction(() {})
       ),
-      SpaSeparator(0.5),
+      SpaSidebarPageState.defaultSeparator,
+      SpaTextButton(Icons.edit, strings.editAction, theme.textButtonBarTheme,
+        () => performAction(() {})),
+      SpaSidebarPageState.defaultSeparator,
+      SpaTextButton(
+        Icons.delete_forever, strings.deleteAction, theme.textButtonXBarTheme,
+        () => performAction(() {})
+      ),
+      SpaSidebarPageState.defaultSeparator,
       SpaTextButton(
         Icons.closed_caption_disabled, strings.disabledAction, theme.textButtonBarTheme, null
       )

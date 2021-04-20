@@ -76,6 +76,18 @@ class Strings extends SpaStrings {
       userPreferences: {
         'en': 'User Preferences',
         'pt': 'Preferências do Usuário'
+      },
+      loggedUser: {
+        'en': 'Logged User',
+        'pt': 'Usuário Logado'
+      },
+      process: {
+        'en': 'Process',
+        'pt': 'Processar'
+      },
+      print: {
+        'en': 'Print',
+        'pt': 'Imprimir'
       }
     );
 }

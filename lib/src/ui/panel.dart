@@ -9,7 +9,7 @@ class SpaPanel extends Container {
     required Color color,
     BoxShadow? shadow,
     EdgeInsets? margins,
-    EdgeInsets paddings = SpaWindow.allPaddings,
+    EdgeInsets? paddings = SpaWindow.allPaddings,
     BorderRadius? borders,
     required Widget child
   })

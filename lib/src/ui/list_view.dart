@@ -11,9 +11,9 @@ class SpaListView extends StatelessWidget {
     ScrollController controller = ScrollController(keepScrollOffset: false);
 
     return Scrollbar(
-      key: GlobalKey(),
+      //key: GlobalKey(),
+      //isAlwaysShown: true,
       controller: controller,
-      isAlwaysShown: true,
       thickness: 4,
       child: ListView(
         controller: controller,

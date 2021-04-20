@@ -1,19 +1,19 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/page.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu_model.dart';
 import 'package:spa_scaffold/src/scaffold/pages_controller_model.dart';
+import 'package:spa_scaffold/src/settings.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
 import 'package:spa_scaffold/src/ui/separator.dart';
 import 'package:spa_scaffold/src/ui/strings.dart';
+import 'package:spa_scaffold/src/ui/tab_control.dart';
 import 'package:spa_scaffold/src/ui/text.dart';
 import 'package:spa_scaffold/src/ui/theme.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
-import 'package:spa_scaffold/src/settings.dart';
 
 class PagesControllerWidget extends StatelessWidget {
   static final EdgeInsets _pagesBarPaddings = EdgeInsets.fromLTRB(32, 0, 32, 0);
@@ -44,7 +44,7 @@ class PagesControllerWidget extends StatelessWidget {
       appbarChildren.add(
         Expanded(
           child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
+            builder: (context, constraints) {
               if (
                   (constraints.maxWidth - _pagesBarPaddings.horizontal)
                   / controllerModel.pagesCount < 56
@@ -53,9 +53,9 @@ class PagesControllerWidget extends StatelessWidget {
                 return Row(
                   children: [
                     Expanded(child: controllerModel.isHome
-                        ? appName
-                        : _getHeaderTitle(controllerModel.currentPage.title, theme)
-                      ),
+                      ? appName
+                      : _getHeaderTitle(controllerModel.currentPage.title, theme)
+                    ),
                     SpaSeparator(),
                     SpaIconButton(
                       Icons.segment, theme.iconButtonHeaderTheme, () => _showOpenPages(context)
@@ -63,59 +63,51 @@ class PagesControllerWidget extends StatelessWidget {
                   ]
                 );
               }
-              else {
-                double maxPageCellWidth = 0;
-                final Map<int, Widget> pagesBarChildren = Map();
 
-                for (int i = 0; i < controllerPages.length; i++) {
-                  if (i == 0) {
-                    pagesBarChildren[i] = Icon(
-                      Icons.home,
-                      color: theme.iconButtonHeaderTheme.getIconColor(controllerModel.isActive(i))
-                    );
-                  }
-                  else {
-                    SpaText title = SpaText(
-                      controllerPages[i].title,
-                      theme.activePagesBarTheme.getTextStyle(controllerModel.isActive(i))
-                    );
-                    maxPageCellWidth = max(
-                      maxPageCellWidth,
-                      title.getTextWidth() + _pagesBarItemPaddings.horizontal
-                    );
-                    pagesBarChildren[i] = Padding(padding: _pagesBarItemPaddings, child: title);
-                  }
+              double maxPageCellWidth = 0;
+              final List<Widget> pagesBarChildren = [];
+
+              for (int i = 0; i < controllerPages.length; i++) {
+                if (i == 0) {
+                  pagesBarChildren.add(Icon(
+                    Icons.home,
+                    color: theme.iconButtonHeaderTheme.getIconColor(controllerModel.isActive(i))
+                  ));
                 }
-
-                double appNameWidth = appName.getTextWidth();
-                Widget bar = CupertinoSegmentedControl(
-                  groupValue: controllerModel.pageIdx,
-                  onValueChanged: controllerModel.setActivePage,
-                  selectedColor: theme.activePagesBarTheme.selectedColor,
-                  unselectedColor: theme.activePagesBarTheme.unselectedColor,
-                  pressedColor: theme.activePagesBarTheme.pressedColor,
-                  borderColor: theme.activePagesBarTheme.borderColor,
-                  padding: _pagesBarPaddings,
-                  children: pagesBarChildren
-                );
-
-                if (
-                  (constraints.maxWidth - min(appNameWidth, 120) - _pagesBarPaddings.horizontal)
-                  / controllerPages.length < maxPageCellWidth
-                )
-                  return bar;
                 else {
-                  return Row(
-                    children: [
-                      Expanded(child: appName),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(minWidth: constraints.maxWidth - appNameWidth),
-                        child: bar
-                      )
-                    ]
+                  SpaText title = SpaText(
+                    controllerPages[i].title,
+                    theme.activePagesBarTheme.getTextStyle(controllerModel.isActive(i))
                   );
+                  maxPageCellWidth = max(
+                    maxPageCellWidth,
+                    title.getTextWidth() + _pagesBarItemPaddings.horizontal
+                  );
+                  pagesBarChildren.add(Padding(padding: _pagesBarItemPaddings, child: title));
                 }
               }
+
+              double appNameWidth = appName.getTextWidth();
+              Widget bar = SpaTabControl(
+                controllerModel.pageIdx, theme.activePagesBarTheme, _pagesBarPaddings,
+                controllerModel.setActivePage, pagesBarChildren
+              );
+
+              if (
+                (constraints.maxWidth - min(appNameWidth, 120) - _pagesBarPaddings.horizontal)
+                / controllerPages.length < maxPageCellWidth
+              )
+                return bar;
+
+              return Row(
+                children: [
+                  Expanded(child: appName),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(minWidth: constraints.maxWidth - appNameWidth),
+                    child: bar
+                  )
+                ]
+              );
             }
           )
         )
@@ -129,8 +121,7 @@ class PagesControllerWidget extends StatelessWidget {
     if (! context.isLargeScreen) {
       appbarChildren.add(
         SpaIconButton(
-          Icons.adaptive.more,
-          theme.iconButtonHeaderTheme,
+          Icons.adaptive.more, theme.iconButtonHeaderTheme,
           controllerModel.currentPage.overflowMenuAction
         )
       );
@@ -138,8 +129,7 @@ class PagesControllerWidget extends StatelessWidget {
 
     appbarChildren.add(
       SpaIconButton(
-        Icons.close,
-        theme.iconButtonXHeaderTheme,
+        Icons.close, theme.iconButtonXHeaderTheme,
         controllerModel.isHome ? null : controllerModel.closeActivePage
       )
     );

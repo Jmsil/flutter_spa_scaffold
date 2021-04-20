@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:spa_scaffold/spa_scaffold.dart';
 
-class Page2 extends SpaSidebarPage<_Page2State> {
+class Page2 extends SpaReportPage {
   Page2(IconData icon, String title) : super(icon, title);
 
   @override
   _Page2State createState() => _Page2State();
 }
 
-class _Page2State extends SpaSidebarPageState {
+class _Page2State extends SpaReportPageState {
   @override
-  List<Widget> sidebarBuilder(BuildContext context) {
-    return [];
+  Widget filtersBuilder(BuildContext context) {
+    return Center();
   }
 
   @override
-  Widget contentBuilder(BuildContext context) {
+  Widget reportBuilder(BuildContext context) {
     return Center();
   }
+
+  @override
+  Future<bool> onProcess() async {
+    return false;
+  }
+
+  @override
+  void onPrint() {}
 }

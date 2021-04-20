@@ -11,13 +11,19 @@ class SpaStrings {
   late final String appName;
   late final String openPages;
   late final String userPreferences;
+  late final String loggedUser;
+  late final String process;
+  late final String print;
 
   SpaStrings(
       Locale locale,
       {
         required Map<String, String> appName,
         required Map<String, String> activePages,
-        required Map<String, String> userPreferences
+        required Map<String, String> userPreferences,
+        required Map<String, String> loggedUser,
+        required Map<String, String> process,
+        required Map<String, String> print
       }
     )
     :
@@ -29,6 +35,9 @@ class SpaStrings {
     this.appName = parse(appName);
     this.openPages = parse(activePages);
     this.userPreferences = parse(userPreferences);
+    this.loggedUser = parse(loggedUser);
+    this.process = parse(process);
+    this.print = parse(print);
   }
 
   @protected @nonVirtual

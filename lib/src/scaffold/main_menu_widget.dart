@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/page.dart';
@@ -22,11 +24,9 @@ class MainMenuWidget extends StatelessWidget {
   static final EdgeInsets _tallHeaderPaddings = SpaWindow.parsePaddings(-1, 36, -1, -1);
   static final BorderRadius _headerBorders = SpaWindow.parseBorders(-1, -1, 0, 0);
 
-
   final GlobalKey<DrawerControllerState> _drawerKey;
 
   MainMenuWidget(this._drawerKey);
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +43,8 @@ class MainMenuWidget extends StatelessWidget {
     final SpaMainMenuGroup? currentMenu = menuModel.currentMenu;
 
     if (currentMenu != null) {
+      _insertSpacer(menuChildren, theme.menuItemTheme, settings);
+
       for (SpaMainMenuItem item in currentMenu.items) {
         menuChildren.add(
           SpaMenuItem(
@@ -51,7 +53,7 @@ class MainMenuWidget extends StatelessWidget {
             theme.menuItemTheme,
             item is SpaMainMenuGroup
               ? () => menuModel.openGroup(item)
-              : () => _openPageFromMainMenu(context, controllerModel, item as SpaMainMenuAction)
+              : () => _openPageFromMainMenu(controllerModel, item as SpaMainMenuAction)
           )
         );
       }
@@ -65,25 +67,21 @@ class MainMenuWidget extends StatelessWidget {
           : theme.menuItemUnselectedPageTheme;
 
         if (i == 0) {
+          _insertSpacer(menuChildren, itemTheme, settings);
           menuChildren.add(
-            SpaMenuItem.icon(
-              pages[i].icon, itemTheme, () => _setActivePage(context, i, controllerModel)
-            )
+            SpaMenuItem.icon(pages[i].icon, itemTheme, () => _setActivePage(i, controllerModel))
           );
         }
         else {
           menuChildren.add(
             SpaMenuItem(
               pages[i].icon, pages[i].title, null, itemTheme,
-              () => _setActivePage(context, i, controllerModel)
+              () => _setActivePage(i, controllerModel)
             )
           );
         }
       }
     }
-
-    if (settings.mainMenuHeaderHasShadow)
-      menuChildren.insert(0, Container(height: 3, color: (menuChildren[0] as SpaMenuItem).color));
 
     final BoxShadow? headerShadow = settings.mainMenuHeaderHasShadow
       ? currentMenu != null
@@ -125,7 +123,7 @@ class MainMenuWidget extends StatelessWidget {
                     children: [
                       SpaSeparator(),
                       GestureDetector(
-                        onTap: () => _openSettingsPage(context, controllerModel, strings),
+                        onTap: () => _openSettingsPage(controllerModel, strings),
                         child: CircleAvatar(
                           child: SpaText('J', TextStyle(fontSize: 20, color: Colors.blue[100]))
                         )
@@ -135,7 +133,7 @@ class MainMenuWidget extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SpaText('Usuário Logado', theme.headerTitleStyle),
+                            SpaText(strings.loggedUser, theme.headerTitleStyle),
                             SpaText('jmsilva.inbox', theme.headerSubtitleStyle)
                           ]
                         )
@@ -163,8 +161,7 @@ class MainMenuWidget extends StatelessWidget {
                         SpaText(strings.openPages, theme.headerSubtitleStyle),
 
                       SpaIconButton(
-                        Icons.segment,
-                        theme.iconButtonHeaderTheme,
+                        Icons.segment, theme.iconButtonHeaderTheme,
                         controllerModelHasOpenPages && currentMenu != null
                           ? () => menuModel.setOpenPages() : null
                       )
@@ -179,30 +176,29 @@ class MainMenuWidget extends StatelessWidget {
     );
   }
 
-  void _openPageFromMainMenu(
-      BuildContext context, PagesControllerModel controller, SpaMainMenuAction item
-    )
-  {
-    controller.openPageFromMainMenu(item);
+  void _insertSpacer(List<Widget> children, SpaMenuItemTheme theme, SpaSettings settings) {
+    if (settings.mainMenuHeaderHasShadow)
+      children.add(Container(height: 4, color: theme.getSurfaceColor(true)));
+  }
+
+  void _openPageFromMainMenu(PagesControllerModel controller, SpaMainMenuAction item) {
     _drawerKey.currentState?.close();
+    controller.openPageFromMainMenu(item);
   }
 
   void _drawerCallback(bool isOpened, MainMenuModel model) {
     if (! isOpened)
-      Future.delayed(Duration(milliseconds: 250), () => model.reset());
+      Timer(Duration(milliseconds: SpaWindow.drawerClosingWait), model.reset);
   }
 
-  void _setActivePage(BuildContext context, int idx, PagesControllerModel model) {
-    model.setActivePage(idx);
+  void _setActivePage(int idx, PagesControllerModel model) {
     _drawerKey.currentState?.close();
+    model.setActivePage(idx);
   }
 
-  void _openSettingsPage(
-      BuildContext context, PagesControllerModel controller, SpaStrings strings
-    )
-  {
+  void _openSettingsPage(PagesControllerModel controller, SpaStrings strings) {
     _openPageFromMainMenu(
-      context, controller,
+      controller,
       SpaMainMenuAction(
         Icons.settings, '',
         sets_page.loadLibrary,
