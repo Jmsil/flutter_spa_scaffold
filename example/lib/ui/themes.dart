@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:spa_scaffold/spa_scaffold.dart';
 
-abstract class AppTheme extends SpaTheme {
-  late final SpaTextButtonTheme textButtonXBarTheme = createTextButtonXBarTheme;
-  @protected
-  SpaTextButtonTheme get createTextButtonXBarTheme;
-}
+abstract class AppTheme extends SpaTheme {}
 
 class BlueGreyTheme extends AppTheme {
   @override Color get homeBackgroundColor => Colors.blueGrey[100]!;
@@ -49,6 +44,13 @@ class BlueGreyTheme extends AppTheme {
   );
 
   @override
+  SpaTextButtonTheme get createTextButtonXBarTheme => SpaTextButtonTheme(
+    splashColor: Colors.deepOrangeAccent,
+    iconColor: Colors.red[200],
+    copyFrom: textButtonBarTheme
+  );
+
+  @override
   SpaMenuItemTheme get createMenuItemTheme => SpaMenuItemTheme(
     surfaceColor: Colors.blueGrey[500],
     disabledSurfaceColor: Colors.blueGrey[500],
@@ -85,13 +87,5 @@ class BlueGreyTheme extends AppTheme {
     unselectedTextColor: Colors.blueGrey[200],
     pressedColor: Colors.blueGrey[700],
     borderColor: Colors.blueGrey[400]
-  );
-
-
-  @override
-  SpaTextButtonTheme get createTextButtonXBarTheme => SpaTextButtonTheme(
-    splashColor: Colors.deepOrangeAccent,
-    iconColor: Colors.red[200],
-    copyFrom: textButtonBarTheme
   );
 }

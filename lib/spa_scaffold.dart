@@ -1,6 +1,7 @@
 library spa_scaffold;
 
 export 'src/page/page.dart';
+export 'src/page/registration_page.dart';
 export 'src/page/report_page.dart';
 export 'src/page/sidebar_page.dart';
 export 'src/scaffold/main_menu_item.dart';

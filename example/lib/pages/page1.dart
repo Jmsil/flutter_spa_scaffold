@@ -1,43 +1,31 @@
-import 'package:example/ui/strings.dart';
-import 'package:example/ui/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:spa_scaffold/spa_scaffold.dart';
 
-class Page1 extends SpaSidebarPage {
+class Page1 extends SpaRegistrationPage {
   Page1(IconData icon, String title) : super(icon, title);
 
   @override
   _Page1State createState() => _Page1State();
 }
 
-class _Page1State extends SpaSidebarPageState {
-  @override
-  List<Widget> sidebarBuilder(BuildContext context) {
-    final AppTheme theme = context.read<AppTheme>();
-    final Strings strings = context.read<Strings>();
-
-    return [
-      SpaTextButton(
-        Icons.add, strings.newAction, theme.textButtonBarTheme, () => performAction(() {})
-      ),
-      SpaSidebarPageState.defaultSeparator,
-      SpaTextButton(Icons.edit, strings.editAction, theme.textButtonBarTheme,
-        () => performAction(() {})),
-      SpaSidebarPageState.defaultSeparator,
-      SpaTextButton(
-        Icons.delete_forever, strings.deleteAction, theme.textButtonXBarTheme,
-        () => performAction(() {})
-      ),
-      SpaSidebarPageState.defaultSeparator,
-      SpaTextButton(
-        Icons.closed_caption_disabled, strings.disabledAction, theme.textButtonBarTheme, null
-      )
-    ];
-  }
-
+class _Page1State extends SpaRegistrationPageState {
   @override
   Widget contentBuilder(BuildContext context) {
     return Center();
+  }
+
+  @override
+  Future<RegistrationPageActionReturn> onRecord() async {
+    return RegistrationPageActionReturn(true, '');
+  }
+
+  @override
+  void onCancel() {
+
+  }
+
+  @override
+  Future<RegistrationPageActionReturn> onDelete() async {
+    return RegistrationPageActionReturn(true, '');
   }
 }

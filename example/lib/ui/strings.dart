@@ -8,57 +8,37 @@ class Strings extends SpaStrings {
   // Main menu
   //
   late final String groupMenuItem1 = parse({
-    'en': 'Group Menu Item 1',
-    'pt': 'Item de Menu Grupo 1'
+    'en': 'Registrations Menu',
+    'pt': 'Menu de Cadastros'
   });
 
   late final String actionMenuItem1 = parse({
-    'en': 'Action Menu Item 1',
-    'pt': 'Item de Menu Ação 1'
+    'en': 'Registration Page',
+    'pt': 'Página de Cadastro'
   });
 
   late final String groupMenuItem2 = parse({
-    'en': 'Group Menu Item 2',
-    'pt': 'Item de Menu Grupo 2'
+    'en': 'Reports Menu',
+    'pt': 'Menu de Relatórios'
   });
 
   late final String actionMenuItem2 = parse({
-    'en': 'Action Menu Item 2',
-    'pt': 'Item de Menu Ação 2'
+    'en': 'Report Page',
+    'pt': 'Página de Relatório'
   });
 
 
   // Page's titles
   //
   late final String pageTitle1 = parse({
-    'en': "Page's Title 1",
-    'pt': 'Título da Página 1'
+    'en': "Registration Page's Title",
+    'pt': 'Título da Página de Cadastro'
   });
+
 
   late final String pageTitle2 = parse({
-    'en': "Page's Title 2 - Large and Complete For Tests",
-    'pt': 'Título da Página 2 - Grande e Completo Para Testes'
-  });
-
-
-  late final String newAction = parse({
-    'en': 'New Action',
-    'pt': 'Ação Novo'
-  });
-
-  late final String editAction = parse({
-    'en': 'Edit Action',
-    'pt': 'Ação Editar'
-  });
-
-  late final String deleteAction = parse({
-    'en': 'Delete Action',
-    'pt': 'Ação Deletar'
-  });
-
-  late final String disabledAction = parse({
-    'en': 'Disabled Action',
-    'pt': 'Ação Desativada'
+    'en': "Report Page's Title",
+    'pt': 'Título da Página de Relatório'
   });
 
   Strings(Locale locale)
@@ -73,13 +53,13 @@ class Strings extends SpaStrings {
         'en': 'Open Pages',
         'pt': 'Páginas Abertas'
       },
-      userPreferences: {
-        'en': 'User Preferences',
-        'pt': 'Preferências do Usuário'
-      },
       loggedUser: {
         'en': 'Logged User',
         'pt': 'Usuário Logado'
+      },
+      userPreferences: {
+        'en': 'User Preferences',
+        'pt': 'Preferências do Usuário'
       },
       process: {
         'en': 'Process',
@@ -88,6 +68,18 @@ class Strings extends SpaStrings {
       print: {
         'en': 'Print',
         'pt': 'Imprimir'
+      },
+      record: {
+        'en': 'Record',
+        'pt': 'Gravar'
+      },
+      cancel: {
+        'en': 'Cancel',
+        'pt': 'Cancelar'
+      },
+      delete: {
+        'en': 'Delete',
+        'pt': 'Deletar'
       }
     );
 }

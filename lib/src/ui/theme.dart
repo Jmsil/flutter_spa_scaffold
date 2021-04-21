@@ -57,6 +57,10 @@ abstract class SpaTheme {
   @protected
   SpaTextButtonTheme get createTextButtonBarTheme;
 
+  late final SpaTextButtonTheme textButtonXBarTheme = createTextButtonXBarTheme;
+  @protected
+  SpaTextButtonTheme get createTextButtonXBarTheme;
+
 
   late final SpaMenuItemTheme menuItemTheme = createMenuItemTheme;
   @protected
