@@ -17,6 +17,9 @@ class SpaStrings {
   late final String record;
   late final String cancel;
   late final String delete;
+  late final String ok;
+  late final String yes;
+  late final String no;
 
   SpaStrings(
       Locale locale,
@@ -29,7 +32,10 @@ class SpaStrings {
         required Map<String, String> print,
         required Map<String, String> record,
         required Map<String, String> cancel,
-        required Map<String, String> delete
+        required Map<String, String> delete,
+        required Map<String, String> ok,
+        required Map<String, String> yes,
+        required Map<String, String> no
       }
     )
     :
@@ -47,6 +53,9 @@ class SpaStrings {
     this.record = parse(record);
     this.cancel = parse(cancel);
     this.delete = parse(delete);
+    this.ok = parse(ok);
+    this.yes = parse(yes);
+    this.no = parse(no);
   }
 
   @protected @nonVirtual

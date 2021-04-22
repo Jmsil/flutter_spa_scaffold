@@ -1,89 +1,112 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+const double _titleFontSize = 14;
+const double _normalFontSize = 13;
+
 abstract class SpaTheme {
-  static const double _titleFontSize = 14;
-  static const double _normalFontSize = 13;
-
-
   Color get homeBackgroundColor;
-  Color get headerPanelColor;
-  Color get barPanelColor;
-  Color get contentPanelColor;
-  Color get menuPanelColor;
   Color get scrollbarColor;
+  Color get navigatorBackgroundColor;
 
-  late final TextStyle headerTitleStyle =
-    TextStyle(fontSize: _titleFontSize, color: createHeaderTitleColor);
+  @nonVirtual
+  late final SpaPanelTheme headerPanelTheme = createHeaderPanelTheme;
   @protected
-  Color get createHeaderTitleColor;
+  SpaPanelTheme get createHeaderPanelTheme;
 
-  late final TextStyle headerSubtitleStyle =
-    TextStyle(fontSize: _normalFontSize, color: createHeaderSubtitleColor);
+  @nonVirtual
+  late final SpaPanelTheme barPanelTheme = createBarPanelTheme;
   @protected
-  Color get createHeaderSubtitleColor;
+  SpaPanelTheme get createBarPanelTheme;
+
+  @nonVirtual
+  late final SpaPanelTheme contentPanelTheme = createContentPanelTheme;
+  @protected
+  SpaPanelTheme get createContentPanelTheme;
 
 
+  @nonVirtual
   late final BoxShadow allShadows = BoxShadow(color: createAllShadowsColor, blurRadius: 6);
   @protected
   Color get createAllShadowsColor;
 
+  @nonVirtual
   late final BoxShadow mainMenuHeaderShadow =
     _getMainMenuHeaderShadow(createMainMenuHeaderShadowColor);
   @protected
   Color get createMainMenuHeaderShadowColor;
 
+  @nonVirtual
   late final BoxShadow pagesMenuHeaderFirstSelectedShadow =
     _getMainMenuHeaderShadow(createPagesMenuHeaderFirstSelectedShadowColor);
   @protected
   Color get createPagesMenuHeaderFirstSelectedShadowColor;
 
+  @nonVirtual
   late final BoxShadow pagesMenuHeaderFirstUnselectedShadow =
     _getMainMenuHeaderShadow(createPagesMenuHeaderFirstUnselectedShadow);
   @protected
   Color get createPagesMenuHeaderFirstUnselectedShadow;
 
 
-  late final SpaIconButtonTheme iconButtonHeaderTheme = createIconButtonHeaderTheme;
-  @protected
-  SpaIconButtonTheme get createIconButtonHeaderTheme;
-
+  @nonVirtual
   late final SpaIconButtonTheme iconButtonXHeaderTheme = createIconButtonXHeaderTheme;
   @protected
   SpaIconButtonTheme get createIconButtonXHeaderTheme;
 
 
-  late final SpaTextButtonTheme textButtonBarTheme = createTextButtonBarTheme;
-  @protected
-  SpaTextButtonTheme get createTextButtonBarTheme;
-
+  @nonVirtual
   late final SpaTextButtonTheme textButtonXBarTheme = createTextButtonXBarTheme;
   @protected
   SpaTextButtonTheme get createTextButtonXBarTheme;
 
 
+  @nonVirtual
   late final SpaMenuItemTheme menuItemTheme = createMenuItemTheme;
   @protected
   SpaMenuItemTheme get createMenuItemTheme;
 
+  @nonVirtual
   late final SpaMenuItemTheme menuItemSelectedPageTheme = createMenuItemSelectedPageTheme;
   @protected
   SpaMenuItemTheme get createMenuItemSelectedPageTheme;
 
+  @nonVirtual
   late final SpaMenuItemTheme menuItemUnselectedPageTheme = createMenuItemUnselectedPageTheme;
   @protected
   SpaMenuItemTheme get createMenuItemUnselectedPageTheme;
 
 
-  late final SpaTabbarTheme activePagesBarTheme = createActivePagesBarTheme;
-  @protected
-  SpaTabbarTheme get createActivePagesBarTheme;
-
-
   static BoxShadow _getMainMenuHeaderShadow(Color color ) =>
-    BoxShadow(color: color, offset: Offset(0, 5), blurRadius: 6, spreadRadius: -2);
+    BoxShadow(color: color, offset: Offset(0, 3), blurRadius: 6);
 }
 
+class SpaPanelTheme {
+  final Color color;
+  final TextStyle titleStyle;
+  final TextStyle subtitleStyle;
+  final SpaIconButtonTheme iconButtonTheme;
+  final SpaTextButtonTheme textButtonTheme;
+  final SpaTabbarTheme tabbarTheme;
+
+  SpaPanelTheme({
+    Color? color, Color? titleColor, Color? subtitleColor, SpaIconButtonTheme? iconButtonTheme,
+    SpaTextButtonTheme? textButtonTheme, SpaTabbarTheme? tabbarTheme, SpaPanelTheme? copyFrom
+  })
+    :
+    this.color = color ?? copyFrom?.color ?? Colors.transparent,
+    titleStyle = TextStyle(
+      fontSize: _titleFontSize,
+      color: titleColor ?? copyFrom?.titleStyle.color ?? Colors.transparent
+    ),
+    subtitleStyle = TextStyle(
+      fontSize: _normalFontSize,
+      color: subtitleColor ?? copyFrom?.subtitleStyle.color ?? Colors.transparent
+    ),
+    this.iconButtonTheme = iconButtonTheme ?? copyFrom?.iconButtonTheme ?? SpaIconButtonTheme(),
+    this.textButtonTheme = textButtonTheme ?? copyFrom?.textButtonTheme ?? SpaTextButtonTheme(),
+    this.tabbarTheme = tabbarTheme ?? copyFrom?.tabbarTheme ?? SpaTabbarTheme();
+}
 
 class SpaTouchableWidgetTheme {
   final Color _surfaceColor;
@@ -105,7 +128,6 @@ class SpaTouchableWidgetTheme {
 
   Color getSurfaceColor(bool enabled) => enabled ? _surfaceColor : _disabledSurfaceColor;
 }
-
 
 class SpaIconButtonTheme extends SpaTouchableWidgetTheme {
   final Color _iconColor;
@@ -129,7 +151,6 @@ class SpaIconButtonTheme extends SpaTouchableWidgetTheme {
   Color getIconColor(bool enabled) => enabled ? _iconColor : _disabledIconColor;
 }
 
-
 class SpaTextButtonTheme extends SpaIconButtonTheme {
   final TextStyle _textStyle;
   final TextStyle _disabledTextStyle;
@@ -140,11 +161,11 @@ class SpaTextButtonTheme extends SpaIconButtonTheme {
   })
     :
     _textStyle = TextStyle(
-      fontSize: SpaTheme._normalFontSize,
+      fontSize: _normalFontSize,
       color: textColor ?? copyFrom?._textStyle.color ?? Colors.transparent
     ),
     _disabledTextStyle = TextStyle(
-      fontSize: SpaTheme._normalFontSize,
+      fontSize: _normalFontSize,
       color: disabledContentColor ?? copyFrom?._disabledTextStyle.color ?? Colors.transparent
     ),
     super(
@@ -159,7 +180,6 @@ class SpaTextButtonTheme extends SpaIconButtonTheme {
 
   TextStyle getTextStyle(bool enabled) => enabled ? _textStyle : _disabledTextStyle;
 }
-
 
 class SpaMenuItemTheme extends SpaTextButtonTheme {
   final Color _trailingIconColor;
@@ -185,32 +205,38 @@ class SpaMenuItemTheme extends SpaTextButtonTheme {
   Color getTrailingIconColor(bool enabled) => enabled ? _trailingIconColor : _disabledIconColor;
 }
 
-
 class SpaTabbarTheme {
   final Color selectedColor;
   final Color unselectedColor;
+  final Color _selectedIconColor;
+  final Color _unselectedIconColor;
   final TextStyle _selectedTextStyle;
   final TextStyle _unselectedTextStyle;
   final Color pressedColor;
   final Color borderColor;
 
   SpaTabbarTheme({
-    Color? selectedColor, Color? unselectedColor, Color? selectedTextColor,
-    Color? unselectedTextColor, Color? pressedColor, Color? borderColor, SpaTabbarTheme? copyFrom
+    Color? selectedColor, Color? unselectedColor, Color? selectedIconColor,
+    Color? unselectedIconColor, Color? selectedTextColor, Color? unselectedTextColor,
+    Color? pressedColor, Color? borderColor, SpaTabbarTheme? copyFrom
   })
     :
     this.selectedColor = selectedColor ?? copyFrom?.selectedColor ?? Colors.transparent,
     this.unselectedColor = unselectedColor ?? copyFrom?.unselectedColor ?? Colors.transparent,
+    _selectedIconColor = selectedIconColor ?? copyFrom?._selectedIconColor ?? Colors.transparent,
+    _unselectedIconColor =
+      unselectedIconColor ?? copyFrom?._unselectedIconColor ?? Colors.transparent,
     _selectedTextStyle = TextStyle(
-      fontSize: SpaTheme._normalFontSize,
+      fontSize: _normalFontSize,
       color: selectedTextColor ?? copyFrom?._selectedTextStyle.color ?? Colors.transparent
     ),
     _unselectedTextStyle = TextStyle(
-      fontSize: SpaTheme._normalFontSize,
+      fontSize: _normalFontSize,
       color: unselectedTextColor ?? copyFrom?._unselectedTextStyle.color ?? Colors.transparent
     ),
     this.pressedColor = pressedColor ?? copyFrom?.pressedColor ?? Colors.transparent,
     this.borderColor = borderColor ?? copyFrom?.borderColor ?? Colors.transparent;
 
+  Color getIconColor(bool selected) => selected ? _selectedIconColor : _unselectedIconColor;
   TextStyle getTextStyle(bool selected) => selected ? _selectedTextStyle : _unselectedTextStyle;
 }

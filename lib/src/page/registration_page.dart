@@ -3,9 +3,9 @@ import 'package:meta/meta.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/sidebar_page.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
+import 'package:spa_scaffold/src/ui/dialogs.dart';
 import 'package:spa_scaffold/src/ui/strings.dart';
 import 'package:spa_scaffold/src/ui/theme.dart';
-import 'package:spa_scaffold/src/ui/dialogs.dart';
 
 abstract class SpaRegistrationPage extends SpaSidebarPage {
   SpaRegistrationPage(IconData icon, String title) : super(icon, title);
@@ -24,12 +24,12 @@ abstract class SpaRegistrationPageState<T extends SpaRegistrationPage>
 
     return [
       SpaTextButton(
-        Icons.save, strings.record, theme.textButtonBarTheme,
+        Icons.save, strings.record, theme.barPanelTheme.textButtonTheme,
         () => performAction(_record)
       ),
       SpaSidebarPageState.defaultSeparator,
       SpaTextButton(
-        Icons.cancel, strings.cancel, theme.textButtonBarTheme,
+        Icons.cancel, strings.cancel, theme.barPanelTheme.textButtonTheme,
         () => performAction(_cancel)
       ),
       SpaSidebarPageState.defaultSeparator,
@@ -51,7 +51,14 @@ abstract class SpaRegistrationPageState<T extends SpaRegistrationPage>
 
   void _record() async {
     RegistrationPageActionReturn result = await onRecord();
-    SpaDialogs.showOkCancel(context);
+    await SpaDialogs.showMessage(
+      context,
+      'Why a Hummingbird',
+      'Early on, a hummingbird image was created for the Dart team to use for presentations '
+      'and the web. The hummingbird represents that Dart is a speedy language.'
+    );
+
+    print('diagResult');
   }
 
   void _cancel() {
@@ -60,6 +67,14 @@ abstract class SpaRegistrationPageState<T extends SpaRegistrationPage>
 
   void _delete() async {
     RegistrationPageActionReturn result = await onDelete();
+    SpaQuestionDialogReturn diagResult = await SpaDialogs.showQuestion(
+      context,
+      'Why a Hummingbird',
+      'Early on, a hummingbird image was created for the Dart team to use for presentations '
+      'and the web. The hummingbird represents that Dart is a speedy language.'
+    );
+
+    print(diagResult);
   }
 }
 

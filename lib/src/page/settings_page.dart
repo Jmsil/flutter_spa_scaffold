@@ -23,8 +23,8 @@ class _SettingsPageState extends State {
             onChanged: (value) => settings.floatingPanels = value
           ),
           Switch(
-            value: settings.mainMenuHeaderHasShadow,
-            onChanged: (value) => settings.mainMenuHeaderHasShadow = value
+            value: settings.headersHasShadow,
+            onChanged: (value) => settings.headersHasShadow = value
           )
         ]
       )

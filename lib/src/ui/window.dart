@@ -5,7 +5,7 @@ class SpaWindow {
 
   static const double _margin = 8;
   static const double _padding = 8;
-  static const Radius _radius = Radius.circular(8);
+  static const Radius _radius = Radius.circular(6);
 
   static const EdgeInsets allMargins = EdgeInsets.all(_margin);
   static const EdgeInsets allPaddings = EdgeInsets.all(_padding);
@@ -38,6 +38,8 @@ class SpaWindow {
 }
 
 extension WinSpec on BuildContext {
+  double get screenWidth => MediaQuery.of(this).size.width;
+  double get screenHeight => MediaQuery.of(this).size.height;
   bool get isLargeScreen => MediaQuery.of(this).size.width >= 1024;
   bool get isTallScreen => MediaQuery.of(this).size.height >= 540;
 }

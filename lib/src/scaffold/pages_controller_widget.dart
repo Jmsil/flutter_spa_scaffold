@@ -27,15 +27,15 @@ class PagesControllerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
     final SpaStrings strings = context.read<SpaStrings>();
+    final SpaSettings settings = context.watch<SpaSettings>();
     final PagesControllerModel controllerModel = context.watch<PagesControllerModel>();
-    final bool floatingPanels = context.select<SpaSettings, bool>((sets) => sets.floatingPanels);
 
     final List<SpaPage> controllerPages = controllerModel.pages;
     final SpaText appName = _getHeaderTitle(strings.appName, theme);
 
     final List<Widget> appbarChildren = [
       SpaIconButton(
-        Icons.menu, theme.iconButtonHeaderTheme,
+        Icons.menu, theme.headerPanelTheme.iconButtonTheme,
         () => _mainMenuKey.currentState?.open()
       )
     ];
@@ -58,7 +58,8 @@ class PagesControllerWidget extends StatelessWidget {
                     ),
                     SpaSeparator(),
                     SpaIconButton(
-                      Icons.segment, theme.iconButtonHeaderTheme, () => _showOpenPages(context)
+                      Icons.segment, theme.headerPanelTheme.iconButtonTheme,
+                      () => _showOpenPages(context)
                     )
                   ]
                 );
@@ -71,13 +72,15 @@ class PagesControllerWidget extends StatelessWidget {
                 if (i == 0) {
                   pagesBarChildren.add(Icon(
                     Icons.home,
-                    color: theme.iconButtonHeaderTheme.getIconColor(controllerModel.isActive(i))
+                    color: theme.headerPanelTheme.tabbarTheme.getIconColor(
+                      controllerModel.isActive(i)
+                    )
                   ));
                 }
                 else {
                   SpaText title = SpaText(
                     controllerPages[i].title,
-                    theme.activePagesBarTheme.getTextStyle(controllerModel.isActive(i))
+                    theme.headerPanelTheme.tabbarTheme.getTextStyle(controllerModel.isActive(i))
                   );
                   maxPageCellWidth = max(
                     maxPageCellWidth,
@@ -89,7 +92,7 @@ class PagesControllerWidget extends StatelessWidget {
 
               double appNameWidth = appName.getTextWidth();
               Widget bar = SpaTabControl(
-                controllerModel.pageIdx, theme.activePagesBarTheme, _pagesBarPaddings,
+                controllerModel.pageIdx, theme.headerPanelTheme.tabbarTheme, _pagesBarPaddings,
                 controllerModel.setActivePage, pagesBarChildren
               );
 
@@ -121,7 +124,7 @@ class PagesControllerWidget extends StatelessWidget {
     if (! context.isLargeScreen) {
       appbarChildren.add(
         SpaIconButton(
-          Icons.adaptive.more, theme.iconButtonHeaderTheme,
+          Icons.adaptive.more, theme.headerPanelTheme.iconButtonTheme,
           controllerModel.currentPage.overflowMenuAction
         )
       );
@@ -144,10 +147,10 @@ class PagesControllerWidget extends StatelessWidget {
           )
         ),
         SpaPanel(
-          color: theme.headerPanelColor,
-          shadow: theme.allShadows,
-          margins: floatingPanels ? SpaWindow.allMargins : null,
-          borders: floatingPanels ? SpaWindow.allBorders : null,
+          color: theme.headerPanelTheme.color,
+          shadow: settings.headersHasShadow || settings.floatingPanels ? theme.allShadows : null,
+          margins: settings.floatingPanels ? SpaWindow.allMargins : null,
+          borders: settings.floatingPanels ? SpaWindow.allBorders : null,
           child: Row(children: appbarChildren)
         )
       ]
@@ -160,5 +163,5 @@ class PagesControllerWidget extends StatelessWidget {
   }
 
   SpaText _getHeaderTitle(String text, SpaTheme theme) =>
-    SpaText('   $text', theme.headerTitleStyle);
+    SpaText('   $text', theme.headerPanelTheme.titleStyle);
 }

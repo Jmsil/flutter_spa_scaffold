@@ -80,6 +80,18 @@ class Strings extends SpaStrings {
       delete: {
         'en': 'Delete',
         'pt': 'Deletar'
+      },
+      ok: {
+        'en': 'Ok',
+        'pt': 'Ok'
+      },
+      yes: {
+        'en': 'Yes',
+        'pt': 'Sim'
+      },
+      no: {
+        'en': 'No',
+        'pt': 'Não'
       }
     );
 }

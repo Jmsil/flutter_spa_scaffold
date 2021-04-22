@@ -13,24 +13,33 @@ class SpaIconButton extends _ButtonFrame {
   SpaIconButton(IconData icon, SpaIconButtonTheme theme, Function()? onPressed)
     :
     super(
-      true, theme, SpaWindow.allPaddings, onPressed,
+      theme, SpaWindow.allPaddings, SpaWindow.allBorders, onPressed,
       Icon(icon, color: theme.getIconColor(onPressed != null))
     );
 }
 
 
 class SpaTextButton extends _ButtonFrame {
-  SpaTextButton(IconData icon, String text, SpaTextButtonTheme theme, Function()? onPressed)
+  SpaTextButton(
+    IconData icon, String text, SpaTextButtonTheme theme, Function()? onPressed,
+    {bool expanded = true, BorderRadius? borders}
+  )
     :
     super(
-      false, theme, _iconTextPaddings, onPressed,
+      theme, _iconTextPaddings, borders, onPressed,
       Row(
+        mainAxisAlignment: expanded ? MainAxisAlignment.start : MainAxisAlignment.center,
         children: [
           Icon(icon, color: theme.getIconColor(onPressed != null)),
           SpaSeparator(_separatorScale),
-          Expanded(
-            child: SpaText(text, theme.getTextStyle(onPressed != null))
-          )
+
+          if (expanded)
+            Expanded(
+              child: SpaText(text, theme.getTextStyle(onPressed != null))
+            ),
+
+          if (! expanded)
+            SpaText(text, theme.getTextStyle(onPressed != null))
         ]
       )
     );
@@ -44,10 +53,9 @@ class SpaMenuItem extends _ButtonFrame {
   )
     :
     super(
-      false,
       theme,
       trailingIcon == null ? _iconTextPaddings : _menuItemTrailingPaddings,
-      onPressed,
+      null, onPressed,
       Row(
         children: [
           Icon(leadingIcon, color: theme.getIconColor(onPressed != null)),
@@ -68,7 +76,7 @@ class SpaMenuItem extends _ButtonFrame {
   SpaMenuItem.icon(IconData icon, SpaMenuItemTheme theme, Function()? onPressed)
     :
     super(
-      false, theme, SpaWindow.allPaddings, onPressed,
+      theme, SpaWindow.allPaddings, null, onPressed,
       Icon(icon, color: theme.getIconColor(onPressed != null))
     );
 }
@@ -76,14 +84,14 @@ class SpaMenuItem extends _ButtonFrame {
 
 class _ButtonFrame extends Material {
   _ButtonFrame(
-    bool isRounded, SpaTouchableWidgetTheme theme, EdgeInsets paddings, Function()? onPressed,
-    Widget child
+    SpaTouchableWidgetTheme theme, EdgeInsets paddings, BorderRadius? borders,
+    Function()? onPressed, Widget child
   )
     :
     super(
       color: theme.getSurfaceColor(onPressed != null),
-      borderRadius: isRounded ? SpaWindow.allBorders : null,
-      clipBehavior: isRounded ? Clip.hardEdge : Clip.none,
+      borderRadius: borders,
+      clipBehavior: borders != null ? Clip.hardEdge : Clip.none,
       child: InkResponse(
         focusColor: theme.hoverColor,
         hoverColor: theme.hoverColor,

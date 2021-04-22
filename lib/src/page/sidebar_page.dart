@@ -34,8 +34,6 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends State<T> {
   static final EdgeInsets _drawerMenuMargins = SpaWindow.parseMargins(0, 0, -1, -1);
   static final BorderRadius _fixedMenuBorders = SpaWindow.parseBorders(-1, 0, -1, 0);
   static final BorderRadius _drawerMenuBorders = SpaWindow.parseBorders(0, -1, 0, -1);
-  static final EdgeInsets _floatingMenuPaddings = SpaWindow.parsePaddings(0, -1, 0, -1);
-  static final EdgeInsets _flatMenuPaddings = SpaWindow.parsePaddings(0, 0, 0, -1);
   static final EdgeInsets _contentMargins = SpaWindow.parseMargins(-1, 0, -1, -1);
   static final BorderRadius _contentWithMenuBorders = SpaWindow.parseBorders(0, -1, 0, -1);
 
@@ -47,7 +45,7 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends State<T> {
 
     Widget menu = SpaPanel(
       width: 170,
-      color: theme.barPanelColor,
+      color: theme.barPanelTheme.color,
       shadow: floatingPanels || ! isLargeScreen ? theme.allShadows : null,
       margins: floatingPanels
         ? isLargeScreen ? _fixedMenuMargins : _drawerMenuMargins
@@ -55,12 +53,12 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends State<T> {
       borders: floatingPanels
         ? isLargeScreen ? _fixedMenuBorders : _drawerMenuBorders
         : null,
-      paddings: floatingPanels ? _floatingMenuPaddings : _flatMenuPaddings,
+      paddings: null,
       child: SpaListView(sidebarBuilder(context))
     );
 
     Widget content = SpaPanel(
-      color: theme.contentPanelColor,
+      color: theme.contentPanelTheme.color,
       shadow: floatingPanels ? theme.allShadows : null,
       margins: floatingPanels ? _contentMargins : null,
       borders: floatingPanels

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
 
-// TODO: Try to imporove shadow performance.
 class SpaPanel extends Container {
   SpaPanel({
     double? width,
@@ -24,6 +23,7 @@ class SpaPanel extends Container {
         borderRadius: borders,
         boxShadow: shadow != null ? [shadow] : null
       ),
+      clipBehavior: borders == null || paddings != null ? Clip.none : Clip.antiAlias,
       child: child
     );
 }

@@ -1,90 +1,199 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spa_scaffold/src/settings.dart';
+import 'package:spa_scaffold/src/ui/button.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
+import 'package:spa_scaffold/src/ui/separator.dart';
+import 'package:spa_scaffold/src/ui/strings.dart';
+import 'package:spa_scaffold/src/ui/text.dart';
 import 'package:spa_scaffold/src/ui/theme.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
-import 'package:spa_scaffold/src/ui/button.dart';
-import 'package:spa_scaffold/src/ui/text.dart';
+
+enum SpaQuestionDialogReturn {yes, no}
 
 class SpaDialogs {
-  static void showMessage(BuildContext context, String title, String message) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      useSafeArea: false,
-      builder: (context) => _OkDialog('')
+  static Future<void> showMessage(BuildContext context, String title, String message) async =>
+    await _showDialog(context, true, _MessageDialog(title, message));
+
+  static Future<SpaQuestionDialogReturn> showQuestion(
+    BuildContext context, String title, String question
+  ) async {
+    SpaQuestionDialogReturn? r = await _showDialog<SpaQuestionDialogReturn>(
+      context, false, _QuestionDialog(title, question)
     );
+    return r ?? SpaQuestionDialogReturn.no;
   }
 
-  static void showOkCancel(BuildContext context) {
-    showDialog(
+  static Future<T?> _showDialog<T>(BuildContext context, bool allowDismiss, Widget widget) async {
+    return await showDialog<T>(
       context: context,
-      barrierDismissible: false,
-      useSafeArea: false,
-      builder: (context) => _OkCancelDialog('')
-    );
-  }
-
-  static void showYesNo(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      useSafeArea: false,
-      builder: (context) => _YesNoDialog('')
+      useSafeArea: true,
+      barrierDismissible: allowDismiss,
+      barrierColor: context.read<SpaTheme>().navigatorBackgroundColor,
+      builder: allowDismiss
+        ? (context) => widget
+        : (context) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: widget
+          );
+        }
     );
   }
 }
 
-class _BaseDialog extends StatelessWidget {
-  static final BorderRadius _barBorders = SpaWindow.parseBorders(0, 0, -1, -1);
+abstract class _BaseDialog extends StatelessWidget {
+  static final EdgeInsets windowPaddings = EdgeInsets.all(36);
+  static final EdgeInsets contentPaddings = EdgeInsets.all(16);
+  static final EdgeInsets titleMargins = SpaWindow.parseMargins(0, 0, 0, -1);
 
-  final String _title;
+  final IconData icon;
+  final String title;
 
-  _BaseDialog(this._title);
+  _BaseDialog(this.icon, this.title);
 
   @override
   Widget build(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
+    final SpaStrings strings = context.read<SpaStrings>();
+    final SpaSettings settings = context.read<SpaSettings>();
 
-    return Dialog(
-      backgroundColor: theme.contentPanelColor,
-      //insetPadding: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(borderRadius: SpaWindow.allBorders),
-      child: Column(
+    final Widget titlePanel = SpaPanel(
+      color: theme.headerPanelTheme.color,
+      shadow: settings.headersHasShadow || settings.floatingPanels ? theme.allShadows : null,
+      margins: settings.floatingPanels ? titleMargins : null,
+      borders: settings.floatingPanels ? SpaWindow.allBorders : null,
+      child: Row(
         children: [
-          //SpaText(_title, theme.)
-          SpaPanel(
-            color: theme.barPanelColor,
-            //margins: SpaWindow.allMargins,
-            borders: _barBorders,
-            child: SpaTextButton(
-              Icons.close, 'Close', theme.textButtonBarTheme,
-              () => Navigator.of(context).pop()
+          Icon(
+            icon, size: 30,
+            color: theme.headerPanelTheme.iconButtonTheme.getIconColor(true)
+          ),
+          SpaSeparator(),
+          Expanded(child: SpaText(title, theme.headerPanelTheme.titleStyle))
+        ]
+      )
+    );
+
+    return Material(
+      type: MaterialType.transparency,
+      child: Padding(
+        padding: windowPaddings,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 420),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (settings.floatingPanels)
+                  titlePanel,
+
+                SpaPanel(
+                  color: theme.contentPanelTheme.color,
+                  shadow: theme.allShadows,
+                  borders: SpaWindow.allBorders,
+                  paddings: null,
+                  child: Column(
+                    children: [
+                      if (! settings.floatingPanels)
+                        titlePanel,
+
+                      Padding(
+                        padding: contentPaddings,
+                        child: contentBuilder(context, theme)
+                      ),
+                      SpaPanel(
+                        color: theme.barPanelTheme.color,
+                        child: barBuilder(context, theme, strings)
+                      )
+                    ]
+                  )
+                )
+              ]
             )
           )
-        ]
+        )
       )
     );
   }
 
   @protected
-  Widget contentBuilder(BuildContext context) {
-    return Center();
+  Widget contentBuilder(BuildContext context, SpaTheme theme);
+
+  @protected
+  Widget barBuilder(BuildContext context, SpaTheme theme, SpaStrings strings);
+
+  Widget _getIconText(BuildContext context, SpaTheme theme, String text) {
+    final Widget textWidget = SpaText(text, theme.contentPanelTheme.titleStyle, true);
+
+    if (context.screenWidth - windowPaddings.horizontal >= 240)
+      return Row(
+        children: [
+          Icon(icon, size: 64, color: theme.contentPanelTheme.iconButtonTheme.getIconColor(true)),
+          SpaSeparator(3),
+          Expanded(child: textWidget)
+        ]
+      );
+
+    return textWidget;
   }
+}
 
-  @protected barBuilder(BuildContext context) {
-    return Center();
+class _MessageDialog extends _BaseDialog {
+  final String message;
+
+  _MessageDialog(String title, this.message) : super(Icons.info, title);
+
+  @override
+  Widget contentBuilder(BuildContext context, SpaTheme theme) =>
+    _getIconText(context, theme, message);
+
+  @override
+  Widget barBuilder(BuildContext context, SpaTheme theme, SpaStrings strings) {
+    return SpaTextButton(
+      Icons.check, strings.ok, context.read<SpaTheme>().barPanelTheme.textButtonTheme,
+      () => Navigator.of(context).pop(),
+      expanded: false,
+      borders: SpaWindow.allBorders
+    );
   }
 }
 
-class _OkDialog extends _BaseDialog {
-  _OkDialog(String title) : super(title);
-}
+class _QuestionDialog extends _BaseDialog {
+  final String question;
 
-class _OkCancelDialog extends _BaseDialog {
-  _OkCancelDialog(String title) : super(title);
-}
+  _QuestionDialog(String title, this.question) : super(Icons.help, title);
 
-class _YesNoDialog extends _BaseDialog {
-  _YesNoDialog(String title) : super(title);
+  @override
+  Widget contentBuilder(BuildContext context, SpaTheme theme) =>
+    _getIconText(context, theme, question);
+
+  @override
+  Widget barBuilder(BuildContext context, SpaTheme theme, SpaStrings strings) {
+    final Widget yesButton = SpaTextButton(
+      Icons.check, strings.yes, theme.barPanelTheme.textButtonTheme,
+      () => Navigator.of(context).pop(SpaQuestionDialogReturn.yes),
+      expanded: false,
+      borders: SpaWindow.allBorders
+    );
+
+    final Widget noButton = SpaTextButton(
+      Icons.close, strings.no, theme.textButtonXBarTheme,
+      () => Navigator.of(context).pop(SpaQuestionDialogReturn.no),
+      expanded: false,
+      borders: SpaWindow.allBorders
+    );
+
+    if (context.screenWidth - _BaseDialog.windowPaddings.horizontal >= 200) {
+      return Row(
+        children: [
+          Expanded(child: yesButton),
+          SpaSeparator(),
+          Expanded(child: noButton)
+        ]
+      );
+    }
+
+    return Column(children: [yesButton, SpaSeparator(), noButton]);
+  }
 }
