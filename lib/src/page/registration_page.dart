@@ -23,12 +23,12 @@ abstract class SpaRegistrationPageState<T extends SpaRegistrationPage>
 
     return [
       SpaTextButton(
-        Icons.save, strings.record, theme.textButtonBarTheme,
+        Icons.save, strings.record, theme.barPanelTheme.textButtonTheme,
         () => performAction(_record)
       ),
       SpaSidebarPageState.defaultSeparator,
       SpaTextButton(
-        Icons.cancel, strings.cancel, theme.textButtonBarTheme,
+        Icons.cancel, strings.cancel, theme.barPanelTheme.textButtonTheme,
         () => performAction(_cancel)
       ),
       SpaSidebarPageState.defaultSeparator,

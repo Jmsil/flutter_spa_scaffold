@@ -113,7 +113,7 @@ class MainMenuWidget extends StatelessWidget {
 
             // Header
             SpaPanel(
-              color: theme.headerPanelColor,
+              color: theme.headerPanelTheme.color,
               shadow: headerShadow,
               paddings: isTallScreen ? _tallHeaderPaddings : _headerPaddings,
               borders: settings.floatingPanels ? _headerBorders : null,
@@ -133,13 +133,13 @@ class MainMenuWidget extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SpaText(strings.loggedUser, theme.headerTitleStyle),
-                            SpaText('jmsilva.inbox', theme.headerSubtitleStyle)
+                            SpaText(strings.loggedUser, theme.headerPanelTheme.titleStyle),
+                            SpaText('jmsilva.inbox', theme.headerPanelTheme.subtitleStyle)
                           ]
                         )
                       ),
                       SpaSeparator(),
-                      SpaIconButton(Icons.logout, theme.iconButtonHeaderTheme, () {})
+                      SpaIconButton(Icons.logout, theme.headerPanelTheme.iconButtonTheme, () {})
                     ]
                   ),
                   SpaSeparator(isTallScreen ? 3 : 1),
@@ -147,21 +147,21 @@ class MainMenuWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SpaIconButton(
-                        Icons.arrow_back, theme.iconButtonHeaderTheme,
+                        Icons.arrow_back, theme.headerPanelTheme.iconButtonTheme,
                         menuModel.isRoot ? null : menuModel.back
                       ),
 
                       if (currentMenu != null)
                         SpaIconButton(
-                          Icons.home, theme.iconButtonHeaderTheme,
+                          Icons.home, theme.headerPanelTheme.iconButtonTheme,
                           menuModel.isRoot ? null : menuModel.reset
                         ),
 
                       if (currentMenu == null)
-                        SpaText(strings.openPages, theme.headerSubtitleStyle),
+                        SpaText(strings.openPages, theme.headerPanelTheme.subtitleStyle),
 
                       SpaIconButton(
-                        Icons.segment, theme.iconButtonHeaderTheme,
+                        Icons.segment, theme.headerPanelTheme.iconButtonTheme,
                         controllerModelHasOpenPages && currentMenu != null
                           ? () => menuModel.setOpenPages() : null
                       )

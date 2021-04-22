@@ -29,24 +29,30 @@ abstract class SpaReportPageState<T extends SpaReportPage> extends SpaSidebarPag
 
     return [
       SpaPanel(
-        color: theme.headerPanelColor,
+        color: theme.headerPanelTheme.color,
         paddings: null,
         child: SpaTabControl(
-          _tab, theme.activePagesBarTheme, _tabControlPaddings,
+          _tab, theme.headerPanelTheme.tabbarTheme, _tabControlPaddings,
           (value) => performAction(() => setState(() => _tab = value)),
           [
-            Icon(Icons.filter_alt, color: theme.iconButtonHeaderTheme.getIconColor(_tab == 0)),
-            Icon(Icons.article, color: theme.iconButtonHeaderTheme.getIconColor(_tab == 1))
+            Icon(
+              Icons.filter_alt,
+              color: theme.headerPanelTheme.tabbarTheme.getIconColor(_tab == 0)
+            ),
+            Icon(
+              Icons.article,
+              color: theme.headerPanelTheme.tabbarTheme.getIconColor(_tab == 1)
+            )
           ]
         )
       ),
       SpaTextButton(
-        Icons.settings, strings.process, theme.textButtonBarTheme,
+        Icons.settings, strings.process, theme.barPanelTheme.textButtonTheme,
         () => performAction(_process)
       ),
       SpaSidebarPageState.defaultSeparator,
       SpaTextButton(
-        Icons.print, strings.print, theme.textButtonBarTheme,
+        Icons.print, strings.print, theme.barPanelTheme.textButtonTheme,
         () => performAction(_print)
       )
     ];
