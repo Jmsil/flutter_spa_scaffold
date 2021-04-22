@@ -5,6 +5,7 @@ import 'package:spa_scaffold/src/page/sidebar_page.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
 import 'package:spa_scaffold/src/ui/strings.dart';
 import 'package:spa_scaffold/src/ui/theme.dart';
+import 'package:spa_scaffold/src/ui/dialogs.dart';
 
 abstract class SpaRegistrationPage extends SpaSidebarPage {
   SpaRegistrationPage(IconData icon, String title) : super(icon, title);
@@ -50,6 +51,7 @@ abstract class SpaRegistrationPageState<T extends SpaRegistrationPage>
 
   void _record() async {
     RegistrationPageActionReturn result = await onRecord();
+    SpaDialogs.showOkCancel(context);
   }
 
   void _cancel() {
