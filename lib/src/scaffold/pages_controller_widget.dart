@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/page.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu_model.dart';
 import 'package:spa_scaffold/src/scaffold/pages_controller_model.dart';
-import 'package:spa_scaffold/src/settings.dart';
+import 'package:spa_scaffold/src/page/settings_model.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
 import 'package:spa_scaffold/src/ui/separator.dart';
@@ -27,7 +27,7 @@ class PagesControllerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
     final SpaStrings strings = context.read<SpaStrings>();
-    final SpaSettings settings = context.watch<SpaSettings>();
+    final SpaSettingsModel settings = context.watch<SpaSettingsModel>();
     final PagesControllerModel controllerModel = context.watch<PagesControllerModel>();
 
     final List<SpaPage> controllerPages = controllerModel.pages;

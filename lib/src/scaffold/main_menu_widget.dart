@@ -7,7 +7,7 @@ import 'package:spa_scaffold/src/page/settings_page.dart' deferred as sets_page;
 import 'package:spa_scaffold/src/scaffold/main_menu_item.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu_model.dart';
 import 'package:spa_scaffold/src/scaffold/pages_controller_model.dart';
-import 'package:spa_scaffold/src/settings.dart';
+import 'package:spa_scaffold/src/page/settings_model.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
 import 'package:spa_scaffold/src/ui/list_view.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
@@ -30,7 +30,7 @@ class MainMenuWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
     final SpaStrings strings = context.read<SpaStrings>();
-    final SpaSettings settings = context.watch<SpaSettings>();
+    final SpaSettingsModel settings = context.watch<SpaSettingsModel>();
     final PagesControllerModel controllerModel = context.read<PagesControllerModel>();
     final MainMenuModel menuModel = context.watch<MainMenuModel>();
     final bool controllerModelHasOpenPages =
@@ -173,7 +173,7 @@ class MainMenuWidget extends StatelessWidget {
     );
   }
 
-  void _insertSpacer(List<Widget> children, SpaMenuItemTheme theme, SpaSettings settings) {
+  void _insertSpacer(List<Widget> children, SpaMenuItemTheme theme, SpaSettingsModel settings) {
     if (settings.headersHasShadow)
       children.add(Container(height: 4, color: theme.getSurfaceColor(true)));
   }

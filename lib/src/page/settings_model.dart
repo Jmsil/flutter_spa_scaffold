@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 
-class SpaSettings with ChangeNotifier {
+class SpaSettingsModel with ChangeNotifier {
   bool _floatingPanels;
   bool _headersHasShadow;
 
-  SpaSettings(this._floatingPanels, this._headersHasShadow);
+  SpaSettingsModel(this._floatingPanels, this._headersHasShadow);
 
 
   bool get floatingPanels => _floatingPanels;

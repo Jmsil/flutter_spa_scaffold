@@ -6,7 +6,7 @@ import 'package:spa_scaffold/src/scaffold/main_menu_model.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu_widget.dart';
 import 'package:spa_scaffold/src/scaffold/pages_controller_model.dart';
 import 'package:spa_scaffold/src/scaffold/pages_controller_widget.dart';
-import 'package:spa_scaffold/src/settings.dart';
+import 'package:spa_scaffold/src/page/settings_model.dart';
 import 'package:spa_scaffold/src/ui/strings.dart';
 import 'package:spa_scaffold/src/ui/theme.dart';
 
@@ -33,7 +33,7 @@ void spaRun<STR extends SpaStrings, THM extends SpaTheme>(
         ChangeNotifierProvider<MainMenuModel>(
           create: (context) => MainMenuModel(mainMenuItemsBuilder(providedStrings))
         ),
-        ChangeNotifierProvider<SpaSettings>(create: (context) => SpaSettings(true, true))
+        ChangeNotifierProvider<SpaSettingsModel>(create: (context) => SpaSettingsModel(true, true))
       ],
       builder: (context, child) {
         final SpaTheme theme = context.read<SpaTheme>();

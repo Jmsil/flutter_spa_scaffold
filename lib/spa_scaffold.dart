@@ -6,7 +6,7 @@ export 'src/page/report_page.dart';
 export 'src/page/sidebar_page.dart';
 export 'src/scaffold/main_menu_item.dart';
 export 'src/scaffold/scaffold.dart';
-export 'src/settings.dart';
+export 'src/page/settings_model.dart';
 export 'src/ui/button.dart';
 export 'src/ui/dialogs.dart';
 export 'src/ui/list_view.dart';

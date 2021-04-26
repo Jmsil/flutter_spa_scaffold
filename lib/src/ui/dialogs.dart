@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spa_scaffold/src/settings.dart';
+import 'package:spa_scaffold/src/page/settings_model.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
 import 'package:spa_scaffold/src/ui/separator.dart';
@@ -56,7 +56,7 @@ abstract class _BaseDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
     final SpaStrings strings = context.read<SpaStrings>();
-    final SpaSettings settings = context.read<SpaSettings>();
+    final SpaSettingsModel settings = context.read<SpaSettingsModel>();
 
     final Widget titlePanel = SpaPanel(
       color: theme.headerPanelTheme.color,

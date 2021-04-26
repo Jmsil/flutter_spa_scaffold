@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/page.dart';
-import 'package:spa_scaffold/src/settings.dart';
+import 'package:spa_scaffold/src/page/settings_model.dart';
 import 'package:spa_scaffold/src/ui/list_view.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
 import 'package:spa_scaffold/src/ui/separator.dart';
@@ -40,7 +40,7 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends State<T> {
   @override
   Widget build(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
-    final bool floatingPanels = context.select<SpaSettings, bool>((sets) => sets.floatingPanels);
+    final bool floatingPanels = context.select<SpaSettingsModel, bool>((sets) => sets.floatingPanels);
     final bool isLargeScreen = context.isLargeScreen;
 
     Widget menu = SpaPanel(
