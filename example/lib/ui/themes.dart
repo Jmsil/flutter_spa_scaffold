@@ -112,4 +112,7 @@ class BlueGreyTheme extends AppTheme {
     textColor: Colors.blueGrey[200],
     copyFrom: menuItemTheme
   );
+
+  String? get mainMenuBackgroundAsset => 'main_menu_bkg_blue_grey.png';
+  String? get sidebarPageBackgroundAsset => 'sidebar_page_bkg_blue_grey.png';
 }

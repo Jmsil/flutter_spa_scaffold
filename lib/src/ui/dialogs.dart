@@ -60,9 +60,9 @@ abstract class _BaseDialog extends StatelessWidget {
 
     final Widget titlePanel = SpaPanel(
       color: theme.headerPanelTheme.color,
-      shadow: settings.headersHasShadow || settings.floatingPanels ? theme.allShadows : null,
-      margins: settings.floatingPanels ? titleMargins : null,
-      borders: settings.floatingPanels ? SpaWindow.allBorders : null,
+      shadow: settings.hasHeaderShadow || settings.isFloatingPanel ? theme.allShadows : null,
+      margins: settings.isFloatingPanel ? titleMargins : null,
+      borders: settings.isFloatingPanel ? SpaWindow.allBorders : null,
       child: Row(
         children: [
           Icon(
@@ -85,7 +85,7 @@ abstract class _BaseDialog extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (settings.floatingPanels)
+                if (settings.isFloatingPanel)
                   titlePanel,
 
                 SpaPanel(
@@ -95,7 +95,7 @@ abstract class _BaseDialog extends StatelessWidget {
                   paddings: null,
                   child: Column(
                     children: [
-                      if (! settings.floatingPanels)
+                      if (! settings.isFloatingPanel)
                         titlePanel,
 
                       Padding(
@@ -130,7 +130,7 @@ abstract class _BaseDialog extends StatelessWidget {
       return Row(
         children: [
           Icon(icon, size: 64, color: theme.contentPanelTheme.iconButtonTheme.getIconColor(true)),
-          SpaSeparator(3),
+          SpaSeparator(2),
           Expanded(child: textWidget)
         ]
       );

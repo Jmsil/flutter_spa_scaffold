@@ -81,7 +81,7 @@ class MainMenuWidget extends StatelessWidget {
       }
     }
 
-    final BoxShadow? headerShadow = settings.headersHasShadow
+    final BoxShadow? headerShadow = settings.hasHeaderShadow
       ? currentMenu != null
         ? theme.mainMenuHeaderShadow
         : controllerModel.isHome
@@ -89,7 +89,6 @@ class MainMenuWidget extends StatelessWidget {
           : theme.pagesMenuHeaderFirstUnselectedShadow
       : null;
 
-    // TODO: Adapt menu's width dynamically.
     return DrawerController(
       key: _drawerKey,
       alignment: DrawerAlignment.start,
@@ -99,9 +98,10 @@ class MainMenuWidget extends StatelessWidget {
         width: 250,
         color: theme.contentPanelTheme.color,
         shadow: theme.allShadows,
-        margins: settings.floatingPanels ? _menuMargins : null,
-        borders: settings.floatingPanels ? SpaWindow.allBorders : null,
+        margins: settings.isFloatingPanel ? _menuMargins : null,
+        borders: settings.isFloatingPanel ? SpaWindow.allBorders : null,
         paddings: null,
+        backgroundAsset: settings.hasPanelBackground ? theme.mainMenuBackgroundAsset : null,
         child: Column(
           verticalDirection: VerticalDirection.up,
           children: [
@@ -174,7 +174,7 @@ class MainMenuWidget extends StatelessWidget {
   }
 
   void _insertSpacer(List<Widget> children, SpaMenuItemTheme theme, SpaSettingsModel settings) {
-    if (settings.headersHasShadow)
+    if (settings.hasHeaderShadow)
       children.add(Container(height: 4, color: theme.getSurfaceColor(true)));
   }
 

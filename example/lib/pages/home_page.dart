@@ -12,9 +12,12 @@ class _HomePageState extends State {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 420, maxHeight: 420),
-        child: Image.asset('assets/images/app_logo.jpg')
+      child: Padding(
+        padding: EdgeInsets.all(90),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 340, maxHeight: 340),
+          child: Image.asset('assets/images/app_logo.png')
+        )
       )
     );
   }

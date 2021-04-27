@@ -40,28 +40,32 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends State<T> {
   @override
   Widget build(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
-    final bool floatingPanels = context.select<SpaSettingsModel, bool>((sets) => sets.floatingPanels);
+    final bool isFloatingPanel =
+      context.select<SpaSettingsModel, bool>((sets) => sets.isFloatingPanel);
+    final bool hasPanelBackground =
+      context.select<SpaSettingsModel, bool>((sets) => sets.hasPanelBackground);
     final bool isLargeScreen = context.isLargeScreen;
 
     Widget menu = SpaPanel(
       width: 170,
       color: theme.barPanelTheme.color,
-      shadow: floatingPanels || ! isLargeScreen ? theme.allShadows : null,
-      margins: floatingPanels
+      shadow: isFloatingPanel || ! isLargeScreen ? theme.allShadows : null,
+      margins: isFloatingPanel
         ? isLargeScreen ? _fixedMenuMargins : _drawerMenuMargins
         : null,
-      borders: floatingPanels
+      borders: isFloatingPanel
         ? isLargeScreen ? _fixedMenuBorders : _drawerMenuBorders
         : null,
       paddings: null,
+      backgroundAsset: hasPanelBackground ? theme.sidebarPageBackgroundAsset : null,
       child: SpaListView(sidebarBuilder(context))
     );
 
     Widget content = SpaPanel(
       color: theme.contentPanelTheme.color,
-      shadow: floatingPanels ? theme.allShadows : null,
-      margins: floatingPanels ? _contentMargins : null,
-      borders: floatingPanels
+      shadow: isFloatingPanel ? theme.allShadows : null,
+      margins: isFloatingPanel ? _contentMargins : null,
+      borders: isFloatingPanel
         ? isLargeScreen ? _contentWithMenuBorders : SpaWindow.allBorders
         : null,
       child: contentBuilder(context)

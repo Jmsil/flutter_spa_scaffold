@@ -10,6 +10,7 @@ class SpaPanel extends Container {
     EdgeInsets? margins,
     EdgeInsets? paddings = SpaWindow.allPaddings,
     BorderRadius? borders,
+    String? backgroundAsset,
     required Widget child
   })
     :
@@ -20,6 +21,13 @@ class SpaPanel extends Container {
       padding: paddings,
       decoration: BoxDecoration(
         color:  color,
+        image: backgroundAsset == null
+          ? null
+          : DecorationImage(
+              fit: BoxFit.fitWidth,
+              alignment: Alignment.bottomCenter,
+              image: AssetImage('assets/images/$backgroundAsset')
+            ),
         borderRadius: borders,
         boxShadow: shadow != null ? [shadow] : null
       ),

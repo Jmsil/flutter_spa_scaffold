@@ -77,6 +77,10 @@ abstract class SpaTheme {
   SpaMenuItemTheme get createMenuItemUnselectedPageTheme;
 
 
+  String? get mainMenuBackgroundAsset => null;
+  String? get sidebarPageBackgroundAsset => null;
+
+
   static BoxShadow _getMainMenuHeaderShadow(Color color ) =>
     BoxShadow(color: color, offset: Offset(0, 3), blurRadius: 6);
 }

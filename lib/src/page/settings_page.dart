@@ -19,12 +19,16 @@ class _SettingsPageState extends State {
       child: Column(
         children: [
           Switch(
-            value: settings.floatingPanels,
-            onChanged: (value) => settings.floatingPanels = value
+            value: settings.isFloatingPanel,
+            onChanged: (value) => settings.isFloatingPanel = value
           ),
           Switch(
-            value: settings.headersHasShadow,
-            onChanged: (value) => settings.headersHasShadow = value
+            value: settings.hasHeaderShadow,
+            onChanged: (value) => settings.hasHeaderShadow = value
+          ),
+          Switch(
+            value: settings.hasPanelBackground,
+            onChanged: (value) => settings.hasPanelBackground = value
           )
         ]
       )
