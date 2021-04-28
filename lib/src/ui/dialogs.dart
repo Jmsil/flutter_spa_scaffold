@@ -59,7 +59,7 @@ abstract class _BaseDialog extends StatelessWidget {
     final SpaSettingsModel settings = context.read<SpaSettingsModel>();
 
     final Widget titlePanel = SpaPanel(
-      color: theme.headerPanelTheme.color,
+      color: theme.headerTheme.color,
       shadow: settings.hasHeaderShadow || settings.isFloatingPanel ? theme.allShadows : null,
       margins: settings.isFloatingPanel ? titleMargins : null,
       borders: settings.isFloatingPanel ? SpaWindow.allBorders : null,
@@ -67,10 +67,10 @@ abstract class _BaseDialog extends StatelessWidget {
         children: [
           Icon(
             icon, size: 30,
-            color: theme.headerPanelTheme.iconButtonTheme.getIconColor(true)
+            color: theme.headerTheme.iconButtonTheme.getIconColor(true)
           ),
           SpaSeparator(),
-          Expanded(child: SpaText(title, theme.headerPanelTheme.titleStyle))
+          Expanded(child: SpaText(title, theme.headerTheme.titleStyle))
         ]
       )
     );
@@ -89,7 +89,7 @@ abstract class _BaseDialog extends StatelessWidget {
                   titlePanel,
 
                 SpaPanel(
-                  color: theme.contentPanelTheme.color,
+                  color: theme.contentTheme.color,
                   shadow: theme.allShadows,
                   borders: SpaWindow.allBorders,
                   paddings: null,
@@ -103,7 +103,7 @@ abstract class _BaseDialog extends StatelessWidget {
                         child: contentBuilder(context, theme)
                       ),
                       SpaPanel(
-                        color: theme.barPanelTheme.color,
+                        color: theme.barTheme.color,
                         child: barBuilder(context, theme, strings)
                       )
                     ]
@@ -124,12 +124,12 @@ abstract class _BaseDialog extends StatelessWidget {
   Widget barBuilder(BuildContext context, SpaTheme theme, SpaStrings strings);
 
   Widget _getIconText(BuildContext context, SpaTheme theme, String text) {
-    final Widget textWidget = SpaText(text, theme.contentPanelTheme.titleStyle, true);
+    final Widget textWidget = SpaText(text, theme.contentTheme.titleStyle, true);
 
     if (context.screenWidth - windowPaddings.horizontal >= 240)
       return Row(
         children: [
-          Icon(icon, size: 64, color: theme.contentPanelTheme.iconButtonTheme.getIconColor(true)),
+          Icon(icon, size: 64, color: theme.contentTheme.iconButtonTheme.getIconColor(true)),
           SpaSeparator(2),
           Expanded(child: textWidget)
         ]
@@ -151,7 +151,7 @@ class _MessageDialog extends _BaseDialog {
   @override
   Widget barBuilder(BuildContext context, SpaTheme theme, SpaStrings strings) {
     return SpaTextButton(
-      Icons.check, strings.ok, context.read<SpaTheme>().barPanelTheme.textButtonTheme,
+      Icons.check, strings.ok, context.read<SpaTheme>().barTheme.textButtonTheme,
       () => Navigator.of(context).pop(),
       expanded: false,
       borders: SpaWindow.allBorders
@@ -171,7 +171,7 @@ class _QuestionDialog extends _BaseDialog {
   @override
   Widget barBuilder(BuildContext context, SpaTheme theme, SpaStrings strings) {
     final Widget yesButton = SpaTextButton(
-      Icons.check, strings.yes, theme.barPanelTheme.textButtonTheme,
+      Icons.check, strings.yes, theme.barTheme.textButtonTheme,
       () => Navigator.of(context).pop(SpaQuestionDialogReturn.yes),
       expanded: false,
       borders: SpaWindow.allBorders

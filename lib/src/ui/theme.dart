@@ -5,24 +5,23 @@ const double _titleFontSize = 14;
 const double _normalFontSize = 13;
 
 abstract class SpaTheme {
-  Color get homeBackgroundColor;
   Color get scrollbarColor;
   Color get navigatorBackgroundColor;
 
   @nonVirtual
-  late final SpaPanelTheme headerPanelTheme = createHeaderPanelTheme;
+  late final SpaRegionTheme headerTheme = createHeaderTheme;
   @protected
-  SpaPanelTheme get createHeaderPanelTheme;
+  SpaRegionTheme get createHeaderTheme;
 
   @nonVirtual
-  late final SpaPanelTheme barPanelTheme = createBarPanelTheme;
+  late final SpaRegionTheme barTheme = createBarTheme;
   @protected
-  SpaPanelTheme get createBarPanelTheme;
+  SpaRegionTheme get createBarTheme;
 
   @nonVirtual
-  late final SpaPanelTheme contentPanelTheme = createContentPanelTheme;
+  late final SpaRegionTheme contentTheme = createContentTheme;
   @protected
-  SpaPanelTheme get createContentPanelTheme;
+  SpaRegionTheme get createContentTheme;
 
 
   @nonVirtual
@@ -44,9 +43,9 @@ abstract class SpaTheme {
 
   @nonVirtual
   late final BoxShadow pagesMenuHeaderFirstUnselectedShadow =
-    _getMainMenuHeaderShadow(createPagesMenuHeaderFirstUnselectedShadow);
+    _getMainMenuHeaderShadow(createPagesMenuHeaderFirstUnselectedShadowColor);
   @protected
-  Color get createPagesMenuHeaderFirstUnselectedShadow;
+  Color get createPagesMenuHeaderFirstUnselectedShadowColor;
 
 
   @nonVirtual
@@ -77,15 +76,15 @@ abstract class SpaTheme {
   SpaMenuItemTheme get createMenuItemUnselectedPageTheme;
 
 
-  String? get mainMenuBackgroundAsset => null;
-  String? get sidebarPageBackgroundAsset => null;
+  String? get mainMenuBackgroundAsset;
+  String? get sidebarPageBackgroundAsset;
 
 
   static BoxShadow _getMainMenuHeaderShadow(Color color ) =>
     BoxShadow(color: color, offset: Offset(0, 3), blurRadius: 6);
 }
 
-class SpaPanelTheme {
+class SpaRegionTheme {
   final Color color;
   final TextStyle titleStyle;
   final TextStyle subtitleStyle;
@@ -94,10 +93,10 @@ class SpaPanelTheme {
   final SpaTabbarTheme tabbarTheme;
   final SpaSwitchTheme switchTheme;
 
-  SpaPanelTheme({
+  SpaRegionTheme({
     Color? color, Color? titleColor, Color? subtitleColor, SpaIconButtonTheme? iconButtonTheme,
     SpaTextButtonTheme? textButtonTheme, SpaTabbarTheme? tabbarTheme, SpaSwitchTheme? switchTheme,
-    SpaPanelTheme? copyFrom
+    SpaRegionTheme? copyFrom
   })
     :
     this.color = color ?? copyFrom?.color ?? Colors.transparent,

@@ -4,18 +4,16 @@ import 'package:spa_scaffold/spa_scaffold.dart';
 abstract class AppTheme extends SpaTheme {}
 
 class BlueGreyTheme extends AppTheme {
-  @override Color get homeBackgroundColor => Colors.blueGrey[100]!;
   @override Color get scrollbarColor => Colors.teal[200]!;
   @override Color get navigatorBackgroundColor => Color(0x47000000);
 
   @override Color get createAllShadowsColor => Colors.black54;
   @override Color get createMainMenuHeaderShadowColor => Colors.black54;
   @override Color get createPagesMenuHeaderFirstSelectedShadowColor => Colors.black54;
-  @override Color get createPagesMenuHeaderFirstUnselectedShadow => Colors.black38;
+  @override Color get createPagesMenuHeaderFirstUnselectedShadowColor => Colors.black38;
 
-  // TODO: Adjust headerPanelTheme's properties.
   @override
-  SpaPanelTheme get createHeaderPanelTheme => SpaPanelTheme(
+  SpaRegionTheme get createHeaderTheme => SpaRegionTheme(
     color: Colors.blueGrey[700],
     titleColor: Colors.blueGrey[100],
     subtitleColor: Colors.blueGrey[200],
@@ -37,9 +35,8 @@ class BlueGreyTheme extends AppTheme {
     )
   );
 
-  // TODO: Adjust barPanelTheme's properties.
   @override
-  SpaPanelTheme get createBarPanelTheme => SpaPanelTheme(
+  SpaRegionTheme get createBarTheme => SpaRegionTheme(
     color: Colors.blueGrey[500],
     textButtonTheme: SpaTextButtonTheme(
       surfaceColor: Colors.blueGrey[700],
@@ -49,18 +46,17 @@ class BlueGreyTheme extends AppTheme {
       textColor: Colors.grey[300],
       disabledContentColor: Colors.blueGrey[200]
     ),
-    copyFrom: headerPanelTheme
+    copyFrom: headerTheme
   );
 
-  // TODO: Adjust contentPanelTheme properties.
   @override
-  SpaPanelTheme get createContentPanelTheme => SpaPanelTheme(
+  SpaRegionTheme get createContentTheme => SpaRegionTheme(
     color: Colors.blueGrey[100],
     titleColor: Colors.black,
     subtitleColor: Colors.grey[900],
     iconButtonTheme: SpaIconButtonTheme(
       iconColor: Colors.teal[300],
-      copyFrom: headerPanelTheme.iconButtonTheme
+      copyFrom: headerTheme.iconButtonTheme
     ),
     switchTheme: SpaSwitchTheme(
       activeColor: Colors.teal[300],
@@ -69,7 +65,7 @@ class BlueGreyTheme extends AppTheme {
       inactiveTrackColor: Colors.blueGrey[200],
       hoverColor: Colors.teal[200]
     ),
-    copyFrom: headerPanelTheme
+    copyFrom: headerTheme
   );
 
 
@@ -78,7 +74,7 @@ class BlueGreyTheme extends AppTheme {
     hoverColor: Colors.red[500]!.withOpacity(0.5),
     splashColor: Colors.deepOrangeAccent,
     iconColor: Colors.red[200],
-    copyFrom: headerPanelTheme.iconButtonTheme
+    copyFrom: headerTheme.iconButtonTheme
   );
 
 
@@ -87,11 +83,10 @@ class BlueGreyTheme extends AppTheme {
     splashColor: Colors.deepOrangeAccent,
     iconColor: Colors.red[200],
     textColor: Colors.red[200],
-    copyFrom: barPanelTheme.textButtonTheme
+    copyFrom: barTheme.textButtonTheme
   );
 
 
-  // TODO: Adjust disabled menuItemTheme colors.
   @override
   SpaMenuItemTheme get createMenuItemTheme => SpaMenuItemTheme(
     surfaceColor: Colors.blueGrey[500],
@@ -101,7 +96,7 @@ class BlueGreyTheme extends AppTheme {
     iconColor: Colors.teal[200],
     textColor: Colors.grey[300],
     trailingIconColor: Colors.blueGrey[200],
-    disabledContentColor: Colors.blueGrey[400]
+    disabledContentColor: Colors.blueGrey[200]
   );
 
   @override
@@ -116,8 +111,7 @@ class BlueGreyTheme extends AppTheme {
     hoverColor: Colors.blueGrey[600],
     splashColor: Colors.blueGrey[300],
     iconColor: Colors.blueGrey[400],
-    textColor: Colors.blueGrey[200],
-    copyFrom: menuItemTheme
+    textColor: Colors.blueGrey[200]
   );
 
   String? get mainMenuBackgroundAsset => 'main_menu_bkg_blue_grey.png';

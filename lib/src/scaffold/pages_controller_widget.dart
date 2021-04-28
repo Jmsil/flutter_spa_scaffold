@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/page.dart';
+import 'package:spa_scaffold/src/page/settings_model.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu_model.dart';
 import 'package:spa_scaffold/src/scaffold/pages_controller_model.dart';
-import 'package:spa_scaffold/src/page/settings_model.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
 import 'package:spa_scaffold/src/ui/separator.dart';
@@ -35,7 +35,7 @@ class PagesControllerWidget extends StatelessWidget {
 
     final List<Widget> appbarChildren = [
       SpaIconButton(
-        Icons.menu, theme.headerPanelTheme.iconButtonTheme,
+        Icons.menu, theme.headerTheme.iconButtonTheme,
         () => _mainMenuKey.currentState?.open()
       )
     ];
@@ -58,7 +58,7 @@ class PagesControllerWidget extends StatelessWidget {
                     ),
                     SpaSeparator(),
                     SpaIconButton(
-                      Icons.segment, theme.headerPanelTheme.iconButtonTheme,
+                      Icons.segment, theme.headerTheme.iconButtonTheme,
                       () => _showOpenPages(context)
                     )
                   ]
@@ -72,7 +72,7 @@ class PagesControllerWidget extends StatelessWidget {
                 if (i == 0) {
                   pagesBarChildren.add(Icon(
                     Icons.home,
-                    color: theme.headerPanelTheme.tabbarTheme.getIconColor(
+                    color: theme.headerTheme.tabbarTheme.getIconColor(
                       controllerModel.isActive(i)
                     )
                   ));
@@ -80,7 +80,7 @@ class PagesControllerWidget extends StatelessWidget {
                 else {
                   SpaText title = SpaText(
                     controllerPages[i].title,
-                    theme.headerPanelTheme.tabbarTheme.getTextStyle(controllerModel.isActive(i))
+                    theme.headerTheme.tabbarTheme.getTextStyle(controllerModel.isActive(i))
                   );
                   maxPageCellWidth = max(
                     maxPageCellWidth,
@@ -92,7 +92,7 @@ class PagesControllerWidget extends StatelessWidget {
 
               double appNameWidth = appName.getTextWidth();
               Widget bar = SpaTabControl(
-                controllerModel.pageIdx, theme.headerPanelTheme.tabbarTheme, _pagesBarPaddings,
+                controllerModel.pageIdx, theme.headerTheme.tabbarTheme, _pagesBarPaddings,
                 controllerModel.setActivePage, pagesBarChildren
               );
 
@@ -124,7 +124,7 @@ class PagesControllerWidget extends StatelessWidget {
     if (! context.isLargeScreen) {
       appbarChildren.add(
         SpaIconButton(
-          Icons.adaptive.more, theme.headerPanelTheme.iconButtonTheme,
+          Icons.adaptive.more, theme.headerTheme.iconButtonTheme,
           controllerModel.currentPage.overflowMenuAction
         )
       );
@@ -147,7 +147,7 @@ class PagesControllerWidget extends StatelessWidget {
           )
         ),
         SpaPanel(
-          color: theme.headerPanelTheme.color,
+          color: theme.headerTheme.color,
           shadow: settings.hasHeaderShadow || settings.isFloatingPanel ? theme.allShadows : null,
           margins: settings.isFloatingPanel ? SpaWindow.allMargins : null,
           borders: settings.isFloatingPanel ? SpaWindow.allBorders : null,
@@ -163,5 +163,5 @@ class PagesControllerWidget extends StatelessWidget {
   }
 
   SpaText _getHeaderTitle(String text, SpaTheme theme) =>
-    SpaText('   $text', theme.headerPanelTheme.titleStyle);
+    SpaText('   $text', theme.headerTheme.titleStyle);
 }

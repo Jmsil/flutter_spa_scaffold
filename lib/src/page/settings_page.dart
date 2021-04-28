@@ -22,15 +22,15 @@ class _SettingsPageState extends State {
       child: Column(
         children: [
           SpaSwitch(
-            settings.isFloatingPanel, theme.contentPanelTheme.switchTheme,
+            settings.isFloatingPanel, theme.contentTheme.switchTheme,
             (value) => settings.isFloatingPanel = value
           ),
           SpaSwitch(
-            settings.hasHeaderShadow, theme.contentPanelTheme.switchTheme,
+            settings.hasHeaderShadow, theme.contentTheme.switchTheme,
             (value) => settings.hasHeaderShadow = value
           ),
           SpaSwitch(
-            settings.hasPanelBackground, theme.contentPanelTheme.switchTheme,
+            settings.hasPanelBackground, theme.contentTheme.switchTheme,
             (value) => settings.hasPanelBackground = value
           )
         ]

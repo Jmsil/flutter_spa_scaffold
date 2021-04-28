@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/page.dart';
+import 'package:spa_scaffold/src/page/settings_model.dart';
 import 'package:spa_scaffold/src/page/settings_page.dart' deferred as sets_page;
 import 'package:spa_scaffold/src/scaffold/main_menu_item.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu_model.dart';
 import 'package:spa_scaffold/src/scaffold/pages_controller_model.dart';
-import 'package:spa_scaffold/src/page/settings_model.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
 import 'package:spa_scaffold/src/ui/list_view.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
@@ -96,7 +96,7 @@ class MainMenuWidget extends StatelessWidget {
       drawerCallback: (isOpened) => _drawerCallback(isOpened, menuModel),
       child: SpaPanel(
         width: 250,
-        color: theme.contentPanelTheme.color,
+        color: theme.contentTheme.color,
         shadow: theme.allShadows,
         margins: settings.isFloatingPanel ? _menuMargins : null,
         borders: settings.isFloatingPanel ? SpaWindow.allBorders : null,
@@ -111,7 +111,7 @@ class MainMenuWidget extends StatelessWidget {
 
             // Header
             SpaPanel(
-              color: theme.headerPanelTheme.color,
+              color: theme.headerTheme.color,
               shadow: headerShadow,
               paddings: isTallScreen ? _tallHeaderPaddings : _headerPaddings,
               child: Column(
@@ -130,13 +130,13 @@ class MainMenuWidget extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SpaText(strings.loggedUser, theme.headerPanelTheme.titleStyle),
-                            SpaText('jmsilva.inbox', theme.headerPanelTheme.subtitleStyle)
+                            SpaText(strings.loggedUser, theme.headerTheme.titleStyle),
+                            SpaText('jmsilva.inbox', theme.headerTheme.subtitleStyle)
                           ]
                         )
                       ),
                       SpaSeparator(),
-                      SpaIconButton(Icons.logout, theme.headerPanelTheme.iconButtonTheme, () {})
+                      SpaIconButton(Icons.logout, theme.headerTheme.iconButtonTheme, () {})
                     ]
                   ),
                   SpaSeparator(isTallScreen ? 3 : 1),
@@ -144,21 +144,21 @@ class MainMenuWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SpaIconButton(
-                        Icons.arrow_back, theme.headerPanelTheme.iconButtonTheme,
+                        Icons.arrow_back, theme.headerTheme.iconButtonTheme,
                         menuModel.isRoot ? null : menuModel.back
                       ),
 
                       if (currentMenu != null)
                         SpaIconButton(
-                          Icons.home, theme.headerPanelTheme.iconButtonTheme,
+                          Icons.home, theme.headerTheme.iconButtonTheme,
                           menuModel.isRoot ? null : menuModel.reset
                         ),
 
                       if (currentMenu == null)
-                        SpaText(strings.openPages, theme.headerPanelTheme.subtitleStyle),
+                        SpaText(strings.openPages, theme.headerTheme.subtitleStyle),
 
                       SpaIconButton(
-                        Icons.segment, theme.headerPanelTheme.iconButtonTheme,
+                        Icons.segment, theme.headerTheme.iconButtonTheme,
                         controllerModelHasOpenPages && currentMenu != null
                           ? () => menuModel.setOpenPages() : null
                       )

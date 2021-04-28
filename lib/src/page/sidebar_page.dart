@@ -48,7 +48,7 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends State<T> {
 
     Widget menu = SpaPanel(
       width: 170,
-      color: theme.barPanelTheme.color,
+      color: theme.barTheme.color,
       shadow: isFloatingPanel || ! isLargeScreen ? theme.allShadows : null,
       margins: isFloatingPanel
         ? isLargeScreen ? _fixedMenuMargins : _drawerMenuMargins
@@ -62,7 +62,7 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends State<T> {
     );
 
     Widget content = SpaPanel(
-      color: theme.contentPanelTheme.color,
+      color: theme.contentTheme.color,
       shadow: isFloatingPanel ? theme.allShadows : null,
       margins: isFloatingPanel ? _contentMargins : null,
       borders: isFloatingPanel

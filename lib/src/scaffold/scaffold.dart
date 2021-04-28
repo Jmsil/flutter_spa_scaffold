@@ -51,7 +51,7 @@ void spaRun<STR extends SpaStrings, THM extends SpaTheme>(
           ),
           home: SafeArea(
             child: Material(
-              color: theme.homeBackgroundColor,
+              color: theme.contentTheme.color,
               child: Stack(
                 children: [
                   PagesControllerWidget(mainMenuKey),
