@@ -62,6 +62,13 @@ class BlueGreyTheme extends AppTheme {
       iconColor: Colors.teal[300],
       copyFrom: headerPanelTheme.iconButtonTheme
     ),
+    switchTheme: SpaSwitchTheme(
+      activeColor: Colors.teal[300],
+      activeTrackColor: Colors.blueGrey[200],
+      inactiveThumbColor: Colors.blueGrey[300],
+      inactiveTrackColor: Colors.blueGrey[200],
+      hoverColor: Colors.teal[200]
+    ),
     copyFrom: headerPanelTheme
   );
 

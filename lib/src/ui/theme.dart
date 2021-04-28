@@ -92,10 +92,12 @@ class SpaPanelTheme {
   final SpaIconButtonTheme iconButtonTheme;
   final SpaTextButtonTheme textButtonTheme;
   final SpaTabbarTheme tabbarTheme;
+  final SpaSwitchTheme switchTheme;
 
   SpaPanelTheme({
     Color? color, Color? titleColor, Color? subtitleColor, SpaIconButtonTheme? iconButtonTheme,
-    SpaTextButtonTheme? textButtonTheme, SpaTabbarTheme? tabbarTheme, SpaPanelTheme? copyFrom
+    SpaTextButtonTheme? textButtonTheme, SpaTabbarTheme? tabbarTheme, SpaSwitchTheme? switchTheme,
+    SpaPanelTheme? copyFrom
   })
     :
     this.color = color ?? copyFrom?.color ?? Colors.transparent,
@@ -109,7 +111,8 @@ class SpaPanelTheme {
     ),
     this.iconButtonTheme = iconButtonTheme ?? copyFrom?.iconButtonTheme ?? SpaIconButtonTheme(),
     this.textButtonTheme = textButtonTheme ?? copyFrom?.textButtonTheme ?? SpaTextButtonTheme(),
-    this.tabbarTheme = tabbarTheme ?? copyFrom?.tabbarTheme ?? SpaTabbarTheme();
+    this.tabbarTheme = tabbarTheme ?? copyFrom?.tabbarTheme ?? SpaTabbarTheme(),
+    this.switchTheme = switchTheme ?? copyFrom?.switchTheme ?? SpaSwitchTheme();
 }
 
 class SpaTouchableWidgetTheme {
@@ -243,4 +246,25 @@ class SpaTabbarTheme {
 
   Color getIconColor(bool selected) => selected ? _selectedIconColor : _unselectedIconColor;
   TextStyle getTextStyle(bool selected) => selected ? _selectedTextStyle : _unselectedTextStyle;
+}
+
+class SpaSwitchTheme {
+  final Color activeColor;
+  final Color activeTrackColor;
+  final Color inactiveThumbColor;
+  final Color inactiveTrackColor;
+  final Color hoverColor;
+
+  SpaSwitchTheme({
+    Color? activeColor, Color? activeTrackColor, Color? inactiveThumbColor,
+    Color? inactiveTrackColor, Color? hoverColor, SpaSwitchTheme? copyFrom
+  })
+    :
+    this.activeColor = activeColor ?? copyFrom?.activeColor ?? Colors.transparent,
+    this.activeTrackColor = activeTrackColor ?? copyFrom?.activeTrackColor ?? Colors.transparent,
+    this.inactiveThumbColor =
+      inactiveThumbColor ?? copyFrom?.inactiveThumbColor ?? Colors.transparent,
+    this.inactiveTrackColor =
+      inactiveTrackColor ?? copyFrom?.inactiveTrackColor ?? Colors.transparent,
+    this.hoverColor = hoverColor?.withOpacity(0.5) ?? copyFrom?.hoverColor ?? Colors.transparent;
 }
