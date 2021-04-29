@@ -149,9 +149,9 @@ class PagesControllerWidget extends StatelessWidget {
         ),
         SpaPanel(
           color: theme.headerTheme.color,
-          shadow: settings.hasHeaderShadow || settings.isFloatingPanel ? theme.allShadows : null,
-          margins: settings.isFloatingPanel ? _appbarMargins : null,
-          borders: settings.isFloatingPanel ? SpaWindow.allBorders : null,
+          shadow: settings.hasHeadersShadow || settings.isFloatingPanels ? theme.allShadows : null,
+          margins: settings.isFloatingPanels ? _appbarMargins : null,
+          borders: settings.isFloatingPanels ? SpaWindow.allBorders : null,
           child: Row(children: appbarChildren)
         )
       ]

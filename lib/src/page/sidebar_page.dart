@@ -35,9 +35,9 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends SpaPageStat
   Widget build(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
     final bool isFloatingPanel =
-      context.select<SpaSettingsModel, bool>((sets) => sets.isFloatingPanel);
+      context.select<SpaSettingsModel, bool>((sets) => sets.isFloatingPanels);
     final bool hasPanelBackground =
-      context.select<SpaSettingsModel, bool>((sets) => sets.hasPanelBackground);
+      context.select<SpaSettingsModel, bool>((sets) => sets.hasPanelsDecorImage);
     final bool isLargeScreen = context.isLargeScreen;
 
     Widget bar = SpaPanel(

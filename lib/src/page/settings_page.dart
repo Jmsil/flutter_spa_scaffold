@@ -29,22 +29,22 @@ class _SettingsPageState extends SpaPageState {
           TableRow(children: [
             SpaText(strings.floatingPanels, theme.contentTheme.subtitleStyle),
             SpaSwitch(
-              settings.isFloatingPanel, theme.contentTheme.switchTheme,
-              (value) => settings.isFloatingPanel = value
+              settings.isFloatingPanels, theme.contentTheme.switchTheme,
+              (value) => settings.isFloatingPanels = value
             )
           ]),
           TableRow(children: [
             SpaText(strings.headersShadow, theme.contentTheme.subtitleStyle),
             SpaSwitch(
-              settings.hasHeaderShadow, theme.contentTheme.switchTheme,
-              (value) => settings.hasHeaderShadow = value
+              settings.hasHeadersShadow, theme.contentTheme.switchTheme,
+              (value) => settings.hasHeadersShadow = value
             )
           ]),
           TableRow(children: [
             SpaText(strings.panelsDecorImage, theme.contentTheme.subtitleStyle),
             SpaSwitch(
-              settings.hasPanelBackground, theme.contentTheme.switchTheme,
-              (value) => settings.hasPanelBackground = value
+              settings.hasPanelsDecorImage, theme.contentTheme.switchTheme,
+              (value) => settings.hasPanelsDecorImage = value
             )
           ])
         ]

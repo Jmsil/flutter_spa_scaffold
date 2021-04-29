@@ -1,38 +1,38 @@
 import 'package:flutter/foundation.dart';
 
 class SpaSettingsModel with ChangeNotifier {
-  bool _isFloatingPanel;
-  bool _hasHeaderShadow;
-  bool _hasPanelBackground;
+  bool _isFloatingPanels;
+  bool _hasHeadersShadow;
+  bool _hasPanelsDecorImage;
 
-  SpaSettingsModel(this._isFloatingPanel, this._hasHeaderShadow, this._hasPanelBackground);
+  SpaSettingsModel(this._isFloatingPanels, this._hasHeadersShadow, this._hasPanelsDecorImage);
 
 
-  bool get isFloatingPanel => _isFloatingPanel;
+  bool get isFloatingPanels => _isFloatingPanels;
 
-  set isFloatingPanel(bool value) {
-    if (value != _isFloatingPanel) {
-      _isFloatingPanel = value;
+  set isFloatingPanels(bool value) {
+    if (value != _isFloatingPanels) {
+      _isFloatingPanels = value;
       notifyListeners();
     }
   }
 
 
-  bool get hasHeaderShadow => _hasHeaderShadow;
+  bool get hasHeadersShadow => _hasHeadersShadow;
 
-  set hasHeaderShadow(bool value) {
-    if (value != _hasHeaderShadow) {
-      _hasHeaderShadow = value;
+  set hasHeadersShadow(bool value) {
+    if (value != _hasHeadersShadow) {
+      _hasHeadersShadow = value;
       notifyListeners();
     }
   }
 
 
-  bool get hasPanelBackground => _hasPanelBackground;
+  bool get hasPanelsDecorImage => _hasPanelsDecorImage;
 
-  set hasPanelBackground(bool value) {
-    if (value != _hasPanelBackground) {
-      _hasPanelBackground = value;
+  set hasPanelsDecorImage(bool value) {
+    if (value != _hasPanelsDecorImage) {
+      _hasPanelsDecorImage = value;
       notifyListeners();
     }
   }

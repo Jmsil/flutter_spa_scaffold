@@ -81,7 +81,7 @@ class MainMenuWidget extends StatelessWidget {
       }
     }
 
-    final BoxShadow? headerShadow = settings.hasHeaderShadow
+    final BoxShadow? headerShadow = settings.hasHeadersShadow
       ? currentMenu != null
         ? theme.mainMenuHeaderShadow
         : controllerModel.isHome
@@ -98,11 +98,11 @@ class MainMenuWidget extends StatelessWidget {
         width: 250,
         color: theme.contentTheme.color,
         shadow: theme.allShadows,
-        margins: settings.isFloatingPanel ? _menuMargins : null,
-        borders: settings.isFloatingPanel ? SpaWindow.allBorders : null,
+        margins: settings.isFloatingPanels ? _menuMargins : null,
+        borders: settings.isFloatingPanels ? SpaWindow.allBorders : null,
         paddings: null,
-        clip: settings.isFloatingPanel || settings.hasHeaderShadow,
-        backgroundAsset: settings.hasPanelBackground ? theme.mainMenuBackgroundAsset : null,
+        clip: settings.isFloatingPanels || settings.hasHeadersShadow,
+        backgroundAsset: settings.hasPanelsDecorImage ? theme.mainMenuBackgroundAsset : null,
         child: Column(
           verticalDirection: VerticalDirection.up,
           children: [
@@ -175,7 +175,7 @@ class MainMenuWidget extends StatelessWidget {
   }
 
   void _insertSpacer(List<Widget> children, SpaMenuItemTheme theme, SpaSettingsModel settings) {
-    if (settings.hasHeaderShadow)
+    if (settings.hasHeadersShadow)
       children.add(Container(height: 4, color: theme.getSurfaceColor(true)));
   }
 
