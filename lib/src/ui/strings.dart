@@ -20,6 +20,9 @@ class SpaStrings {
   late final String ok;
   late final String yes;
   late final String no;
+  late final String floatingPanels;
+  late final String headersShadow;
+  late final String panelsDecorImage;
 
   SpaStrings(
       Locale locale,
@@ -35,7 +38,10 @@ class SpaStrings {
         required Map<String, String> delete,
         required Map<String, String> ok,
         required Map<String, String> yes,
-        required Map<String, String> no
+        required Map<String, String> no,
+        required Map<String, String> floatingPanels,
+        required Map<String, String> headersShadow,
+        required Map<String, String> panelsDecorImage,
       }
     )
     :
@@ -56,6 +62,9 @@ class SpaStrings {
     this.ok = parse(ok);
     this.yes = parse(yes);
     this.no = parse(no);
+    this.floatingPanels = parse(floatingPanels);
+    this.headersShadow = parse(headersShadow);
+    this.panelsDecorImage = parse(panelsDecorImage);
   }
 
   @protected @nonVirtual

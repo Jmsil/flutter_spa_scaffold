@@ -92,6 +92,18 @@ class Strings extends SpaStrings {
       no: {
         'en': 'No',
         'pt': 'Não'
+      },
+      floatingPanels: {
+        'en': 'Floating Panels',
+        'pt': 'Painéis Flutuantes'
+      },
+      headersShadow: {
+        'en': 'Headers Shadow',
+        'pt': 'Cabeçalhos Com Sombra'
+      },
+      panelsDecorImage: {
+        'en': 'Panels Decor Image',
+        'pt': 'Painéis Com Decoração'
       }
     );
 }
