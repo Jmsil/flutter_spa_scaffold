@@ -16,6 +16,7 @@ import 'package:spa_scaffold/src/ui/theme.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
 
 class PagesControllerWidget extends StatelessWidget {
+  static final EdgeInsets _appbarMargins = SpaWindow.parsePaddings(-1, -1, -1, 0);
   static final EdgeInsets _pagesBarPaddings = EdgeInsets.fromLTRB(32, 0, 32, 0);
   static final EdgeInsets _pagesBarItemPaddings = SpaWindow.parsePaddings(-1, 0, -1, 0);
 
@@ -149,7 +150,7 @@ class PagesControllerWidget extends StatelessWidget {
         SpaPanel(
           color: theme.headerTheme.color,
           shadow: settings.hasHeaderShadow || settings.isFloatingPanel ? theme.allShadows : null,
-          margins: settings.isFloatingPanel ? SpaWindow.allMargins : null,
+          margins: settings.isFloatingPanel ? _appbarMargins : null,
           borders: settings.isFloatingPanel ? SpaWindow.allBorders : null,
           child: Row(children: appbarChildren)
         )

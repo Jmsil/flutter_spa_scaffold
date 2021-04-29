@@ -8,12 +8,12 @@ class HomePage extends SpaPage {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State {
+class _HomePageState extends SpaPageState {
   @override
-  Widget build(BuildContext context) {
+  Widget contentBuilder(BuildContext context) {
     return Center(
       child: Padding(
-        padding: EdgeInsets.all(90),
+        padding: EdgeInsets.all(48) - SpaPageState.contentPaddings,
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 340, maxHeight: 340),
           child: Image.asset('assets/images/app_logo.png')

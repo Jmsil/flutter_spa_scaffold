@@ -12,9 +12,9 @@ class SettingsPage extends SpaPage {
   _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State {
+class _SettingsPageState extends SpaPageState {
   @override
-  Widget build(BuildContext context) {
+  Widget contentBuilder(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
     final SpaSettingsModel settings = context.watch<SpaSettingsModel>();
 

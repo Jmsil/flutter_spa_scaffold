@@ -26,18 +26,12 @@ abstract class SpaSidebarPage extends SpaPage {
   void resetOverflowMenuAction() => _menuKey.currentState?.close();
 }
 
-abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends State<T> {
+abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends SpaPageState<T> {
   @protected
   static final SpaSeparator defaultSeparator = SpaSeparator(0.5);
+  static final EdgeInsets _fixedBarMargins = SpaWindow.parseMargins(-1, -1, 0, -1);
 
-  static final EdgeInsets _fixedMenuMargins = SpaWindow.parseMargins(-1, 0, 0, -1);
-  static final EdgeInsets _drawerMenuMargins = SpaWindow.parseMargins(0, 0, -1, -1);
-  static final BorderRadius _fixedMenuBorders = SpaWindow.parseBorders(-1, 0, -1, 0);
-  static final BorderRadius _drawerMenuBorders = SpaWindow.parseBorders(0, -1, 0, -1);
-  static final EdgeInsets _contentMargins = SpaWindow.parseMargins(-1, 0, -1, -1);
-  static final BorderRadius _contentWithMenuBorders = SpaWindow.parseBorders(0, -1, 0, -1);
-
-  @override
+  @override @nonVirtual
   Widget build(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
     final bool isFloatingPanel =
@@ -46,49 +40,37 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends State<T> {
       context.select<SpaSettingsModel, bool>((sets) => sets.hasPanelBackground);
     final bool isLargeScreen = context.isLargeScreen;
 
-    Widget menu = SpaPanel(
+    Widget bar = SpaPanel(
       width: 170,
       color: theme.barTheme.color,
       shadow: isFloatingPanel || ! isLargeScreen ? theme.allShadows : null,
       margins: isFloatingPanel
-        ? isLargeScreen ? _fixedMenuMargins : _drawerMenuMargins
-        : null,
-      borders: isFloatingPanel
-        ? isLargeScreen ? _fixedMenuBorders : _drawerMenuBorders
+        ? isLargeScreen ? _fixedBarMargins : SpaWindow.allMargins
         : null,
       paddings: null,
+      borders: isFloatingPanel ? SpaWindow.allBorders : null,
       backgroundAsset: hasPanelBackground ? theme.sidebarPageBackgroundAsset : null,
       child: SpaListView(sidebarBuilder(context))
     );
 
-    Widget content = SpaPanel(
-      color: theme.contentTheme.color,
-      shadow: isFloatingPanel ? theme.allShadows : null,
-      margins: isFloatingPanel ? _contentMargins : null,
-      borders: isFloatingPanel
-        ? isLargeScreen ? _contentWithMenuBorders : SpaWindow.allBorders
-        : null,
-      child: contentBuilder(context)
-    );
-
     if (isLargeScreen) {
       return Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          menu,
-          Expanded(child: content)
+          bar,
+          Expanded(child: super.build(context))
         ]
       );
     }
 
     return Stack(
       children: [
-        content,
+        super.build(context),
         DrawerController(
           key: widget._menuKey,
           alignment: DrawerAlignment.end,
           scrimColor: Colors.transparent,
-          child: menu
+          child: bar
         )
       ]
     );
@@ -97,11 +79,8 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends State<T> {
   @protected
   List<Widget> sidebarBuilder(BuildContext context);
 
-  @protected
-  Widget contentBuilder(BuildContext context);
-
   @protected @nonVirtual
-  void performAction(Function() action) async {
+  void performAction(Function() action) {
     if (widget._menuKey.currentState == null)
       action();
     else {
