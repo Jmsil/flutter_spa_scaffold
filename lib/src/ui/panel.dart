@@ -10,6 +10,7 @@ class SpaPanel extends Container {
     EdgeInsets? margins,
     EdgeInsets? paddings = SpaWindow.allPaddings,
     BorderRadius? borders,
+    bool clip = false,
     String? backgroundAsset,
     required Widget child
   })
@@ -31,7 +32,7 @@ class SpaPanel extends Container {
         borderRadius: borders,
         boxShadow: shadow != null ? [shadow] : null
       ),
-      clipBehavior: borders == null || paddings != null ? Clip.none : Clip.antiAlias,
+      clipBehavior: clip ? Clip.antiAlias : Clip.none,
       child: child
     );
 }

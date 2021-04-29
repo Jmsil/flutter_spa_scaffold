@@ -93,6 +93,7 @@ abstract class _BaseDialog extends StatelessWidget {
                   shadow: theme.allShadows,
                   borders: SpaWindow.allBorders,
                   paddings: null,
+                  clip: true,
                   child: Column(
                     children: [
                       if (! settings.isFloatingPanel)

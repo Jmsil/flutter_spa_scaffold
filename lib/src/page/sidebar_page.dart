@@ -49,6 +49,7 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends SpaPageStat
         : null,
       paddings: null,
       borders: isFloatingPanel ? SpaWindow.allBorders : null,
+      clip: isFloatingPanel,
       backgroundAsset: hasPanelBackground ? theme.sidebarPageBackgroundAsset : null,
       child: SpaListView(sidebarBuilder(context))
     );

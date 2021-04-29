@@ -101,6 +101,7 @@ class MainMenuWidget extends StatelessWidget {
         margins: settings.isFloatingPanel ? _menuMargins : null,
         borders: settings.isFloatingPanel ? SpaWindow.allBorders : null,
         paddings: null,
+        clip: settings.isFloatingPanel || settings.hasHeaderShadow,
         backgroundAsset: settings.hasPanelBackground ? theme.mainMenuBackgroundAsset : null,
         child: Column(
           verticalDirection: VerticalDirection.up,
