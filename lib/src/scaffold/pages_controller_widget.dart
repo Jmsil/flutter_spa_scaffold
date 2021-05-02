@@ -122,12 +122,10 @@ class PagesControllerWidget extends StatelessWidget {
       appbarChildren.add(SpaSeparator());
     }
 
-    if (! context.isLargeScreen) {
+    Function()? overflowMenuAction = controllerModel.currentPage.getOverflowMenuAction(context);
+    if (overflowMenuAction != null) {
       appbarChildren.add(
-        SpaIconButton(
-          Icons.adaptive.more, theme.headerTheme.iconButtonTheme,
-          controllerModel.currentPage.overflowMenuAction
-        )
+        SpaIconButton(Icons.adaptive.more, theme.headerTheme.iconButtonTheme, overflowMenuAction)
       );
     }
 

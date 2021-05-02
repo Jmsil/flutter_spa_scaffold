@@ -19,8 +19,8 @@ import 'package:spa_scaffold/src/ui/window.dart';
 
 class MainMenuWidget extends StatelessWidget {
   static final EdgeInsets _menuMargins = EdgeInsets.all(18);
-  static final EdgeInsets _headerPaddings = SpaWindow.parsePaddings(-1, 16, -1, -1);
-  static final EdgeInsets _tallHeaderPaddings = SpaWindow.parsePaddings(-1, 36, -1, -1);
+  static final EdgeInsets _compactHeaderPaddings = SpaWindow.parsePaddings(-1, 16, -1, -1);
+  static final EdgeInsets _extendedHeaderPaddings = SpaWindow.parsePaddings(-1, 36, -1, -1);
 
   final GlobalKey<DrawerControllerState> _drawerKey;
 
@@ -35,7 +35,7 @@ class MainMenuWidget extends StatelessWidget {
     final MainMenuModel menuModel = context.watch<MainMenuModel>();
     final bool controllerModelHasOpenPages =
       context.select<PagesControllerModel, bool>((model) => model.hasOpenPages);
-    final bool isTallScreen = context.isTallScreen;
+    final bool isExtendedHeader = context.screenHeight >= 480;
 
     final List<Widget> menuChildren = [];
     final SpaMainMenuGroup? currentMenu = menuModel.currentMenu;
@@ -114,7 +114,7 @@ class MainMenuWidget extends StatelessWidget {
             SpaPanel(
               color: theme.headerTheme.color,
               shadow: headerShadow,
-              paddings: isTallScreen ? _tallHeaderPaddings : _headerPaddings,
+              paddings: isExtendedHeader ? _extendedHeaderPaddings : _compactHeaderPaddings,
               child: Column(
                 children: [
                   Row(
@@ -140,7 +140,7 @@ class MainMenuWidget extends StatelessWidget {
                       SpaIconButton(Icons.logout, theme.headerTheme.iconButtonTheme, () {})
                     ]
                   ),
-                  SpaSeparator(isTallScreen ? 3 : 1),
+                  SpaSeparator(isExtendedHeader ? 3 : 1),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

@@ -9,7 +9,7 @@ abstract class SpaPage extends StatefulWidget {
   @override
   SpaPageState createState();
 
-  Function()? get overflowMenuAction => null;
+  Function()? getOverflowMenuAction(BuildContext context) => null;
 
   void resetOverflowMenuAction() {}
 }

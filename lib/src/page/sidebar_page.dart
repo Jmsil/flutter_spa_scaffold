@@ -20,7 +20,11 @@ abstract class SpaSidebarPage extends SpaPage {
   SpaSidebarPageState createState();
 
   @override @nonVirtual
-  Function()? get overflowMenuAction => () => _menuKey.currentState?.open();
+  Function()? getOverflowMenuAction(BuildContext context) {
+    if (context.screenWidth >= 1024)
+      return null;
+    return () => _menuKey.currentState?.open();
+  }
 
   @override @nonVirtual
   void resetOverflowMenuAction() => _menuKey.currentState?.close();
@@ -31,21 +35,21 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends SpaPageStat
   static final SpaSeparator defaultSeparator = SpaSeparator(0.5);
   static final EdgeInsets _fixedBarMargins = SpaWindow.parseMargins(-1, -1, 0, -1);
 
-  @override @nonVirtual
+  @override
   Widget build(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
     final bool isFloatingPanel =
       context.select<SpaSettingsModel, bool>((sets) => sets.isFloatingPanels);
     final bool hasPanelBackground =
       context.select<SpaSettingsModel, bool>((sets) => sets.hasPanelsDecorImage);
-    final bool isLargeScreen = context.isLargeScreen;
+    final bool isFixedBar = context.screenWidth >= 1024;
 
     Widget bar = SpaPanel(
       width: 170,
       color: theme.barTheme.color,
-      shadow: isFloatingPanel || ! isLargeScreen ? theme.allShadows : null,
+      shadow: isFloatingPanel || ! isFixedBar ? theme.allShadows : null,
       margins: isFloatingPanel
-        ? isLargeScreen ? _fixedBarMargins : SpaWindow.allMargins
+        ? isFixedBar ? _fixedBarMargins : SpaWindow.allMargins
         : null,
       paddings: null,
       borders: isFloatingPanel ? SpaWindow.allBorders : null,
@@ -54,7 +58,7 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends SpaPageStat
       child: SpaListView(sidebarBuilder(context))
     );
 
-    if (isLargeScreen) {
+    if (isFixedBar) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -80,7 +84,7 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends SpaPageStat
   @protected
   List<Widget> sidebarBuilder(BuildContext context);
 
-  @protected @nonVirtual
+  @protected
   void performAction(Function() action) {
     if (widget._menuKey.currentState == null)
       action();

@@ -37,9 +37,7 @@ class SpaWindow {
   }
 }
 
-extension WinSpec on BuildContext {
+extension ScreenSpecs on BuildContext {
   double get screenWidth => MediaQuery.of(this).size.width;
   double get screenHeight => MediaQuery.of(this).size.height;
-  bool get isLargeScreen => MediaQuery.of(this).size.width >= 1024;
-  bool get isTallScreen => MediaQuery.of(this).size.height >= 540;
 }
