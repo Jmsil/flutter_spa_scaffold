@@ -104,6 +104,50 @@ class Strings extends SpaStrings {
       panelsDecorImage: {
         'en': 'Panels Decor Image',
         'pt': 'Painéis Com Decoração'
+      },
+      success: {
+        'en': 'Success',
+        'pt': 'Sucesso'
+      },
+      error: {
+        'en': 'Error',
+        'pt': 'Erro'
+      },
+      invalidData: {
+        'en': 'Invalid Data',
+        'pt': 'Dado Inválido'
+      },
+      recordSuccessMessage: {
+        'en': 'Registry recorded successfully.',
+        'pt': 'Registro gravado com sucesso.'
+      },
+      recordErrorMessage: {
+        'en': 'An error has occurred while recording.',
+        'pt': 'Ocorreu um erro ao gravar o registro.'
+      },
+      editCancelQuestion: {
+        'en': 'Are you sure you want to cancel the editing?',
+        'pt': 'Você tem certeza que deseja cancelar a edição?'
+      },
+      editDeleteQuestion: {
+        'en': 'Are you sure you want to delete the registry?',
+        'pt': 'Você tem certeza que deseja deletar o registro?'
+      },
+      deleteSuccessMessage: {
+        'en': 'Registry deleted successfully.',
+        'pt': 'Registro deletado com sucesso.'
+      },
+      deleteErrorMessage: {
+        'en': 'An error has occurred while deleting.',
+        'pt': 'Ocorreu um erro ao deletar o registro.'
+      },
+      noData: {
+        'en': 'No Data',
+        'pt': 'Sem Dados'
+      },
+      noDataFound: {
+        'en': 'No data found.',
+        'pt': 'Nenhum dados encontrado.'
       }
     );
 }

@@ -35,7 +35,7 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends SpaPageStat
   static final SpaSeparator defaultSeparator = SpaSeparator(0.5);
   static final EdgeInsets _fixedBarMargins = SpaWindow.parseMargins(-1, -1, 0, -1);
 
-  @override
+  @override @nonVirtual
   Widget build(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
     final bool isFloatingPanel =
@@ -84,13 +84,14 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends SpaPageStat
   @protected
   List<Widget> sidebarBuilder(BuildContext context);
 
-  @protected
-  void performAction(Function() action) {
-    if (widget._menuKey.currentState == null)
-      action();
-    else {
+  @protected @nonVirtual
+  Function() getBarAction(Function() action) {
+    if (context.screenWidth >= 1024)
+      return action;
+
+    return () {
       widget.resetOverflowMenuAction();
       Timer(Duration(milliseconds: SpaWindow.drawerClosingWait), action);
-    }
+    };
   }
 }

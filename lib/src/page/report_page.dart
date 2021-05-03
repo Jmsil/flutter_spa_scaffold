@@ -3,11 +3,11 @@ import 'package:meta/meta.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/sidebar_page.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
+import 'package:spa_scaffold/src/ui/dialogs.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
 import 'package:spa_scaffold/src/ui/strings.dart';
 import 'package:spa_scaffold/src/ui/tab_control.dart';
 import 'package:spa_scaffold/src/ui/theme.dart';
-import 'package:spa_scaffold/src/ui/window.dart';
 
 abstract class SpaReportPage extends SpaSidebarPage {
   SpaReportPage(IconData icon, String title) : super(icon, title);
@@ -17,12 +17,12 @@ abstract class SpaReportPage extends SpaSidebarPage {
 }
 
 abstract class SpaReportPageState<T extends SpaReportPage> extends SpaSidebarPageState<T> {
-  static final EdgeInsets _tabControlPaddings = SpaWindow.parsePaddings(-1, 12, -1, -1);
+  static final EdgeInsets _tabControlPaddings = EdgeInsets.all(12);
 
   int _tab = 0;
   bool _hasData = false;
 
-  @override @nonVirtual
+  @override
   List<Widget> sidebarBuilder(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
     final SpaStrings strings = context.read<SpaStrings>();
@@ -33,7 +33,7 @@ abstract class SpaReportPageState<T extends SpaReportPage> extends SpaSidebarPag
         paddings: null,
         child: SpaTabControl(
           _tab, theme.headerTheme.tabbarTheme, _tabControlPaddings,
-          (value) => performAction(() => setState(() => _tab = value)),
+          (value) => getBarAction(() => setState(() => _tab = value))(),
           [
             Icon(
               Icons.filter_alt,
@@ -48,12 +48,12 @@ abstract class SpaReportPageState<T extends SpaReportPage> extends SpaSidebarPag
       ),
       SpaTextButton(
         Icons.settings, strings.process, theme.barTheme.textButtonTheme,
-        () => performAction(_process)
+        getBarAction(_process)
       ),
       SpaSidebarPageState.defaultSeparator,
       SpaTextButton(
         Icons.print, strings.print, theme.barTheme.textButtonTheme,
-        () => performAction(_print)
+        getBarAction(_print)
       )
     ];
   }
@@ -82,18 +82,19 @@ abstract class SpaReportPageState<T extends SpaReportPage> extends SpaSidebarPag
   void onPrint();
 
   void _process() async {
+    final SpaStrings strings = context.read<SpaStrings>();
     _hasData = await onProcess();
     setState(() {
       _tab = 1;
-      if (! _hasData) {
-        // Show no data found message here.
-      }
+      if (! _hasData)
+        SpaDialogs.showMessage(context, strings.noData, strings.noDataFound);
     });
   }
 
   void _print() {
+    final SpaStrings strings = context.read<SpaStrings>();
     if (! _hasData) {
-      // Show no data found message here.
+      SpaDialogs.showMessage(context, strings.noData, strings.noDataFound);
       return;
     }
 

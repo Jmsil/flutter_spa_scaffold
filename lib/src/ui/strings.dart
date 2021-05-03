@@ -23,6 +23,17 @@ class SpaStrings {
   late final String floatingPanels;
   late final String headersShadow;
   late final String panelsDecorImage;
+  late final String success;
+  late final String error;
+  late final String invalidData;
+  late final String recordSuccessMessage;
+  late final String recordErrorMessage;
+  late final String editCancelQuestion;
+  late final String editDeleteQuestion;
+  late final String deleteSuccessMessage;
+  late final String deleteErrorMessage;
+  late final String noData;
+  late final String noDataFound;
 
   SpaStrings(
       Locale locale,
@@ -42,6 +53,17 @@ class SpaStrings {
         required Map<String, String> floatingPanels,
         required Map<String, String> headersShadow,
         required Map<String, String> panelsDecorImage,
+        required Map<String, String> success,
+        required Map<String, String> error,
+        required Map<String, String> invalidData,
+        required Map<String, String> recordSuccessMessage,
+        required Map<String, String> recordErrorMessage,
+        required Map<String, String> editCancelQuestion,
+        required Map<String, String> editDeleteQuestion,
+        required Map<String, String> deleteSuccessMessage,
+        required Map<String, String> deleteErrorMessage,
+        required Map<String, String> noData,
+        required Map<String, String> noDataFound
       }
     )
     :
@@ -65,6 +87,17 @@ class SpaStrings {
     this.floatingPanels = parse(floatingPanels);
     this.headersShadow = parse(headersShadow);
     this.panelsDecorImage = parse(panelsDecorImage);
+    this.success = parse(success);
+    this.error = parse(error);
+    this.invalidData = parse(invalidData);
+    this.recordSuccessMessage = parse(recordSuccessMessage);
+    this.recordErrorMessage = parse(recordErrorMessage);
+    this.editCancelQuestion = parse(editCancelQuestion);
+    this.editDeleteQuestion = parse(editDeleteQuestion);
+    this.deleteSuccessMessage = parse(deleteSuccessMessage);
+    this.deleteErrorMessage = parse(deleteErrorMessage);
+    this.noData = parse(noData);
+    this.noDataFound = parse(noDataFound);
   }
 
   @protected @nonVirtual

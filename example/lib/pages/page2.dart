@@ -10,19 +10,13 @@ class Page2 extends SpaReportPage {
 
 class _Page2State extends SpaReportPageState {
   @override
-  Widget filtersBuilder(BuildContext context) {
-    return Center();
-  }
+  Widget filtersBuilder(BuildContext context) => Center();
 
   @override
-  Widget reportBuilder(BuildContext context) {
-    return Center();
-  }
+  Widget reportBuilder(BuildContext context) => Center();
 
   @override
-  Future<bool> onProcess() async {
-    return false;
-  }
+  Future<bool> onProcess() async => false;
 
   @override
   void onPrint() {}

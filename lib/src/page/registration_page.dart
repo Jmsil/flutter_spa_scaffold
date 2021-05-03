@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/sidebar_page.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
@@ -17,7 +16,7 @@ abstract class SpaRegistrationPage extends SpaSidebarPage {
 abstract class SpaRegistrationPageState<T extends SpaRegistrationPage>
   extends SpaSidebarPageState<T>
 {
-  @override @nonVirtual
+  @override
   List<Widget> sidebarBuilder(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
     final SpaStrings strings = context.read<SpaStrings>();
@@ -25,17 +24,17 @@ abstract class SpaRegistrationPageState<T extends SpaRegistrationPage>
     return [
       SpaTextButton(
         Icons.save, strings.record, theme.barTheme.textButtonTheme,
-        () => performAction(_record)
+        getBarAction(_record)
       ),
       SpaSidebarPageState.defaultSeparator,
       SpaTextButton(
         Icons.cancel, strings.cancel, theme.barTheme.textButtonTheme,
-        () => performAction(_cancel)
+        getBarAction(_cancel)
       ),
       SpaSidebarPageState.defaultSeparator,
       SpaTextButton(
         Icons.delete_forever, strings.delete, theme.textButtonXBarTheme,
-        () => performAction(_delete)
+        getBarAction(_delete)
       )
     ];
   }
@@ -44,42 +43,69 @@ abstract class SpaRegistrationPageState<T extends SpaRegistrationPage>
   Future<RegistrationPageActionReturn> onRecord();
 
   @protected
-  void onCancel();
+  void onClear();
+
+  @protected
+  String? onValidate();
 
   @protected
   Future<RegistrationPageActionReturn> onDelete();
 
+
   void _record() async {
+    final SpaStrings strings = context.read<SpaStrings>();
+
+    String? validationMessage = onValidate();
+    if (validationMessage != null) {
+      SpaDialogs.showMessage(context, strings.invalidData, validationMessage);
+      return;
+    }
+
     RegistrationPageActionReturn result = await onRecord();
     await SpaDialogs.showMessage(
       context,
-      'Why a Hummingbird',
-      'Early on, a hummingbird image was created for the Dart team to use for presentations '
-      'and the web. The hummingbird represents that Dart is a speedy language.'
+      result.isSuccess ? strings.success : strings.error,
+      result.message ??
+        (result.isSuccess ? strings.recordSuccessMessage : strings.recordErrorMessage)
     );
 
-    print('diagResult');
+    if (result.isSuccess)
+      onClear();
   }
 
-  void _cancel() {
-    onCancel();
+  void _cancel() async {
+    final SpaStrings strings = context.read<SpaStrings>();
+    if (
+      await SpaDialogs.showQuestion(context, strings.cancel, strings.editCancelQuestion) ==
+        SpaQuestionDialogReturn.yes
+    )
+      onClear();
   }
 
   void _delete() async {
+    final SpaStrings strings = context.read<SpaStrings>();
+
+    if (
+      await SpaDialogs.showQuestion(context, strings.delete, strings.editDeleteQuestion) ==
+        SpaQuestionDialogReturn.no
+    )
+      return;
+
     RegistrationPageActionReturn result = await onDelete();
-    SpaQuestionDialogReturn diagResult = await SpaDialogs.showQuestion(
+    await SpaDialogs.showMessage(
       context,
-      'Why a Hummingbird',
-      'Early on, a hummingbird image was created for the Dart team to use for presentations '
-      'and the web. The hummingbird represents that Dart is a speedy language.'
+      result.isSuccess ? strings.success : strings.error,
+      result.message ??
+        (result.isSuccess ? strings.deleteSuccessMessage : strings.deleteErrorMessage)
     );
 
-    print(diagResult);
+    if (result.isSuccess)
+      onClear();
   }
 }
 
 class RegistrationPageActionReturn {
   final bool isSuccess;
-  final String message;
-  RegistrationPageActionReturn(this.isSuccess, this.message);
+  final String? message;
+  RegistrationPageActionReturn(this.isSuccess, [this.message]);
 }

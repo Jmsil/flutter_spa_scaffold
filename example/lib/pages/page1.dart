@@ -10,22 +10,19 @@ class Page1 extends SpaRegistrationPage {
 
 class _Page1State extends SpaRegistrationPageState {
   @override
-  Widget contentBuilder(BuildContext context) {
-    return Center();
-  }
+  Widget contentBuilder(BuildContext context) => Center();
 
   @override
-  Future<RegistrationPageActionReturn> onRecord() async {
-    return RegistrationPageActionReturn(true, '');
-  }
+  Future<RegistrationPageActionReturn> onRecord() async =>
+    RegistrationPageActionReturn(true, null);
 
   @override
-  void onCancel() {
-
-  }
+  void onClear() {}
 
   @override
-  Future<RegistrationPageActionReturn> onDelete() async {
-    return RegistrationPageActionReturn(true, '');
-  }
+  String? onValidate() => null;
+
+  @override
+  Future<RegistrationPageActionReturn> onDelete() async =>
+    RegistrationPageActionReturn(true, null);
 }

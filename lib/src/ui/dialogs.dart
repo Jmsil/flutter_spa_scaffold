@@ -25,11 +25,12 @@ class SpaDialogs {
   }
 
   static Future<T?> _showDialog<T>(BuildContext context, bool allowDismiss, Widget widget) async {
+    final SpaTheme theme = context.read<SpaTheme>();
     return await showDialog<T>(
       context: context,
       useSafeArea: true,
       barrierDismissible: allowDismiss,
-      barrierColor: context.read<SpaTheme>().navigatorBackgroundColor,
+      barrierColor: theme.navigatorBackgroundColor,
       builder: allowDismiss
         ? (context) => widget
         : (context) {
@@ -55,7 +56,6 @@ abstract class _BaseDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
-    final SpaStrings strings = context.read<SpaStrings>();
     final SpaSettingsModel settings = context.read<SpaSettingsModel>();
 
     final Widget titlePanel = SpaPanel(
@@ -101,11 +101,11 @@ abstract class _BaseDialog extends StatelessWidget {
 
                       Padding(
                         padding: contentPaddings,
-                        child: contentBuilder(context, theme)
+                        child: contentBuilder(context)
                       ),
                       SpaPanel(
                         color: theme.barTheme.color,
-                        child: barBuilder(context, theme, strings)
+                        child: barBuilder(context)
                       )
                     ]
                   )
@@ -119,12 +119,13 @@ abstract class _BaseDialog extends StatelessWidget {
   }
 
   @protected
-  Widget contentBuilder(BuildContext context, SpaTheme theme);
+  Widget contentBuilder(BuildContext context);
 
   @protected
-  Widget barBuilder(BuildContext context, SpaTheme theme, SpaStrings strings);
+  Widget barBuilder(BuildContext context);
 
-  Widget _getIconText(BuildContext context, SpaTheme theme, String text) {
+  Widget _getIconText(BuildContext context, String text) {
+    final SpaTheme theme = context.read<SpaTheme>();
     final Widget textWidget = SpaText(text, theme.contentTheme.titleStyle, true);
 
     if (context.screenWidth - windowPaddings.horizontal >= 240)
@@ -146,13 +147,14 @@ class _MessageDialog extends _BaseDialog {
   _MessageDialog(String title, this.message) : super(Icons.info, title);
 
   @override
-  Widget contentBuilder(BuildContext context, SpaTheme theme) =>
-    _getIconText(context, theme, message);
+  Widget contentBuilder(BuildContext context) => _getIconText(context, message);
 
   @override
-  Widget barBuilder(BuildContext context, SpaTheme theme, SpaStrings strings) {
+  Widget barBuilder(BuildContext context) {
+    final SpaTheme theme = context.read<SpaTheme>();
+    final SpaStrings strings = context.read<SpaStrings>();
     return SpaTextButton(
-      Icons.check, strings.ok, context.read<SpaTheme>().barTheme.textButtonTheme,
+      Icons.check, strings.ok, theme.barTheme.textButtonTheme,
       () => Navigator.of(context).pop(),
       expanded: false,
       borders: SpaWindow.allBorders
@@ -166,11 +168,13 @@ class _QuestionDialog extends _BaseDialog {
   _QuestionDialog(String title, this.question) : super(Icons.help, title);
 
   @override
-  Widget contentBuilder(BuildContext context, SpaTheme theme) =>
-    _getIconText(context, theme, question);
+  Widget contentBuilder(BuildContext context) => _getIconText(context, question);
 
   @override
-  Widget barBuilder(BuildContext context, SpaTheme theme, SpaStrings strings) {
+  Widget barBuilder(BuildContext context) {
+    final SpaTheme theme = context.read<SpaTheme>();
+    final SpaStrings strings = context.read<SpaStrings>();
+
     final Widget yesButton = SpaTextButton(
       Icons.check, strings.yes, theme.barTheme.textButtonTheme,
       () => Navigator.of(context).pop(SpaQuestionDialogReturn.yes),
