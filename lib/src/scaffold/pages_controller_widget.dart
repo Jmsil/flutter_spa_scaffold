@@ -17,8 +17,8 @@ import 'package:spa_scaffold/src/ui/window.dart';
 
 class PagesControllerWidget extends StatelessWidget {
   static final EdgeInsets _appbarMargins = SpaWindow.parsePaddings(-1, -1, -1, 0);
-  static final EdgeInsets _pagesBarPaddings = EdgeInsets.fromLTRB(32, 0, 32, 0);
-  static final EdgeInsets _pagesBarItemPaddings = SpaWindow.parsePaddings(-1, 0, -1, 0);
+  static final EdgeInsets _pagesTabPaddings = EdgeInsets.fromLTRB(32, 0, 32, 0);
+  static final EdgeInsets _pagesTabItemPaddings = SpaWindow.parsePaddings(-1, 0, -1, 0);
 
   final GlobalKey<DrawerControllerState> _mainMenuKey;
 
@@ -47,15 +47,16 @@ class PagesControllerWidget extends StatelessWidget {
           child: LayoutBuilder(
             builder: (context, constraints) {
               if (
-                  (constraints.maxWidth - _pagesBarPaddings.horizontal)
-                  / controllerModel.pagesCount < 56
+                  (constraints.maxWidth - _pagesTabPaddings.horizontal)
+                  / controllerPages.length < 56
                 )
               {
                 return Row(
                   children: [
-                    Expanded(child: controllerModel.isHome
-                      ? appName
-                      : _getHeaderTitle(controllerModel.currentPage.title, theme)
+                    Expanded(
+                      child: controllerModel.isHome
+                        ? appName
+                        : _getHeaderTitle(controllerModel.currentPage.title, theme)
                     ),
                     SpaSeparator(),
                     SpaIconButton(
@@ -67,38 +68,31 @@ class PagesControllerWidget extends StatelessWidget {
               }
 
               double maxPageCellWidth = 0;
-              final List<Widget> pagesBarChildren = [];
+              final List<Widget> pagesTabChildren = [
+                Icon(
+                  Icons.home,
+                  color: theme.headerTheme.tabbarTheme.getIconColor(controllerModel.isActive(0))
+                )
+              ];
 
-              for (int i = 0; i < controllerPages.length; i++) {
-                if (i == 0) {
-                  pagesBarChildren.add(Icon(
-                    Icons.home,
-                    color: theme.headerTheme.tabbarTheme.getIconColor(
-                      controllerModel.isActive(i)
-                    )
-                  ));
-                }
-                else {
-                  SpaText title = SpaText(
-                    controllerPages[i].title,
-                    theme.headerTheme.tabbarTheme.getTextStyle(controllerModel.isActive(i))
-                  );
-                  maxPageCellWidth = max(
-                    maxPageCellWidth,
-                    title.getTextWidth() + _pagesBarItemPaddings.horizontal
-                  );
-                  pagesBarChildren.add(Padding(padding: _pagesBarItemPaddings, child: title));
-                }
+              for (int i = 1; i < controllerPages.length; i++) {
+                SpaText title = SpaText(
+                  controllerPages[i].title,
+                  theme.headerTheme.tabbarTheme.getTextStyle(controllerModel.isActive(i))
+                );
+                maxPageCellWidth = max(
+                  maxPageCellWidth, title.textWidth + _pagesTabItemPaddings.horizontal
+                );
+                pagesTabChildren.add(Padding(padding: _pagesTabItemPaddings, child: title));
               }
 
-              double appNameWidth = appName.getTextWidth();
               Widget bar = SpaTabControl(
-                controllerModel.pageIdx, theme.headerTheme.tabbarTheme, _pagesBarPaddings,
-                controllerModel.setActivePage, pagesBarChildren
+                controllerModel.pageIdx, theme.headerTheme.tabbarTheme, _pagesTabPaddings,
+                controllerModel.setActivePage, pagesTabChildren
               );
 
               if (
-                (constraints.maxWidth - min(appNameWidth, 120) - _pagesBarPaddings.horizontal)
+                (constraints.maxWidth - min(appName.textWidth, 80) - _pagesTabPaddings.horizontal)
                 / controllerPages.length < maxPageCellWidth
               )
                 return bar;
@@ -107,7 +101,9 @@ class PagesControllerWidget extends StatelessWidget {
                 children: [
                   Expanded(child: appName),
                   ConstrainedBox(
-                    constraints: BoxConstraints(minWidth: constraints.maxWidth - appNameWidth),
+                    constraints: BoxConstraints(
+                      minWidth: constraints.maxWidth - appName.textWidth
+                    ),
                     child: bar
                   )
                 ]

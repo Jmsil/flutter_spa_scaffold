@@ -20,8 +20,6 @@ class PagesControllerModel with ChangeNotifier {
 
   bool get isHome => _pageIdx == 0;
 
-  int get pagesCount => _pages.length;
-
   SpaPage get currentPage => _pages[_pageIdx];
 
   bool get hasOpenPages => _pages.length > 1;

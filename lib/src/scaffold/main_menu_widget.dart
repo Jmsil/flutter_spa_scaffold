@@ -21,6 +21,7 @@ class MainMenuWidget extends StatelessWidget {
   static final EdgeInsets _menuMargins = EdgeInsets.all(18);
   static final EdgeInsets _compactHeaderPaddings = SpaWindow.parsePaddings(-1, 16, -1, -1);
   static final EdgeInsets _extendedHeaderPaddings = SpaWindow.parsePaddings(-1, 36, -1, -1);
+  static final EdgeInsets _openPagesPaddings = SpaWindow.parsePaddings(-1, 0, -1, 0);
 
   final GlobalKey<DrawerControllerState> _drawerKey;
 
@@ -156,7 +157,15 @@ class MainMenuWidget extends StatelessWidget {
                         ),
 
                       if (currentMenu == null)
-                        SpaText(strings.openPages, theme.headerTheme.subtitleStyle),
+                        Expanded(
+                          child: Padding(
+                            padding: _openPagesPaddings,
+                            child: SpaText(
+                              strings.openPages, theme.headerTheme.subtitleStyle,
+                              textAlign: TextAlign.center
+                            )
+                          )
+                        ),
 
                       SpaIconButton(
                         Icons.segment, theme.headerTheme.iconButtonTheme,

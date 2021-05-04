@@ -126,7 +126,10 @@ abstract class _BaseDialog extends StatelessWidget {
 
   Widget _getIconText(BuildContext context, String text) {
     final SpaTheme theme = context.read<SpaTheme>();
-    final Widget textWidget = SpaText(text, theme.contentTheme.titleStyle, true);
+    final Widget textWidget = SpaText(
+      text, theme.contentTheme.titleStyle,
+      allowWrap: true
+    );
 
     if (context.screenWidth - windowPaddings.horizontal >= 240)
       return Row(
