@@ -11,6 +11,7 @@ export 'src/ui/button.dart';
 export 'src/ui/dialogs.dart';
 export 'src/ui/list_view.dart';
 export 'src/ui/panel.dart';
+export 'src/ui/radio.dart';
 export 'src/ui/separator.dart';
 export 'src/ui/strings.dart';
 export 'src/ui/switch.dart';

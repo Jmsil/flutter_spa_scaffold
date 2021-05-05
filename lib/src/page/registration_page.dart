@@ -18,7 +18,7 @@ abstract class SpaRegistrationPageState<T extends SpaRegistrationPage>
 {
   @override
   List<Widget> sidebarBuilder(BuildContext context) {
-    final SpaTheme theme = context.read<SpaTheme>();
+    final SpaTheme theme = context.watch<SpaTheme>();
     final SpaStrings strings = context.read<SpaStrings>();
 
     return [

@@ -92,11 +92,12 @@ class SpaRegionTheme {
   final SpaTextButtonTheme textButtonTheme;
   final SpaTabbarTheme tabbarTheme;
   final SpaSwitchTheme switchTheme;
+  final SpaRadioTheme radioTheme;
 
   SpaRegionTheme({
     Color? color, Color? titleColor, Color? subtitleColor, SpaIconButtonTheme? iconButtonTheme,
     SpaTextButtonTheme? textButtonTheme, SpaTabbarTheme? tabbarTheme, SpaSwitchTheme? switchTheme,
-    SpaRegionTheme? copyFrom
+    SpaRadioTheme? radioTheme, SpaRegionTheme? copyFrom
   })
     :
     this.color = color ?? copyFrom?.color ?? Colors.transparent,
@@ -111,7 +112,8 @@ class SpaRegionTheme {
     this.iconButtonTheme = iconButtonTheme ?? copyFrom?.iconButtonTheme ?? SpaIconButtonTheme(),
     this.textButtonTheme = textButtonTheme ?? copyFrom?.textButtonTheme ?? SpaTextButtonTheme(),
     this.tabbarTheme = tabbarTheme ?? copyFrom?.tabbarTheme ?? SpaTabbarTheme(),
-    this.switchTheme = switchTheme ?? copyFrom?.switchTheme ?? SpaSwitchTheme();
+    this.switchTheme = switchTheme ?? copyFrom?.switchTheme ?? SpaSwitchTheme(),
+    this.radioTheme = radioTheme ?? copyFrom?.radioTheme ?? SpaRadioTheme();
 }
 
 class SpaTouchableWidgetTheme {
@@ -266,4 +268,34 @@ class SpaSwitchTheme {
     this.inactiveTrackColor =
       inactiveTrackColor ?? copyFrom?.inactiveTrackColor ?? Colors.transparent,
     this.hoverColor = hoverColor?.withOpacity(0.5) ?? copyFrom?.hoverColor ?? Colors.transparent;
+}
+
+class SpaRadioTheme {
+  final Color _enabledColor;
+  final Color _enabledHoveredColor;
+  final Color _disabledColor;
+  final Color hoverColor;
+
+  SpaRadioTheme({
+    Color? enabledColor, Color? enabledHoveredColor, Color? disabledColor, Color? hoverColor,
+    SpaRadioTheme? copyFrom
+  })
+    :
+    this._enabledColor = enabledColor ?? copyFrom?._enabledColor ?? Colors.transparent,
+    this._enabledHoveredColor =
+      enabledHoveredColor ?? enabledColor ??
+      copyFrom?._enabledHoveredColor ?? copyFrom?._enabledColor ??
+      Colors.transparent,
+    this._disabledColor = disabledColor ?? copyFrom?._disabledColor ?? Colors.transparent,
+    this.hoverColor = hoverColor?.withOpacity(0.5) ?? copyFrom?.hoverColor ?? Colors.transparent;
+
+  Color getColor(Set<MaterialState> states) {
+    if (states.contains(MaterialState.disabled))
+      return _disabledColor;
+
+    if (states.contains(MaterialState.hovered) || states.contains(MaterialState.focused))
+      return _enabledHoveredColor;
+
+    return _enabledColor;
+  }
 }

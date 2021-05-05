@@ -55,22 +55,44 @@ abstract class _BaseDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SpaTheme theme = context.read<SpaTheme>();
-    final SpaSettingsModel settings = context.read<SpaSettingsModel>();
+    final SpaSettingsModel sets = context.read<SpaSettingsModel>();
 
     final Widget titlePanel = SpaPanel(
-      color: theme.headerTheme.color,
-      shadow: settings.hasHeadersShadow || settings.isFloatingPanels ? theme.allShadows : null,
-      margins: settings.isFloatingPanels ? titleMargins : null,
-      borders: settings.isFloatingPanels ? SpaWindow.allBorders : null,
+      color: sets.theme.headerTheme.color,
+      shadow: sets.hasHeadersShadow || sets.isFloatingPanels ? sets.theme.allShadows : null,
+      margins: sets.isFloatingPanels ? titleMargins : null,
+      borders: sets.isFloatingPanels ? SpaWindow.allBorders : null,
       child: Row(
         children: [
           Icon(
             icon, size: 30,
-            color: theme.headerTheme.iconButtonTheme.getIconColor(true)
+            color: sets.theme.headerTheme.iconButtonTheme.getIconColor(true)
           ),
           SpaSeparator(),
-          Expanded(child: SpaText(title, theme.headerTheme.titleStyle))
+          Expanded(child: SpaText(title, sets.theme.headerTheme.titleStyle))
+        ]
+      )
+    );
+
+    final Widget contentPanel = SpaPanel(
+      color: sets.theme.contentTheme.color,
+      shadow: sets.theme.allShadows,
+      borders: SpaWindow.allBorders,
+      paddings: null,
+      clip: true,
+      child: Column(
+        children: [
+          if (! sets.isFloatingPanels)
+            titlePanel,
+
+          Padding(
+            padding: contentPaddings,
+            child: contentBuilder(context)
+          ),
+          SpaPanel(
+            color: sets.theme.barTheme.color,
+            child: barBuilder(context)
+          )
         ]
       )
     );
@@ -81,37 +103,14 @@ abstract class _BaseDialog extends StatelessWidget {
         padding: windowPaddings,
         child: Center(
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 420),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (settings.isFloatingPanels)
-                  titlePanel,
-
-                SpaPanel(
-                  color: theme.contentTheme.color,
-                  shadow: theme.allShadows,
-                  borders: SpaWindow.allBorders,
-                  paddings: null,
-                  clip: true,
-                  child: Column(
-                    children: [
-                      if (! settings.isFloatingPanels)
-                        titlePanel,
-
-                      Padding(
-                        padding: contentPaddings,
-                        child: contentBuilder(context)
-                      ),
-                      SpaPanel(
-                        color: theme.barTheme.color,
-                        child: barBuilder(context)
-                      )
-                    ]
-                  )
+            constraints: BoxConstraints(maxWidth: 380),
+            child: sets.isFloatingPanels
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [titlePanel, contentPanel]
                 )
-              ]
-            )
+              :
+                contentPanel
           )
         )
       )
@@ -126,8 +125,9 @@ abstract class _BaseDialog extends StatelessWidget {
 
   Widget _getIconText(BuildContext context, String text) {
     final SpaTheme theme = context.read<SpaTheme>();
+
     final Widget textWidget = SpaText(
-      text, theme.contentTheme.titleStyle,
+      text, theme.contentTheme.subtitleStyle,
       allowWrap: true
     );
 
@@ -156,6 +156,7 @@ class _MessageDialog extends _BaseDialog {
   Widget barBuilder(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
     final SpaStrings strings = context.read<SpaStrings>();
+
     return SpaTextButton(
       Icons.check, strings.ok, theme.barTheme.textButtonTheme,
       () => Navigator.of(context).pop(),

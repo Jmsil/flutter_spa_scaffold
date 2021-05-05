@@ -148,6 +148,10 @@ class Strings extends SpaStrings {
       noDataFound: {
         'en': 'No data found.',
         'pt': 'Nenhum dados encontrado.'
+      },
+      theme: {
+        'en': 'Theme',
+        'pt': 'Tema'
       }
     );
 }

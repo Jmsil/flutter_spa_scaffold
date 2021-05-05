@@ -34,6 +34,7 @@ class SpaStrings {
   late final String deleteErrorMessage;
   late final String noData;
   late final String noDataFound;
+  late final String theme;
 
   SpaStrings(
       Locale locale,
@@ -63,7 +64,8 @@ class SpaStrings {
         required Map<String, String> deleteSuccessMessage,
         required Map<String, String> deleteErrorMessage,
         required Map<String, String> noData,
-        required Map<String, String> noDataFound
+        required Map<String, String> noDataFound,
+        required Map<String, String> theme
       }
     )
     :
@@ -98,6 +100,7 @@ class SpaStrings {
     this.deleteErrorMessage = parse(deleteErrorMessage);
     this.noData = parse(noData);
     this.noDataFound = parse(noDataFound);
+    this.theme = parse(theme);
   }
 
   @protected @nonVirtual

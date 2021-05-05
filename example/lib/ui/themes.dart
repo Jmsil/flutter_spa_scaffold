@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:spa_scaffold/spa_scaffold.dart';
 
-abstract class AppTheme extends SpaTheme {}
+abstract class AppTheme extends SpaTheme {
+  String? get appLogoAsset;
+}
 
 class BlueGreyTheme extends AppTheme {
-  @override Color get scrollbarColor => Colors.teal[200]!;
-  @override Color get navigatorBackgroundColor => Color(0x47000000);
+  @override
+  Color get scrollbarColor => Colors.teal[200]!;
+  @override
+  Color get navigatorBackgroundColor => Color(0x47000000);
 
-  @override Color get createAllShadowsColor => Colors.black54;
-  @override Color get createMainMenuHeaderShadowColor => Colors.black54;
-  @override Color get createPagesMenuHeaderFirstSelectedShadowColor => Colors.black54;
-  @override Color get createPagesMenuHeaderFirstUnselectedShadowColor => Colors.black38;
+  @override
+  Color get createAllShadowsColor => Colors.black54;
+  @override
+  Color get createMainMenuHeaderShadowColor => Colors.black54;
+  @override
+  Color get createPagesMenuHeaderFirstSelectedShadowColor => Colors.black54;
+  @override
+  Color get createPagesMenuHeaderFirstUnselectedShadowColor => Colors.black38;
 
   @override
   SpaRegionTheme get createHeaderTheme => SpaRegionTheme(
@@ -52,8 +60,8 @@ class BlueGreyTheme extends AppTheme {
   @override
   SpaRegionTheme get createContentTheme => SpaRegionTheme(
     color: Colors.blueGrey[100],
-    titleColor: Colors.black,
-    subtitleColor: Colors.grey[900],
+    titleColor: Colors.blueGrey[700],
+    subtitleColor: Colors.black,
     iconButtonTheme: SpaIconButtonTheme(
       iconColor: Colors.teal[300],
       copyFrom: headerTheme.iconButtonTheme
@@ -63,6 +71,12 @@ class BlueGreyTheme extends AppTheme {
       activeTrackColor: Colors.blueGrey[200],
       inactiveThumbColor: Colors.blueGrey[300],
       inactiveTrackColor: Colors.blueGrey[200],
+      hoverColor: Colors.teal[200]
+    ),
+    radioTheme: SpaRadioTheme(
+      enabledColor: Colors.teal[300],
+      enabledHoveredColor: Colors.teal[500],
+      disabledColor: Colors.blueGrey[200],
       hoverColor: Colors.teal[200]
     ),
     copyFrom: headerTheme
@@ -114,6 +128,46 @@ class BlueGreyTheme extends AppTheme {
     textColor: Colors.blueGrey[200]
   );
 
+  @override
   String? get mainMenuBackgroundAsset => 'main_menu_bkg_blue_grey.png';
+  @override
   String? get sidebarPageBackgroundAsset => 'sidebar_page_bkg_blue_grey.png';
+
+  @override
+  String? get appLogoAsset => 'app_logo_blue_grey.png';
+}
+
+class BlueGreyDarkTheme extends BlueGreyTheme {
+  @override
+  Color get navigatorBackgroundColor => Color(0x33000000);
+
+  @override
+  SpaRegionTheme get createContentTheme => SpaRegionTheme(
+    color: Colors.blueGrey[800],
+    titleColor: Colors.blueGrey[300],
+    subtitleColor: Colors.blueGrey[100],
+    iconButtonTheme: SpaIconButtonTheme(
+      iconColor: Colors.teal[300],
+      copyFrom: headerTheme.iconButtonTheme
+    ),
+    switchTheme: SpaSwitchTheme(
+      activeColor: Colors.teal[200],
+      activeTrackColor: Colors.blueGrey[300],
+      inactiveThumbColor: Colors.blueGrey[200],
+      inactiveTrackColor: Colors.blueGrey[300],
+      hoverColor: Colors.teal[200]
+    ),
+    radioTheme: SpaRadioTheme(
+      enabledColor: Colors.teal[200],
+      enabledHoveredColor: Colors.blueGrey[100],
+      disabledColor: Colors.blueGrey[300],
+      hoverColor: Colors.teal[200]
+    ),
+    copyFrom: headerTheme
+  );
+
+  @override
+  String? get appLogoAsset => 'app_logo_blue_grey_dark.png';
+  @override
+  String? get mainMenuBackgroundAsset => 'main_menu_bkg_blue_grey_dark.png';
 }

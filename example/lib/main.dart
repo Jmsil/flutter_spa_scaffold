@@ -7,8 +7,13 @@ import 'package:spa_scaffold/spa_scaffold.dart';
 void main() {
   spaRun<Strings, AppTheme>(
     (locale) => Strings(locale),
-    () => BlueGreyTheme(),
+    ['Blue Grey', 'Blue Grey Dark'],
+    (themeIndex) {
+      if (themeIndex == 0)
+        return BlueGreyTheme();
+      return BlueGreyDarkTheme();
+    },
     () => HomePage(),
-    getMainMenuItems
+    getMainMenu
   );
 }

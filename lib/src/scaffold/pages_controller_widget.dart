@@ -26,17 +26,16 @@ class PagesControllerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SpaTheme theme = context.read<SpaTheme>();
     final SpaStrings strings = context.read<SpaStrings>();
-    final SpaSettingsModel settings = context.watch<SpaSettingsModel>();
+    final SpaSettingsModel sets = context.watch<SpaSettingsModel>();
     final PagesControllerModel controllerModel = context.watch<PagesControllerModel>();
 
     final List<SpaPage> controllerPages = controllerModel.pages;
-    final SpaText appName = _getHeaderTitle(strings.appName, theme);
+    final SpaText appName = _getHeaderTitle(strings.appName, sets.theme);
 
     final List<Widget> appbarChildren = [
       SpaIconButton(
-        Icons.menu, theme.headerTheme.iconButtonTheme,
+        Icons.menu, sets.theme.headerTheme.iconButtonTheme,
         () => _mainMenuKey.currentState?.open()
       )
     ];
@@ -56,11 +55,11 @@ class PagesControllerWidget extends StatelessWidget {
                     Expanded(
                       child: controllerModel.isHome
                         ? appName
-                        : _getHeaderTitle(controllerModel.currentPage.title, theme)
+                        : _getHeaderTitle(controllerModel.currentPage.title, sets.theme)
                     ),
                     SpaSeparator(),
                     SpaIconButton(
-                      Icons.segment, theme.headerTheme.iconButtonTheme,
+                      Icons.segment, sets.theme.headerTheme.iconButtonTheme,
                       () => _showOpenPages(context)
                     )
                   ]
@@ -71,14 +70,16 @@ class PagesControllerWidget extends StatelessWidget {
               final List<Widget> pagesTabChildren = [
                 Icon(
                   Icons.home,
-                  color: theme.headerTheme.tabbarTheme.getIconColor(controllerModel.isActive(0))
+                  color: sets.theme.headerTheme.tabbarTheme.getIconColor(
+                    controllerModel.isActive(0)
+                  )
                 )
               ];
 
               for (int i = 1; i < controllerPages.length; i++) {
                 SpaText title = SpaText(
                   controllerPages[i].title,
-                  theme.headerTheme.tabbarTheme.getTextStyle(controllerModel.isActive(i))
+                  sets.theme.headerTheme.tabbarTheme.getTextStyle(controllerModel.isActive(i))
                 );
                 maxPageCellWidth = max(
                   maxPageCellWidth, title.textWidth + _pagesTabItemPaddings.horizontal
@@ -87,7 +88,8 @@ class PagesControllerWidget extends StatelessWidget {
               }
 
               Widget bar = SpaTabControl(
-                controllerModel.pageIdx, theme.headerTheme.tabbarTheme, _pagesTabPaddings,
+                controllerModel.pageIdx,
+                sets.theme.headerTheme.tabbarTheme, _pagesTabPaddings,
                 controllerModel.setActivePage, pagesTabChildren
               );
 
@@ -121,13 +123,15 @@ class PagesControllerWidget extends StatelessWidget {
     Function()? overflowMenuAction = controllerModel.currentPage.getOverflowMenuAction(context);
     if (overflowMenuAction != null) {
       appbarChildren.add(
-        SpaIconButton(Icons.adaptive.more, theme.headerTheme.iconButtonTheme, overflowMenuAction)
+        SpaIconButton(
+          Icons.adaptive.more, sets.theme.headerTheme.iconButtonTheme, overflowMenuAction
+        )
       );
     }
 
     appbarChildren.add(
       SpaIconButton(
-        Icons.close, theme.iconButtonXHeaderTheme,
+        Icons.close, sets.theme.iconButtonXHeaderTheme,
         controllerModel.isHome ? null : controllerModel.closeActivePage
       )
     );
@@ -142,10 +146,11 @@ class PagesControllerWidget extends StatelessWidget {
           )
         ),
         SpaPanel(
-          color: theme.headerTheme.color,
-          shadow: settings.hasHeadersShadow || settings.isFloatingPanels ? theme.allShadows : null,
-          margins: settings.isFloatingPanels ? _appbarMargins : null,
-          borders: settings.isFloatingPanels ? SpaWindow.allBorders : null,
+          color: sets.theme.headerTheme.color,
+          shadow: sets.hasHeadersShadow || sets.isFloatingPanels
+            ? sets.theme.allShadows : null,
+          margins: sets.isFloatingPanels ? _appbarMargins : null,
+          borders: sets.isFloatingPanels ? SpaWindow.allBorders : null,
           child: Row(children: appbarChildren)
         )
       ]

@@ -4,7 +4,7 @@ import 'package:example/ui/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:spa_scaffold/spa_scaffold.dart';
 
-SpaMainMenuGroup getMainMenuItems(Strings strings) {
+SpaMainMenuGroup getMainMenu(Strings strings) {
   final SpaMainMenuGroup root = SpaMainMenuGroup(Icons.menu, '');
 
   root.addGroup(SpaMainMenuGroup(Icons.edit, strings.groupMenuItem1))

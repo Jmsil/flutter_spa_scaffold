@@ -8,7 +8,6 @@ import 'package:spa_scaffold/src/page/settings_model.dart';
 import 'package:spa_scaffold/src/ui/list_view.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
 import 'package:spa_scaffold/src/ui/separator.dart';
-import 'package:spa_scaffold/src/ui/theme.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
 
 abstract class SpaSidebarPage extends SpaPage {
@@ -37,24 +36,20 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends SpaPageStat
 
   @override @nonVirtual
   Widget build(BuildContext context) {
-    final SpaTheme theme = context.read<SpaTheme>();
-    final bool isFloatingPanel =
-      context.select<SpaSettingsModel, bool>((sets) => sets.isFloatingPanels);
-    final bool hasPanelBackground =
-      context.select<SpaSettingsModel, bool>((sets) => sets.hasPanelsDecorImage);
+    final SpaSettingsModel sets = context.watch<SpaSettingsModel>();
     final bool isFixedBar = context.screenWidth >= 1024;
 
     Widget bar = SpaPanel(
       width: 170,
-      color: theme.barTheme.color,
-      shadow: isFloatingPanel || ! isFixedBar ? theme.allShadows : null,
-      margins: isFloatingPanel
+      color: sets.theme.barTheme.color,
+      shadow: sets.isFloatingPanels || ! isFixedBar ? sets.theme.allShadows : null,
+      margins: sets.isFloatingPanels
         ? isFixedBar ? _fixedBarMargins : SpaWindow.allMargins
         : null,
       paddings: null,
-      borders: isFloatingPanel ? SpaWindow.allBorders : null,
-      clip: isFloatingPanel,
-      backgroundAsset: hasPanelBackground ? theme.sidebarPageBackgroundAsset : null,
+      borders: sets.isFloatingPanels ? SpaWindow.allBorders : null,
+      clip: sets.isFloatingPanels,
+      backgroundAsset: sets.hasPanelsDecorImage ? sets.theme.sidebarPageBackgroundAsset : null,
       child: SpaListView(sidebarBuilder(context))
     );
 

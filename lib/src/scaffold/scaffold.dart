@@ -12,33 +12,33 @@ import 'package:spa_scaffold/src/ui/theme.dart';
 
 void spaRun<STR extends SpaStrings, THM extends SpaTheme>(
     STR Function(Locale) stringsBuilder,
-    THM Function() themeBuilder,
+    List<String> themesList,
+    THM Function(int) themeBuilder,
     SpaPage Function() homePageBuilder,
-    SpaMainMenuGroup Function(STR) mainMenuItemsBuilder
+    SpaMainMenuGroup Function(STR) mainMenuBuilder
   )
 {
   final STR providedStrings = stringsBuilder(Locale('en'));
-  final THM providedTheme = themeBuilder();
 
   runApp(
     MultiProvider(
       providers: [
-        Provider<STR>.value(value: providedStrings),
         Provider<SpaStrings>.value(value: providedStrings),
-        Provider<THM>.value(value: providedTheme),
-        Provider<SpaTheme>.value(value: providedTheme),
+        Provider<STR>.value(value: providedStrings),
+        ChangeNotifierProvider<SpaSettingsModel>(
+          create: (context) => SpaSettingsModel(true, true, true, themesList, themeBuilder, 1)
+        ),
+        ProxyProvider<SpaSettingsModel, SpaTheme>(update: (_, sets, __) => sets.theme),
+        ProxyProvider<SpaSettingsModel, THM>(update: (_, sets, __) => sets.theme as THM),
         ChangeNotifierProvider<PagesControllerModel>(
           create: (context) => PagesControllerModel(homePageBuilder())
         ),
         ChangeNotifierProvider<MainMenuModel>(
-          create: (context) => MainMenuModel(mainMenuItemsBuilder(providedStrings))
-        ),
-        ChangeNotifierProvider<SpaSettingsModel>(
-          create: (context) => SpaSettingsModel(true, true, true)
+          create: (context) => MainMenuModel(mainMenuBuilder(providedStrings))
         )
       ],
       builder: (context, child) {
-        final SpaTheme theme = context.read<SpaTheme>();
+        final SpaTheme theme = context.watch<SpaTheme>();
         final SpaStrings strings = context.read<SpaStrings>();
         final GlobalKey<DrawerControllerState> mainMenuKey = GlobalKey();
 
