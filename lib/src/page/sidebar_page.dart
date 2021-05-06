@@ -47,7 +47,7 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends SpaPageStat
       borders: sets.isFloatingPanels ? SpaWin.allBorders : null,
       clip: sets.isFloatingPanels,
       backgroundAsset: sets.hasPanelsDecorImage ? sets.theme.sidebarPageBackgroundAsset : null,
-      child: SpaListView(sidebarBuilder(context))
+      child: SpaListView(sets.theme.menuScrollbarColor, sidebarBuilder(context))
     );
 
     if (isFixedBar) {

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:spa_scaffold/src/ui/scrollbar.dart';
-import 'package:spa_scaffold/src/ui/separator.dart';
 
-class SpaListView extends StatelessWidget {
+class SpaScrollView extends StatelessWidget {
   final Color scrollbarColor;
-  final List<Widget> children;
+  final Widget child;
 
-  SpaListView(this.scrollbarColor, this.children);
+  SpaScrollView(this.scrollbarColor, this.child);
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +13,9 @@ class SpaListView extends StatelessWidget {
     return SpaScrollbar(
       scrollbarColor,
       controller,
-      ListView(
+      SingleChildScrollView(
         controller: controller,
-        children: [
-          ...children,
-          SpaSep.sep32
-        ]
+        child: child
       )
     );
   }

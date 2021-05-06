@@ -106,7 +106,12 @@ class MainMenuWidget extends StatelessWidget {
           children: [
 
             // Menu
-            Expanded(child: SpaListView(menuChildren)),
+            Expanded(
+              child: SpaListView(
+                sets.theme.menuScrollbarColor,
+                menuChildren
+              )
+            ),
 
             // Header
             SpaPanel(

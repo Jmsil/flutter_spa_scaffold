@@ -7,7 +7,7 @@ abstract class AppTheme extends SpaTheme {
 
 class BlueGreyTheme extends AppTheme {
   @override
-  Color get scrollbarColor => Colors.teal[200]!;
+  Color get menuScrollbarColor => Colors.teal[200]!;
   @override
   Color get navigatorBackgroundColor => Color(0x47000000);
 
@@ -62,6 +62,7 @@ class BlueGreyTheme extends AppTheme {
     color: Colors.blueGrey[100],
     titleColor: Colors.blueGrey[700],
     subtitleColor: Colors.black,
+    scrollbarColor: Colors.teal[300],
     iconButtonTheme: SpaIconButtonTheme(
       iconColor: Colors.teal[300],
       copyFrom: headerTheme.iconButtonTheme
@@ -146,6 +147,7 @@ class BlueGreyDarkTheme extends BlueGreyTheme {
     color: Colors.blueGrey[800],
     titleColor: Colors.blueGrey[300],
     subtitleColor: Colors.blueGrey[100],
+    scrollbarColor: Colors.teal[200],
     iconButtonTheme: SpaIconButtonTheme(
       iconColor: Colors.teal[300],
       copyFrom: headerTheme.iconButtonTheme

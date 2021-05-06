@@ -44,11 +44,6 @@ void spaRun<STR extends SpaStrings, THM extends SpaTheme>(
 
         return MaterialApp(
           title: strings.appName,
-          theme: ThemeData(
-            scrollbarTheme: ScrollbarThemeData(
-              thumbColor: MaterialStateProperty.all(theme.scrollbarColor)
-            )
-          ),
           home: SafeArea(
             child: Material(
               color: theme.contentTheme.color,

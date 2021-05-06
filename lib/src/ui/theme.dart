@@ -5,7 +5,7 @@ const double _titleFontSize = 14;
 const double _normalFontSize = 13;
 
 abstract class SpaTheme {
-  Color get scrollbarColor;
+  Color get menuScrollbarColor;
   Color get navigatorBackgroundColor;
 
   @nonVirtual
@@ -88,6 +88,7 @@ class SpaRegionTheme {
   final Color color;
   final TextStyle titleStyle;
   final TextStyle subtitleStyle;
+  final Color scrollbarColor;
   final SpaIconButtonTheme iconButtonTheme;
   final SpaTextButtonTheme textButtonTheme;
   final SpaTabbarTheme tabbarTheme;
@@ -95,9 +96,10 @@ class SpaRegionTheme {
   final SpaRadioTheme radioTheme;
 
   SpaRegionTheme({
-    Color? color, Color? titleColor, Color? subtitleColor, SpaIconButtonTheme? iconButtonTheme,
-    SpaTextButtonTheme? textButtonTheme, SpaTabbarTheme? tabbarTheme, SpaSwitchTheme? switchTheme,
-    SpaRadioTheme? radioTheme, SpaRegionTheme? copyFrom
+    Color? color, Color? titleColor, Color? subtitleColor, Color? scrollbarColor,
+    SpaIconButtonTheme? iconButtonTheme, SpaTextButtonTheme? textButtonTheme,
+    SpaTabbarTheme? tabbarTheme, SpaSwitchTheme? switchTheme, SpaRadioTheme? radioTheme,
+    SpaRegionTheme? copyFrom
   })
     :
     this.color = color ?? copyFrom?.color ?? Colors.transparent,
@@ -109,6 +111,7 @@ class SpaRegionTheme {
       fontSize: _normalFontSize,
       color: subtitleColor ?? copyFrom?.subtitleStyle.color ?? Colors.transparent
     ),
+    this.scrollbarColor = scrollbarColor ?? copyFrom?.scrollbarColor ?? Colors.transparent,
     this.iconButtonTheme = iconButtonTheme ?? copyFrom?.iconButtonTheme ?? SpaIconButtonTheme(),
     this.textButtonTheme = textButtonTheme ?? copyFrom?.textButtonTheme ?? SpaTextButtonTheme(),
     this.tabbarTheme = tabbarTheme ?? copyFrom?.tabbarTheme ?? SpaTabbarTheme(),

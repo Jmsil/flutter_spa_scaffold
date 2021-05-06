@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/settings_model.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
+import 'package:spa_scaffold/src/ui/scroll_view.dart';
 import 'package:spa_scaffold/src/ui/separator.dart';
 import 'package:spa_scaffold/src/ui/strings.dart';
 import 'package:spa_scaffold/src/ui/text.dart';
@@ -44,6 +45,7 @@ class SpaDialogs {
 }
 
 abstract class _BaseDialog extends StatelessWidget {
+  static final double maxWidth = 380;
   static final EdgeInsets titleMargins = SpaWin.parseMargins(0, 0, 0, -1);
 
   final IconData icon;
@@ -56,6 +58,7 @@ abstract class _BaseDialog extends StatelessWidget {
     final SpaSettingsModel sets = context.read<SpaSettingsModel>();
 
     final Widget titlePanel = SpaPanel(
+      width: maxWidth,
       color: sets.theme.headerTheme.color,
       shadow: sets.hasHeadersShadow || sets.isFloatingPanels ? sets.theme.allShadows : null,
       margins: sets.isFloatingPanels ? titleMargins : null,
@@ -73,19 +76,23 @@ abstract class _BaseDialog extends StatelessWidget {
     );
 
     final Widget contentPanel = SpaPanel(
+      width: maxWidth,
       color: sets.theme.contentTheme.color,
       shadow: sets.theme.allShadows,
       borders: SpaWin.allBorders,
       paddings: null,
       clip: true,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           if (! sets.isFloatingPanels)
             titlePanel,
 
-          Padding(
-            padding: SpaWin.edgeInsets16,
-            child: contentBuilder(context)
+          Flexible(
+            child: Padding(
+              padding: SpaWin.edgeInsets16,
+              child: contentBuilder(context)
+            )
           ),
           SpaPanel(
             color: sets.theme.barTheme.color,
@@ -100,16 +107,16 @@ abstract class _BaseDialog extends StatelessWidget {
       child: Padding(
         padding: SpaWin.edgeInsets32,
         child: Center(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 380),
-            child: sets.isFloatingPanels
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [titlePanel, contentPanel]
-                )
-              :
-                contentPanel
-          )
+          child: sets.isFloatingPanels
+            ? Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  titlePanel,
+                  Flexible(child: contentPanel)
+                ]
+              )
+            :
+              contentPanel
         )
       )
     );
@@ -120,16 +127,27 @@ abstract class _BaseDialog extends StatelessWidget {
 
   @protected
   Widget barBuilder(BuildContext context);
+}
 
-  Widget _getIconText(BuildContext context, String text) {
+class _IconText extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  _IconText(this.icon, this.text);
+
+  @override
+  Widget build(BuildContext context) {
     final SpaTheme theme = context.read<SpaTheme>();
 
-    final Widget textWidget = SpaText(
-      text, theme.contentTheme.subtitleStyle,
-      allowWrap: true
+    final Widget textWidget = SpaScrollView(
+      theme.contentTheme.scrollbarColor,
+      SpaText(
+        text, theme.contentTheme.subtitleStyle,
+        allowWrap: true
+      )
     );
 
-    if (context.screenWidth - SpaWin.edgeInsets32.horizontal >= 240)
+    if (context.screenWidth - SpaWin.edgeInsets32.horizontal >= 240) {
       return Row(
         children: [
           Icon(icon, size: 64, color: theme.contentTheme.iconButtonTheme.getIconColor(true)),
@@ -137,6 +155,7 @@ abstract class _BaseDialog extends StatelessWidget {
           Expanded(child: textWidget)
         ]
       );
+    }
 
     return textWidget;
   }
@@ -148,7 +167,7 @@ class _MessageDialog extends _BaseDialog {
   _MessageDialog(String title, this.message) : super(Icons.info, title);
 
   @override
-  Widget contentBuilder(BuildContext context) => _getIconText(context, message);
+  Widget contentBuilder(BuildContext context) => _IconText(icon, message);
 
   @override
   Widget barBuilder(BuildContext context) {
@@ -170,7 +189,7 @@ class _QuestionDialog extends _BaseDialog {
   _QuestionDialog(String title, this.question) : super(Icons.help, title);
 
   @override
-  Widget contentBuilder(BuildContext context) => _getIconText(context, question);
+  Widget contentBuilder(BuildContext context) => _IconText(icon, question);
 
   @override
   Widget barBuilder(BuildContext context) {
@@ -201,6 +220,12 @@ class _QuestionDialog extends _BaseDialog {
       );
     }
 
-    return Column(children: [yesButton, SpaSep.sep8, noButton]);
+    return Column(
+      children: [
+        yesButton,
+        SpaSep.sep8,
+        noButton
+      ]
+    );
   }
 }
