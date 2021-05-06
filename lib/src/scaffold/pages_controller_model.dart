@@ -3,7 +3,7 @@ import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 import 'package:spa_scaffold/src/page/page.dart';
-import 'package:spa_scaffold/src/scaffold/main_menu_item.dart';
+import 'package:spa_scaffold/src/scaffold/main_menu.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
 
 class PagesControllerModel with ChangeNotifier {

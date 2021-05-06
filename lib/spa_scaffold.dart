@@ -5,7 +5,7 @@ export 'src/page/registration_page.dart';
 export 'src/page/report_page.dart';
 export 'src/page/settings_model.dart';
 export 'src/page/sidebar_page.dart';
-export 'src/scaffold/main_menu_item.dart';
+export 'src/scaffold/main_menu.dart';
 export 'src/scaffold/scaffold.dart';
 export 'src/ui/button.dart';
 export 'src/ui/dialogs.dart';

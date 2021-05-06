@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/page.dart';
 import 'package:spa_scaffold/src/page/settings_model.dart';
 import 'package:spa_scaffold/src/page/settings_page.dart' deferred as sets_page;
-import 'package:spa_scaffold/src/scaffold/main_menu_item.dart';
+import 'package:spa_scaffold/src/scaffold/main_menu.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu_model.dart';
 import 'package:spa_scaffold/src/scaffold/pages_controller_model.dart';
 import 'package:spa_scaffold/src/ui/button.dart';

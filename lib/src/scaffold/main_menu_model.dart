@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:spa_scaffold/src/scaffold/main_menu_item.dart';
+import 'package:spa_scaffold/src/scaffold/main_menu.dart';
 
 class MainMenuModel with ChangeNotifier {
   final SpaMainMenuGroup _root;
