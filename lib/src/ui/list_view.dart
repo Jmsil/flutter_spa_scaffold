@@ -19,7 +19,7 @@ class SpaListView extends StatelessWidget {
         controller: controller,
         children: [
           ...children,
-          SpaSeparator(4)
+          SpaSep.sep32
         ]
       )
     );

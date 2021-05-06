@@ -16,7 +16,7 @@ class _HomePageState extends SpaPageState {
     final AppTheme theme = context.watch<AppTheme>();
     return Center(
       child: Padding(
-        padding: EdgeInsets.all(48) - SpaPageState.contentPaddings,
+        padding: SpaWin.edgeInsets32,
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 340, maxHeight: 340),
           child: Image.asset('assets/images/${theme.appLogoAsset}')

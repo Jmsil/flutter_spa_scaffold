@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SpaWindow {
+class SpaWin {
   static const int drawerClosingWait = 250;
 
   static const double _margin = 8;
@@ -9,7 +9,13 @@ class SpaWindow {
 
   static const EdgeInsets allMargins = EdgeInsets.all(_margin);
   static const EdgeInsets allPaddings = EdgeInsets.all(_padding);
+  static const EdgeInsets horPaddings = EdgeInsets.fromLTRB(_padding, 0, _padding, 0);
   static const BorderRadius allBorders = BorderRadius.all(_radius);
+
+  static const EdgeInsets edgeInsets12 = EdgeInsets.all(12);
+  static const EdgeInsets edgeInsets16 = EdgeInsets.all(16);
+  static const EdgeInsets edgeInsets18 = EdgeInsets.all(18);
+  static const EdgeInsets edgeInsets32 = EdgeInsets.all(32);
 
   static EdgeInsets parseMargins(double l, double t, double r, double b) =>
     _parse(l, t, r, b, _margin);

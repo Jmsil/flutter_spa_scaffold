@@ -30,12 +30,12 @@ class _SettingsPageState extends SpaPageState {
         children: [
           TableRow(
             children: [
-              SpaText(strings.theme, sets.theme.contentTheme.titleStyle), eCell
+              SpaText(strings.theme, sets.theme.contentTheme.titleStyle), SpaSep.sep0
             ]
           ),
           TableRow(
             children: [
-              SpaSeparator(), eCell
+              SpaSep.sep8, SpaSep.sep0
             ]
           ),
 
@@ -52,7 +52,7 @@ class _SettingsPageState extends SpaPageState {
 
           TableRow(
             children: [
-              SpaSeparator(3), eCell
+              SpaSep.sep24, SpaSep.sep0
             ]
           ),
 

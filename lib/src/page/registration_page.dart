@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/sidebar_page.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
 import 'package:spa_scaffold/src/ui/dialogs.dart';
+import 'package:spa_scaffold/src/ui/separator.dart';
 import 'package:spa_scaffold/src/ui/strings.dart';
 import 'package:spa_scaffold/src/ui/theme.dart';
 
@@ -26,12 +27,12 @@ abstract class SpaRegistrationPageState<T extends SpaRegistrationPage>
         Icons.save, strings.record, theme.barTheme.textButtonTheme,
         getBarAction(_record)
       ),
-      SpaSidebarPageState.defaultSeparator,
+      SpaSep.sep4,
       SpaTextButton(
         Icons.cancel, strings.cancel, theme.barTheme.textButtonTheme,
         getBarAction(_cancel)
       ),
-      SpaSidebarPageState.defaultSeparator,
+      SpaSep.sep4,
       SpaTextButton(
         Icons.delete_forever, strings.delete, theme.textButtonXBarTheme,
         getBarAction(_delete)

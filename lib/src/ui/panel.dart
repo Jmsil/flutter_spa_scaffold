@@ -8,7 +8,7 @@ class SpaPanel extends Container {
     required Color color,
     BoxShadow? shadow,
     EdgeInsets? margins,
-    EdgeInsets? paddings = SpaWindow.allPaddings,
+    EdgeInsets? paddings = SpaWin.allPaddings,
     BorderRadius? borders,
     bool clip = false,
     String? backgroundAsset,

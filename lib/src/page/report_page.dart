@@ -5,9 +5,11 @@ import 'package:spa_scaffold/src/page/sidebar_page.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
 import 'package:spa_scaffold/src/ui/dialogs.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
+import 'package:spa_scaffold/src/ui/separator.dart';
 import 'package:spa_scaffold/src/ui/strings.dart';
 import 'package:spa_scaffold/src/ui/tab_control.dart';
 import 'package:spa_scaffold/src/ui/theme.dart';
+import 'package:spa_scaffold/src/ui/window.dart';
 
 abstract class SpaReportPage extends SpaSidebarPage {
   SpaReportPage(IconData icon, String title) : super(icon, title);
@@ -17,8 +19,6 @@ abstract class SpaReportPage extends SpaSidebarPage {
 }
 
 abstract class SpaReportPageState<T extends SpaReportPage> extends SpaSidebarPageState<T> {
-  static final EdgeInsets _tabControlPaddings = EdgeInsets.all(12);
-
   int _tab = 0;
   bool _hasData = false;
 
@@ -32,7 +32,7 @@ abstract class SpaReportPageState<T extends SpaReportPage> extends SpaSidebarPag
         color: theme.headerTheme.color,
         paddings: null,
         child: SpaTabControl(
-          _tab, theme.headerTheme.tabbarTheme, _tabControlPaddings,
+          _tab, theme.headerTheme.tabbarTheme, SpaWin.edgeInsets12,
           (value) => getBarAction(() => setState(() => _tab = value))(),
           [
             Icon(
@@ -50,7 +50,7 @@ abstract class SpaReportPageState<T extends SpaReportPage> extends SpaSidebarPag
         Icons.settings, strings.process, theme.barTheme.textButtonTheme,
         getBarAction(_process)
       ),
-      SpaSidebarPageState.defaultSeparator,
+      SpaSep.sep4,
       SpaTextButton(
         Icons.print, strings.print, theme.barTheme.textButtonTheme,
         getBarAction(_print)

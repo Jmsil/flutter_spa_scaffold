@@ -5,15 +5,14 @@ import 'package:spa_scaffold/src/ui/text.dart';
 import 'package:spa_scaffold/src/ui/theme.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
 
-const double _separatorScale = 1.5;
-final EdgeInsets _iconTextPaddings = SpaWindow.parsePaddings(-1, -1, 12, -1);
-final EdgeInsets _menuItemTrailingPaddings = SpaWindow.parsePaddings(-1, -1, 4, -1);
+final EdgeInsets _iconTextPaddings = SpaWin.parsePaddings(-1, -1, 12, -1);
+final EdgeInsets _menuItemTrailingPaddings = SpaWin.parsePaddings(-1, -1, 4, -1);
 
 class SpaIconButton extends _ButtonFrame {
   SpaIconButton(IconData icon, SpaIconButtonTheme theme, Function()? onPressed)
     :
     super(
-      theme, SpaWindow.allPaddings, SpaWindow.allBorders, onPressed,
+      theme, SpaWin.allPaddings, SpaWin.allBorders, onPressed,
       Icon(icon, color: theme.getIconColor(onPressed != null))
     );
 }
@@ -31,7 +30,7 @@ class SpaTextButton extends _ButtonFrame {
         mainAxisAlignment: expanded ? MainAxisAlignment.start : MainAxisAlignment.center,
         children: [
           Icon(icon, color: theme.getIconColor(onPressed != null)),
-          SpaSeparator(_separatorScale),
+          SpaSep.sep12,
 
           if (expanded)
             Expanded(
@@ -59,14 +58,14 @@ class SpaMenuItem extends _ButtonFrame {
       Row(
         children: [
           Icon(leadingIcon, color: theme.getIconColor(onPressed != null)),
-          SpaSeparator(_separatorScale),
+          SpaSep.sep12,
           Expanded(
             child: SpaText(text, theme.getTextStyle(onPressed != null))
           ),
 
           if (trailingIcon != null)
             ...[
-              SpaSeparator(_separatorScale),
+              SpaSep.sep12,
               Icon(trailingIcon, color: theme.getTrailingIconColor(onPressed != null))
             ],
         ]
@@ -76,7 +75,7 @@ class SpaMenuItem extends _ButtonFrame {
   SpaMenuItem.icon(IconData icon, SpaMenuItemTheme theme, Function()? onPressed)
     :
     super(
-      theme, SpaWindow.allPaddings, null, onPressed,
+      theme, SpaWin.allPaddings, null, onPressed,
       Icon(icon, color: theme.getIconColor(onPressed != null))
     );
 }

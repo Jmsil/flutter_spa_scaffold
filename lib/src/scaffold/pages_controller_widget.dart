@@ -16,9 +16,8 @@ import 'package:spa_scaffold/src/ui/theme.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
 
 class PagesControllerWidget extends StatelessWidget {
-  static final EdgeInsets _appbarMargins = SpaWindow.parsePaddings(-1, -1, -1, 0);
+  static final EdgeInsets _appbarMargins = SpaWin.parsePaddings(-1, -1, -1, 0);
   static final EdgeInsets _pagesTabPaddings = EdgeInsets.fromLTRB(32, 0, 32, 0);
-  static final EdgeInsets _pagesTabItemPaddings = SpaWindow.parsePaddings(-1, 0, -1, 0);
 
   final GlobalKey<DrawerControllerState> _mainMenuKey;
 
@@ -57,7 +56,7 @@ class PagesControllerWidget extends StatelessWidget {
                         ? appName
                         : _getHeaderTitle(controllerModel.currentPage.title, sets.theme)
                     ),
-                    SpaSeparator(),
+                    SpaSep.sep8,
                     SpaIconButton(
                       Icons.segment, sets.theme.headerTheme.iconButtonTheme,
                       () => _showOpenPages(context)
@@ -82,9 +81,9 @@ class PagesControllerWidget extends StatelessWidget {
                   sets.theme.headerTheme.tabbarTheme.getTextStyle(controllerModel.isActive(i))
                 );
                 maxPageCellWidth = max(
-                  maxPageCellWidth, title.textWidth + _pagesTabItemPaddings.horizontal
+                  maxPageCellWidth, title.textWidth + SpaWin.horPaddings.horizontal
                 );
-                pagesTabChildren.add(Padding(padding: _pagesTabItemPaddings, child: title));
+                pagesTabChildren.add(Padding(padding: SpaWin.horPaddings, child: title));
               }
 
               Widget bar = SpaTabControl(
@@ -117,7 +116,7 @@ class PagesControllerWidget extends StatelessWidget {
     }
     else {
       appbarChildren.add(Expanded(child: appName));
-      appbarChildren.add(SpaSeparator());
+      appbarChildren.add(SpaSep.sep8);
     }
 
     Function()? overflowMenuAction = controllerModel.currentPage.getOverflowMenuAction(context);
@@ -150,7 +149,7 @@ class PagesControllerWidget extends StatelessWidget {
           shadow: sets.hasHeadersShadow || sets.isFloatingPanels
             ? sets.theme.allShadows : null,
           margins: sets.isFloatingPanels ? _appbarMargins : null,
-          borders: sets.isFloatingPanels ? SpaWindow.allBorders : null,
+          borders: sets.isFloatingPanels ? SpaWin.allBorders : null,
           child: Row(children: appbarChildren)
         )
       ]

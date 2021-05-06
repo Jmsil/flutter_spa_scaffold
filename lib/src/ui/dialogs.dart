@@ -44,9 +44,7 @@ class SpaDialogs {
 }
 
 abstract class _BaseDialog extends StatelessWidget {
-  static final EdgeInsets windowPaddings = EdgeInsets.all(36);
-  static final EdgeInsets contentPaddings = EdgeInsets.all(16);
-  static final EdgeInsets titleMargins = SpaWindow.parseMargins(0, 0, 0, -1);
+  static final EdgeInsets titleMargins = SpaWin.parseMargins(0, 0, 0, -1);
 
   final IconData icon;
   final String title;
@@ -61,14 +59,14 @@ abstract class _BaseDialog extends StatelessWidget {
       color: sets.theme.headerTheme.color,
       shadow: sets.hasHeadersShadow || sets.isFloatingPanels ? sets.theme.allShadows : null,
       margins: sets.isFloatingPanels ? titleMargins : null,
-      borders: sets.isFloatingPanels ? SpaWindow.allBorders : null,
+      borders: sets.isFloatingPanels ? SpaWin.allBorders : null,
       child: Row(
         children: [
           Icon(
             icon, size: 30,
             color: sets.theme.headerTheme.iconButtonTheme.getIconColor(true)
           ),
-          SpaSeparator(),
+          SpaSep.sep8,
           Expanded(child: SpaText(title, sets.theme.headerTheme.titleStyle))
         ]
       )
@@ -77,7 +75,7 @@ abstract class _BaseDialog extends StatelessWidget {
     final Widget contentPanel = SpaPanel(
       color: sets.theme.contentTheme.color,
       shadow: sets.theme.allShadows,
-      borders: SpaWindow.allBorders,
+      borders: SpaWin.allBorders,
       paddings: null,
       clip: true,
       child: Column(
@@ -86,7 +84,7 @@ abstract class _BaseDialog extends StatelessWidget {
             titlePanel,
 
           Padding(
-            padding: contentPaddings,
+            padding: SpaWin.edgeInsets16,
             child: contentBuilder(context)
           ),
           SpaPanel(
@@ -100,7 +98,7 @@ abstract class _BaseDialog extends StatelessWidget {
     return Material(
       type: MaterialType.transparency,
       child: Padding(
-        padding: windowPaddings,
+        padding: SpaWin.edgeInsets32,
         child: Center(
           child: ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 380),
@@ -131,11 +129,11 @@ abstract class _BaseDialog extends StatelessWidget {
       allowWrap: true
     );
 
-    if (context.screenWidth - windowPaddings.horizontal >= 240)
+    if (context.screenWidth - SpaWin.edgeInsets32.horizontal >= 240)
       return Row(
         children: [
           Icon(icon, size: 64, color: theme.contentTheme.iconButtonTheme.getIconColor(true)),
-          SpaSeparator(2),
+          SpaSep.sep16,
           Expanded(child: textWidget)
         ]
       );
@@ -161,7 +159,7 @@ class _MessageDialog extends _BaseDialog {
       Icons.check, strings.ok, theme.barTheme.textButtonTheme,
       () => Navigator.of(context).pop(),
       expanded: false,
-      borders: SpaWindow.allBorders
+      borders: SpaWin.allBorders
     );
   }
 }
@@ -183,26 +181,26 @@ class _QuestionDialog extends _BaseDialog {
       Icons.check, strings.yes, theme.barTheme.textButtonTheme,
       () => Navigator.of(context).pop(SpaQuestionDialogReturn.yes),
       expanded: false,
-      borders: SpaWindow.allBorders
+      borders: SpaWin.allBorders
     );
 
     final Widget noButton = SpaTextButton(
       Icons.close, strings.no, theme.textButtonXBarTheme,
       () => Navigator.of(context).pop(SpaQuestionDialogReturn.no),
       expanded: false,
-      borders: SpaWindow.allBorders
+      borders: SpaWin.allBorders
     );
 
-    if (context.screenWidth - _BaseDialog.windowPaddings.horizontal >= 200) {
+    if (context.screenWidth - SpaWin.edgeInsets32.horizontal >= 200) {
       return Row(
         children: [
           Expanded(child: yesButton),
-          SpaSeparator(),
+          SpaSep.sep8,
           Expanded(child: noButton)
         ]
       );
     }
 
-    return Column(children: [yesButton, SpaSeparator(), noButton]);
+    return Column(children: [yesButton, SpaSep.sep8, noButton]);
   }
 }

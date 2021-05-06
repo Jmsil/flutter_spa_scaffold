@@ -18,10 +18,8 @@ import 'package:spa_scaffold/src/ui/theme.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
 
 class MainMenuWidget extends StatelessWidget {
-  static final EdgeInsets _menuMargins = EdgeInsets.all(18);
-  static final EdgeInsets _compactHeaderPaddings = SpaWindow.parsePaddings(-1, 16, -1, -1);
-  static final EdgeInsets _extendedHeaderPaddings = SpaWindow.parsePaddings(-1, 36, -1, -1);
-  static final EdgeInsets _openPagesPaddings = SpaWindow.parsePaddings(-1, 0, -1, 0);
+  static final EdgeInsets _compactHeaderPaddings = SpaWin.parsePaddings(-1, 16, -1, -1);
+  static final EdgeInsets _extendedHeaderPaddings = SpaWin.parsePaddings(-1, 36, -1, -1);
 
   final GlobalKey<DrawerControllerState> _drawerKey;
 
@@ -98,8 +96,8 @@ class MainMenuWidget extends StatelessWidget {
         width: 250,
         color: sets.theme.contentTheme.color,
         shadow: sets.theme.allShadows,
-        margins: sets.isFloatingPanels ? _menuMargins : null,
-        borders: sets.isFloatingPanels ? SpaWindow.allBorders : null,
+        margins: sets.isFloatingPanels ? SpaWin.edgeInsets18 : null,
+        borders: sets.isFloatingPanels ? SpaWin.allBorders : null,
         paddings: null,
         clip: sets.isFloatingPanels || sets.hasHeadersShadow,
         backgroundAsset: sets.hasPanelsDecorImage ? sets.theme.mainMenuBackgroundAsset : null,
@@ -121,29 +119,29 @@ class MainMenuWidget extends StatelessWidget {
                   // Logged user session
                   Row(
                     children: [
-                      SpaSeparator(),
+                      SpaSep.sep8,
                       GestureDetector(
                         onTap: () => _openSettingsPage(controllerModel, strings),
                         child: CircleAvatar(
                           child: SpaText('J', TextStyle(fontSize: 20, color: Colors.blue[100]))
                         )
                       ),
-                      SpaSeparator(),
+                      SpaSep.sep8,
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SpaText(strings.loggedUser, sets.theme.headerTheme.titleStyle),
-                            SpaSeparator(0.25),
+                            SpaSep.sep2,
                             SpaText('jmsilva.inbox', sets.theme.headerTheme.subtitleStyle)
                           ]
                         )
                       ),
-                      SpaSeparator(),
+                      SpaSep.sep8,
                       SpaIconButton(Icons.logout, sets.theme.headerTheme.iconButtonTheme, () {})
                     ]
                   ),
-                  SpaSeparator(isExtendedHeader ? 3 : 1),
+                  isExtendedHeader ? SpaSep.sep24 : SpaSep.sep8,
 
                   // Navigation buttons
                   Row(
@@ -163,7 +161,7 @@ class MainMenuWidget extends StatelessWidget {
                       if (currentMenu == null)
                         Expanded(
                           child: Padding(
-                            padding: _openPagesPaddings,
+                            padding: SpaWin.horPaddings,
                             child: SpaText(
                               strings.openPages, sets.theme.headerTheme.subtitleStyle,
                               textAlign: TextAlign.center
@@ -199,7 +197,7 @@ class MainMenuWidget extends StatelessWidget {
 
   void _drawerCallback(bool isOpened, MainMenuModel model) {
     if (! isOpened)
-      Timer(Duration(milliseconds: SpaWindow.drawerClosingWait), model.reset);
+      Timer(Duration(milliseconds: SpaWin.drawerClosingWait), model.reset);
   }
 
   void _setActivePage(int idx, PagesControllerModel model) {

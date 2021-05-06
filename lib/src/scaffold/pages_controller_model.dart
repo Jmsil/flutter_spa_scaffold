@@ -51,7 +51,7 @@ class PagesControllerModel with ChangeNotifier {
     _isOpeningPage = true;
 
     Timer(
-      Duration(milliseconds: SpaWindow.drawerClosingWait),
+      Duration(milliseconds: SpaWin.drawerClosingWait),
       () async {
         int newIdx = -1;
         for (int i = 0; i < _pages.length; i++) {

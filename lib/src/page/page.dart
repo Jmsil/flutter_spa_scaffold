@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spa_scaffold/src/ui/window.dart';
 
 abstract class SpaPage extends StatefulWidget {
   final IconData icon;
@@ -15,12 +16,10 @@ abstract class SpaPage extends StatefulWidget {
 }
 
 abstract class SpaPageState<T extends SpaPage> extends State<T> {
-  static const EdgeInsets contentPaddings = EdgeInsets.all(16);
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: contentPaddings,
+      padding: SpaWin.edgeInsets16,
       child: contentBuilder(context)
     );
   }
