@@ -81,9 +81,9 @@ class PagesControllerWidget extends StatelessWidget {
                   sets.theme.headerTheme.tabbarTheme.getTextStyle(controllerModel.isActive(i))
                 );
                 maxPageCellWidth = max(
-                  maxPageCellWidth, title.textWidth + SpaWin.horPaddings.horizontal
+                  maxPageCellWidth, title.textWidth + SpaTabControl.itemPaddings.horizontal
                 );
-                pagesTabChildren.add(Padding(padding: SpaWin.horPaddings, child: title));
+                pagesTabChildren.add(title);
               }
 
               Widget bar = SpaTabControl(
