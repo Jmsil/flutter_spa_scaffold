@@ -10,29 +10,34 @@ import 'package:spa_scaffold/src/ui/switch.dart';
 import 'package:spa_scaffold/src/ui/text.dart';
 
 class SettingsPage extends SpaPage {
-  SettingsPage(IconData icon, String title) : super(icon, title);
+  SettingsPage(IconData icon) : super(icon);
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
+
+  @override
+  String getTitle(SpaStrings strings) => strings.userPreferences;
 }
 
 class _SettingsPageState extends SpaPageState {
   @override
   Widget contentBuilder(BuildContext context) {
-    final SpaStrings strings = context.read<SpaStrings>();
-    final SpaSettingsModel sets = context.watch<SpaSettingsModel>();
-    int radioIdx = 0;
+    final SpaSettingsModel mSets = context.watch<SpaSettingsModel>();
+    int themeRadioIdx = 0;
+    int languageRadioIdx = 0;
 
     return Center(
       child: SpaScrollView(
-        sets.theme.contentTheme.scrollbarColor,
+        mSets.theme.contentTheme.scrollbarColor,
         Table(
           defaultColumnWidth: IntrinsicColumnWidth(),
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           children: [
+
+            // Theme
             TableRow(
               children: [
-                SpaText(strings.theme, sets.theme.contentTheme.titleStyle), SpaSep.sep0
+                SpaText(mSets.strings.theme, mSets.theme.contentTheme.titleStyle), SpaSep.sep0
               ]
             ),
             TableRow(
@@ -41,13 +46,13 @@ class _SettingsPageState extends SpaPageState {
               ]
             ),
 
-            for (String themeName in sets.themesList)
+            for (String themeName in mSets.getThemesList(context))
               TableRow(
                 children: [
-                  SpaText(themeName, sets.theme.contentTheme.subtitleStyle),
+                  SpaText(themeName, mSets.theme.contentTheme.subtitleStyle),
                   SpaRadio(
-                    radioIdx++, sets.themeIndex, sets.theme.contentTheme.radioTheme,
-                    sets.setTheme
+                    themeRadioIdx++, mSets.themeIndex, mSets.theme.contentTheme.radioTheme,
+                    mSets.setTheme
                   )
                 ]
               ),
@@ -58,30 +63,62 @@ class _SettingsPageState extends SpaPageState {
               ]
             ),
 
+
+            // Language
             TableRow(
               children: [
-                SpaText(strings.floatingPanels, sets.theme.contentTheme.subtitleStyle),
+                SpaText(mSets.strings.language, mSets.theme.contentTheme.titleStyle), SpaSep.sep0
+              ]
+            ),
+            TableRow(
+              children: [
+                SpaSep.sep8, SpaSep.sep0
+              ]
+            ),
+
+            for (String languageName in mSets.getLanguagesList(context))
+              TableRow(
+                children: [
+                  SpaText(languageName, mSets.theme.contentTheme.subtitleStyle),
+                  SpaRadio(
+                    languageRadioIdx++, mSets.languageIndex, mSets.theme.contentTheme.radioTheme,
+                    mSets.setLanguage
+                  )
+                ]
+              ),
+
+            TableRow(
+              children: [
+                SpaSep.sep24, SpaSep.sep0
+              ]
+            ),
+
+
+            // Window
+            TableRow(
+              children: [
+                SpaText(mSets.strings.floatingPanels, mSets.theme.contentTheme.subtitleStyle),
                 SpaSwitch(
-                  sets.isFloatingPanels, sets.theme.contentTheme.switchTheme,
-                  sets.setIsFloatingPanels
+                  mSets.isFloatingPanels, mSets.theme.contentTheme.switchTheme,
+                  mSets.setIsFloatingPanels
                 )
               ]
             ),
             TableRow(
               children: [
-                SpaText(strings.headersShadow, sets.theme.contentTheme.subtitleStyle),
+                SpaText(mSets.strings.headersShadow, mSets.theme.contentTheme.subtitleStyle),
                 SpaSwitch(
-                  sets.hasHeadersShadow, sets.theme.contentTheme.switchTheme,
-                  sets.setHasHeadersShadow
+                  mSets.hasHeadersShadow, mSets.theme.contentTheme.switchTheme,
+                  mSets.setHasHeadersShadow
                 )
               ]
             ),
             TableRow(
               children: [
-                SpaText(strings.panelsDecorImage, sets.theme.contentTheme.subtitleStyle),
+                SpaText(mSets.strings.panelsDecorImage, mSets.theme.contentTheme.subtitleStyle),
                 SpaSwitch(
-                  sets.hasPanelsDecorImage, sets.theme.contentTheme.switchTheme,
-                  sets.setHasPanelsDecorImage
+                  mSets.hasPanelsDecorImage, mSets.theme.contentTheme.switchTheme,
+                  mSets.setHasPanelsDecorImage
                 )
               ]
             )

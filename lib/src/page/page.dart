@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:spa_scaffold/src/ui/strings.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
 
 abstract class SpaPage extends StatefulWidget {
   final IconData icon;
-  final String title;
 
-  SpaPage(this.icon, this.title);
+  SpaPage(this.icon);
 
   @override
   SpaPageState createState();
+
+  String getTitle(SpaStrings strings);
 
   Function()? getOverflowMenuAction(BuildContext context) => null;
 

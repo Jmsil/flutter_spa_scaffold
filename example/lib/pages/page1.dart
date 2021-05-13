@@ -1,11 +1,15 @@
+import 'package:example/ui/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:spa_scaffold/spa_scaffold.dart';
 
 class Page1 extends SpaRegistrationPage {
-  Page1(IconData icon, String title) : super(icon, title);
+  Page1(IconData icon) : super(icon);
 
   @override
   _Page1State createState() => _Page1State();
+
+  @override
+  String getTitle(SpaStrings strings) => (strings as AppStrings).pageTitle1;
 }
 
 class _Page1State extends SpaRegistrationPageState {

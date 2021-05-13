@@ -173,3 +173,7 @@ class BlueGreyDarkTheme extends BlueGreyTheme {
   @override
   String? get mainMenuBackgroundAsset => 'main_menu_bkg_blue_grey_dark.png';
 }
+
+extension AppSettings on SpaSettingsModel {
+  AppTheme get appTheme => theme as AppTheme;
+}

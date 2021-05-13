@@ -1,23 +1,64 @@
 import 'dart:collection';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:spa_scaffold/src/ui/strings.dart';
 import 'package:spa_scaffold/src/ui/theme.dart';
 
 class SpaSettingsModel with ChangeNotifier {
-  bool _isFloatingPanels;
-  bool _hasHeadersShadow;
-  bool _hasPanelsDecorImage;
-
-  final List<String> _themesList;
+  final List<String> Function(BuildContext) _themesListBuilder;
   final SpaTheme Function(int) _themeBuilder;
   int _themeIndex;
   SpaTheme _theme;
 
+  final List<String> Function(BuildContext) _languagesListBuilder;
+  final SpaStrings Function(int) _languageBuilder;
+  int _languageIndex;
+  SpaStrings _strings;
+
+  bool _isFloatingPanels;
+  bool _hasHeadersShadow;
+  bool _hasPanelsDecorImage;
+
   SpaSettingsModel(
-    this._isFloatingPanels, this._hasHeadersShadow, this._hasPanelsDecorImage,
-    this._themesList, this._themeBuilder, this._themeIndex
+    this._themesListBuilder, this._themeBuilder, this._themeIndex,
+    this._languagesListBuilder, this._languageBuilder, this._languageIndex,
+    this._isFloatingPanels, this._hasHeadersShadow, this._hasPanelsDecorImage
   )
-    : _theme = _themeBuilder(_themeIndex);
+    :
+    _theme = _themeBuilder(_themeIndex),
+    _strings = _languageBuilder(_languageIndex);
+
+
+  UnmodifiableListView getThemesList(BuildContext context) =>
+    UnmodifiableListView(_themesListBuilder(context));
+
+  int get themeIndex => _themeIndex;
+
+  SpaTheme get theme => _theme;
+
+  void setTheme(int index) {
+    if (index != _themeIndex) {
+      _themeIndex = index;
+      _theme = _themeBuilder(_themeIndex);
+      notifyListeners();
+    }
+  }
+
+
+  UnmodifiableListView getLanguagesList(BuildContext context) =>
+    UnmodifiableListView(_languagesListBuilder(context));
+
+  int get languageIndex => _languageIndex;
+
+  SpaStrings get strings => _strings;
+
+  void setLanguage(int index) {
+    if (index != _languageIndex) {
+      _languageIndex = index;
+      _strings = _languageBuilder(_languageIndex);
+      notifyListeners();
+    }
+  }
 
 
   bool get isFloatingPanels => _isFloatingPanels;
@@ -45,21 +86,6 @@ class SpaSettingsModel with ChangeNotifier {
   void setHasPanelsDecorImage(bool value) {
     if (value != _hasPanelsDecorImage) {
       _hasPanelsDecorImage = value;
-      notifyListeners();
-    }
-  }
-
-
-  UnmodifiableListView get themesList => UnmodifiableListView(_themesList);
-
-  int get themeIndex => _themeIndex;
-
-  SpaTheme get theme => _theme;
-
-  void setTheme(int index) {
-    if (index != _themeIndex) {
-      _themeIndex = index;
-      _theme = _themeBuilder(_themeIndex);
       notifyListeners();
     }
   }

@@ -9,10 +9,8 @@ import 'package:spa_scaffold/src/scaffold/pages_controller_model.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
 import 'package:spa_scaffold/src/ui/separator.dart';
-import 'package:spa_scaffold/src/ui/strings.dart';
 import 'package:spa_scaffold/src/ui/tab_control.dart';
 import 'package:spa_scaffold/src/ui/text.dart';
-import 'package:spa_scaffold/src/ui/theme.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
 
 class PagesControllerWidget extends StatelessWidget {
@@ -25,21 +23,20 @@ class PagesControllerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SpaStrings strings = context.read<SpaStrings>();
-    final SpaSettingsModel sets = context.watch<SpaSettingsModel>();
-    final PagesControllerModel controllerModel = context.watch<PagesControllerModel>();
-
-    final List<SpaPage> controllerPages = controllerModel.pages;
-    final SpaText appName = _getHeaderTitle(strings.appName, sets.theme);
+    final SpaSettingsModel mSets = context.watch<SpaSettingsModel>();
+    final PagesControllerModel mController = context.watch<PagesControllerModel>();
+    final List<SpaPage> controllerPages = mController.pages;
+    final SpaText appName =
+      _getHeaderTitle(mSets.strings.appName, mSets.theme.headerTheme.titleStyle);
 
     final List<Widget> appbarChildren = [
       SpaIconButton(
-        Icons.menu, sets.theme.headerTheme.iconButtonTheme,
+        Icons.menu, mSets.theme.headerTheme.iconButtonTheme,
         () => _mainMenuKey.currentState?.open()
       )
     ];
 
-    if (controllerModel.hasOpenPages) {
+    if (mController.hasOpenPages) {
       appbarChildren.add(
         Expanded(
           child: LayoutBuilder(
@@ -52,13 +49,16 @@ class PagesControllerWidget extends StatelessWidget {
                 return Row(
                   children: [
                     Expanded(
-                      child: controllerModel.isHome
+                      child: mController.isHome
                         ? appName
-                        : _getHeaderTitle(controllerModel.currentPage.title, sets.theme)
+                        : _getHeaderTitle(
+                            mController.currentPage.getTitle(mSets.strings),
+                            mSets.theme.headerTheme.titleStyle
+                          )
                     ),
                     SpaSep.sep8,
                     SpaIconButton(
-                      Icons.segment, sets.theme.headerTheme.iconButtonTheme,
+                      Icons.segment, mSets.theme.headerTheme.iconButtonTheme,
                       () => _showOpenPages(context)
                     )
                   ]
@@ -69,16 +69,16 @@ class PagesControllerWidget extends StatelessWidget {
               final List<Widget> pagesTabChildren = [
                 Icon(
                   Icons.home,
-                  color: sets.theme.headerTheme.tabbarTheme.getIconColor(
-                    controllerModel.isActive(0)
+                  color: mSets.theme.headerTheme.tabbarTheme.getIconColor(
+                    mController.isActive(0)
                   )
                 )
               ];
 
               for (int i = 1; i < controllerPages.length; i++) {
                 SpaText title = SpaText(
-                  controllerPages[i].title,
-                  sets.theme.headerTheme.tabbarTheme.getTextStyle(controllerModel.isActive(i))
+                  controllerPages[i].getTitle(mSets.strings),
+                  mSets.theme.headerTheme.tabbarTheme.getTextStyle(mController.isActive(i))
                 );
                 maxPageCellWidth = max(
                   maxPageCellWidth, title.textWidth + SpaTabControl.itemPaddings.horizontal
@@ -87,9 +87,9 @@ class PagesControllerWidget extends StatelessWidget {
               }
 
               Widget bar = SpaTabControl(
-                controllerModel.pageIdx,
-                sets.theme.headerTheme.tabbarTheme, _pagesTabPaddings,
-                controllerModel.setActivePage, pagesTabChildren
+                mController.pageIdx,
+                mSets.theme.headerTheme.tabbarTheme, _pagesTabPaddings,
+                mController.setActivePage, pagesTabChildren
               );
 
               if (
@@ -119,19 +119,19 @@ class PagesControllerWidget extends StatelessWidget {
       appbarChildren.add(SpaSep.sep8);
     }
 
-    Function()? overflowMenuAction = controllerModel.currentPage.getOverflowMenuAction(context);
+    Function()? overflowMenuAction = mController.currentPage.getOverflowMenuAction(context);
     if (overflowMenuAction != null) {
       appbarChildren.add(
         SpaIconButton(
-          Icons.adaptive.more, sets.theme.headerTheme.iconButtonTheme, overflowMenuAction
+          Icons.adaptive.more, mSets.theme.headerTheme.iconButtonTheme, overflowMenuAction
         )
       );
     }
 
     appbarChildren.add(
       SpaIconButton(
-        Icons.close, sets.theme.iconButtonXHeaderTheme,
-        controllerModel.isHome ? null : controllerModel.closeActivePage
+        Icons.close, mSets.theme.iconButtonXHeaderTheme,
+        mController.isHome ? null : mController.closeActivePage
       )
     );
 
@@ -140,16 +140,16 @@ class PagesControllerWidget extends StatelessWidget {
       children: [
         Expanded(
           child: IndexedStack(
-            index: controllerModel.pageIdx,
+            index: mController.pageIdx,
             children: controllerPages
           )
         ),
         SpaPanel(
-          color: sets.theme.headerTheme.color,
-          shadow: sets.hasHeadersShadow || sets.isFloatingPanels
-            ? sets.theme.allShadows : null,
-          margins: sets.isFloatingPanels ? _appbarMargins : null,
-          borders: sets.isFloatingPanels ? SpaWin.allBorders : null,
+          color: mSets.theme.headerTheme.color,
+          shadow: mSets.hasHeadersShadow || mSets.isFloatingPanels
+            ? mSets.theme.allShadows : null,
+          margins: mSets.isFloatingPanels ? _appbarMargins : null,
+          borders: mSets.isFloatingPanels ? SpaWin.allBorders : null,
           child: Row(children: appbarChildren)
         )
       ]
@@ -161,6 +161,6 @@ class PagesControllerWidget extends StatelessWidget {
     _mainMenuKey.currentState?.open();
   }
 
-  SpaText _getHeaderTitle(String text, SpaTheme theme) =>
-    SpaText('   $text', theme.headerTheme.titleStyle);
+  SpaText _getHeaderTitle(String text, TextStyle textStyle) =>
+    SpaText('   $text', textStyle);
 }

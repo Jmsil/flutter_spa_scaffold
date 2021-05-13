@@ -12,7 +12,7 @@ import 'package:spa_scaffold/src/ui/window.dart';
 abstract class SpaSidebarPage extends SpaPage {
   final GlobalKey<DrawerControllerState> _menuKey = GlobalKey();
 
-  SpaSidebarPage(IconData icon, String title) : super(icon, title);
+  SpaSidebarPage(IconData icon) : super(icon);
 
   @override
   SpaSidebarPageState createState();
@@ -33,21 +33,21 @@ abstract class SpaSidebarPageState<T extends SpaSidebarPage> extends SpaPageStat
 
   @override @nonVirtual
   Widget build(BuildContext context) {
-    final SpaSettingsModel sets = context.watch<SpaSettingsModel>();
+    final SpaSettingsModel mSets = context.watch<SpaSettingsModel>();
     final bool isFixedBar = context.screenWidth >= 1024;
 
     Widget bar = SpaPanel(
       width: 170,
-      color: sets.theme.barTheme.color,
-      shadow: sets.isFloatingPanels || ! isFixedBar ? sets.theme.allShadows : null,
-      margins: sets.isFloatingPanels
+      color: mSets.theme.barTheme.color,
+      shadow: mSets.isFloatingPanels || ! isFixedBar ? mSets.theme.allShadows : null,
+      margins: mSets.isFloatingPanels
         ? isFixedBar ? _fixedBarMargins : SpaWin.allMargins
         : null,
       paddings: null,
-      borders: sets.isFloatingPanels ? SpaWin.allBorders : null,
-      clip: sets.isFloatingPanels,
-      backgroundAsset: sets.hasPanelsDecorImage ? sets.theme.sidebarPageBackgroundAsset : null,
-      child: SpaListView(sets.theme.menuScrollbarColor, sidebarBuilder(context))
+      borders: mSets.isFloatingPanels ? SpaWin.allBorders : null,
+      clip: mSets.isFloatingPanels,
+      backgroundAsset: mSets.hasPanelsDecorImage ? mSets.theme.sidebarPageBackgroundAsset : null,
+      child: SpaListView(mSets.theme.menuScrollbarColor, sidebarBuilder(context))
     );
 
     if (isFixedBar) {

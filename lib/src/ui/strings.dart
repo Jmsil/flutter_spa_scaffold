@@ -35,6 +35,7 @@ class SpaStrings {
   late final String noData;
   late final String noDataFound;
   late final String theme;
+  late final String language;
 
   SpaStrings(
       Locale locale,
@@ -65,7 +66,8 @@ class SpaStrings {
         required Map<String, String> deleteErrorMessage,
         required Map<String, String> noData,
         required Map<String, String> noDataFound,
-        required Map<String, String> theme
+        required Map<String, String> theme,
+        required Map<String, String> language
       }
     )
     :
@@ -101,6 +103,7 @@ class SpaStrings {
     this.noData = parse(noData);
     this.noDataFound = parse(noDataFound);
     this.theme = parse(theme);
+    this.language = parse(language);
   }
 
   @protected @nonVirtual

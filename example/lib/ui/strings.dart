@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:spa_scaffold/spa_scaffold.dart';
 
 
-class Strings extends SpaStrings {
+class AppStrings extends SpaStrings {
 
   // Main menu
   //
@@ -41,7 +41,29 @@ class Strings extends SpaStrings {
     'pt': 'Título da Página de Relatório'
   });
 
-  Strings(Locale locale)
+
+  late final String blueGrey = parse({
+    'en': 'Blue Grey',
+    'pt': 'Azul Cinza'
+  });
+
+  late final String blueGreyDark = parse({
+    'en': 'Blue Grey Dark',
+    'pt': 'Azul Cinza Escuro'
+  });
+
+  late final String english = parse({
+    'en': 'English',
+    'pt': 'Inglês'
+  });
+
+  late final String portuguese = parse({
+    'en': 'Portuguese',
+    'pt': 'Português'
+  });
+
+
+  AppStrings(Locale locale)
     :
     super(
       locale,
@@ -147,11 +169,19 @@ class Strings extends SpaStrings {
       },
       noDataFound: {
         'en': 'No data found.',
-        'pt': 'Nenhum dados encontrado.'
+        'pt': 'Nenhum dado encontrado.'
       },
       theme: {
         'en': 'Theme',
         'pt': 'Tema'
+      },
+      language: {
+        'en': 'Language',
+        'pt': 'Idioma'
       }
     );
+}
+
+extension AppSettings on SpaSettingsModel {
+  AppStrings get appStrings => strings as AppStrings;
 }

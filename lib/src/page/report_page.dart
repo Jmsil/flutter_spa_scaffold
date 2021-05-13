@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:provider/provider.dart';
+import 'package:spa_scaffold/src/page/settings_model.dart';
 import 'package:spa_scaffold/src/page/sidebar_page.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
 import 'package:spa_scaffold/src/ui/dialogs.dart';
@@ -8,11 +9,10 @@ import 'package:spa_scaffold/src/ui/panel.dart';
 import 'package:spa_scaffold/src/ui/separator.dart';
 import 'package:spa_scaffold/src/ui/strings.dart';
 import 'package:spa_scaffold/src/ui/tab_control.dart';
-import 'package:spa_scaffold/src/ui/theme.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
 
 abstract class SpaReportPage extends SpaSidebarPage {
-  SpaReportPage(IconData icon, String title) : super(icon, title);
+  SpaReportPage(IconData icon) : super(icon);
 
   @override
   SpaReportPageState createState();
@@ -24,35 +24,33 @@ abstract class SpaReportPageState<T extends SpaReportPage> extends SpaSidebarPag
 
   @override
   List<Widget> sidebarBuilder(BuildContext context) {
-    final SpaTheme theme = context.watch<SpaTheme>();
-    final SpaStrings strings = context.read<SpaStrings>();
-
+    final SpaSettingsModel mSets = context.watch<SpaSettingsModel>();
     return [
       SpaPanel(
-        color: theme.headerTheme.color,
+        color: mSets.theme.headerTheme.color,
         paddings: null,
         child: SpaTabControl(
-          _tab, theme.headerTheme.tabbarTheme, SpaWin.edgeInsets12,
+          _tab, mSets.theme.headerTheme.tabbarTheme, SpaWin.edgeInsets12,
           (value) => getBarAction(() => setState(() => _tab = value))(),
           [
             Icon(
               Icons.filter_alt,
-              color: theme.headerTheme.tabbarTheme.getIconColor(_tab == 0)
+              color: mSets.theme.headerTheme.tabbarTheme.getIconColor(_tab == 0)
             ),
             Icon(
               Icons.article,
-              color: theme.headerTheme.tabbarTheme.getIconColor(_tab == 1)
+              color: mSets.theme.headerTheme.tabbarTheme.getIconColor(_tab == 1)
             )
           ]
         )
       ),
       SpaTextButton(
-        Icons.settings, strings.process, theme.barTheme.textButtonTheme,
+        Icons.settings, mSets.strings.process, mSets.theme.barTheme.textButtonTheme,
         getBarAction(_process)
       ),
       SpaSep.sep4,
       SpaTextButton(
-        Icons.print, strings.print, theme.barTheme.textButtonTheme,
+        Icons.print, mSets.strings.print, mSets.theme.barTheme.textButtonTheme,
         getBarAction(_print)
       )
     ];
@@ -82,7 +80,7 @@ abstract class SpaReportPageState<T extends SpaReportPage> extends SpaSidebarPag
   void onPrint();
 
   void _process() async {
-    final SpaStrings strings = context.read<SpaStrings>();
+    final SpaStrings strings = context.read<SpaSettingsModel>().strings;
     _hasData = await onProcess();
     setState(() {
       _tab = 1;
@@ -92,7 +90,7 @@ abstract class SpaReportPageState<T extends SpaReportPage> extends SpaSidebarPag
   }
 
   void _print() {
-    final SpaStrings strings = context.read<SpaStrings>();
+    final SpaStrings strings = context.read<SpaSettingsModel>().strings;
     if (! _hasData) {
       SpaDialogs.showMessage(context, strings.noData, strings.noDataFound);
       return;
