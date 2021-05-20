@@ -1,8 +1,7 @@
 name: spa_scaffold
-description: A package for create a custom Scaffold for Single Page Applications.
+description: A package to create a custom Scaffold for Single Page Applications.
 version: 1.0.0
 author: João Marques da Silva
-homepage:
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
