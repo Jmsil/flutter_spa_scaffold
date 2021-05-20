@@ -120,13 +120,14 @@ class PagesControllerWidget extends StatelessWidget {
     }
 
     Function()? overflowMenuAction = mController.currentPage.getOverflowMenuAction(context);
-    if (overflowMenuAction != null) {
-      appbarChildren.add(
-        SpaIconButton(
+    appbarChildren.add(
+      Offstage(
+        offstage: overflowMenuAction == null,
+        child: SpaIconButton(
           Icons.adaptive.more, mSets.theme.headerTheme.iconButtonTheme, overflowMenuAction
         )
-      );
-    }
+      )
+    );
 
     appbarChildren.add(
       SpaIconButton(
