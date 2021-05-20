@@ -15,6 +15,7 @@ class SpaScrollView extends StatelessWidget {
       controller,
       SingleChildScrollView(
         controller: controller,
+        physics: BouncingScrollPhysics(),
         child: child
       )
     );

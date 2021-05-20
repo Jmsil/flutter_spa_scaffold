@@ -32,7 +32,9 @@ class SpaPanel extends Container {
         borderRadius: borders,
         boxShadow: shadow != null ? [shadow] : null
       ),
-      clipBehavior: clip ? Clip.antiAlias : Clip.none,
+      clipBehavior: clip
+        ? borders == null ? Clip.hardEdge : Clip.antiAlias
+        : Clip.none,
       child: child
     );
 }

@@ -16,6 +16,7 @@ class SpaListView extends StatelessWidget {
       controller,
       ListView(
         controller: controller,
+        physics: BouncingScrollPhysics(),
         children: [
           ...children,
           SpaSep.sep32

@@ -1,25 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SpaScrollbar extends StatelessWidget {
-  final Color color;
-  final Widget child;
-  final ScrollController controller;
-
-  SpaScrollbar(this.color, this.controller, this.child);
-
-  @override
-  Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(
-        scrollbarTheme: ScrollbarThemeData(
-          thumbColor: MaterialStateProperty.all(color)
-        )
-      ),
-      child: Scrollbar(
-        thickness: 4,
-        controller: controller,
-        child: child
-      )
+class SpaScrollbar extends RawScrollbar {
+  SpaScrollbar(Color color, ScrollController controller, Widget child)
+    :
+    super(
+      thickness: 4,
+      thumbColor: color,
+      controller: controller,
+      child: child
     );
-  }
 }

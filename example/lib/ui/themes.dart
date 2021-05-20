@@ -9,7 +9,7 @@ class BlueGreyTheme extends AppTheme {
   @override
   Color get menuScrollbarColor => Colors.teal[200]!;
   @override
-  Color get navigatorBackgroundColor => Color(0x47000000);
+  Color get navigatorBackgroundColor => Color(0x4D000000);
 
   @override
   Color get createAllShadowsColor => Colors.black54;
@@ -140,7 +140,7 @@ class BlueGreyTheme extends AppTheme {
 
 class BlueGreyDarkTheme extends BlueGreyTheme {
   @override
-  Color get navigatorBackgroundColor => Color(0x33000000);
+  Color get navigatorBackgroundColor => Color(0x38000000);
 
   @override
   SpaRegionTheme get createContentTheme => SpaRegionTheme(

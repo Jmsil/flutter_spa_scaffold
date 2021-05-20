@@ -21,24 +21,20 @@ class SpaIconButton extends _ButtonFrame {
 class SpaTextButton extends _ButtonFrame {
   SpaTextButton(
     IconData icon, String text, SpaTextButtonTheme theme, Function()? onPressed,
-    {bool expanded = true, BorderRadius? borders}
+    {bool isCenter = false, BorderRadius? borders}
   )
     :
     super(
       theme, _iconTextPaddings, borders, onPressed,
       Row(
-        mainAxisAlignment: expanded ? MainAxisAlignment.start : MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: isCenter ? MainAxisAlignment.center : MainAxisAlignment.start,
         children: [
           Icon(icon, color: theme.getIconColor(onPressed != null)),
           SpaSep.sep12,
-
-          if (expanded)
-            Expanded(
-              child: SpaText(text, theme.getTextStyle(onPressed != null))
-            ),
-
-          if (! expanded)
-            SpaText(text, theme.getTextStyle(onPressed != null))
+          Flexible(
+            child: SpaText(text, theme.getTextStyle(onPressed != null))
+          )
         ]
       )
     );
@@ -100,7 +96,10 @@ class _ButtonFrame extends Material {
         splashFactory: InkRipple.splashFactory,
         mouseCursor: SystemMouseCursors.basic,
         onTap: onPressed,
-        child: Padding(padding: paddings, child: child)
+        child: Padding(
+          padding: paddings,
+          child: child
+        )
       )
     );
 }

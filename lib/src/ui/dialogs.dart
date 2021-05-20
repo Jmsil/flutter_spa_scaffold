@@ -87,6 +87,7 @@ abstract class _BaseDialog extends StatelessWidget {
       clip: true,
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (! mSets.isFloatingPanels)
             titlePanel,
@@ -178,7 +179,7 @@ class _MessageDialog extends _BaseDialog {
     return SpaTextButton(
       Icons.check, mSets.strings.ok, mSets.theme.barTheme.textButtonTheme,
       () => Navigator.of(context).pop(),
-      expanded: false,
+      isCenter: true,
       borders: SpaWin.allBorders
     );
   }
@@ -199,14 +200,14 @@ class _QuestionDialog extends _BaseDialog {
     final Widget yesButton = SpaTextButton(
       Icons.check, mSets.strings.yes, mSets.theme.barTheme.textButtonTheme,
       () => Navigator.of(context).pop(SpaQuestionDialogReturn.yes),
-      expanded: false,
+      isCenter: true,
       borders: SpaWin.allBorders
     );
 
     final Widget noButton = SpaTextButton(
       Icons.close, mSets.strings.no, mSets.theme.textButtonXBarTheme,
       () => Navigator.of(context).pop(SpaQuestionDialogReturn.no),
-      expanded: false,
+      isCenter: true,
       borders: SpaWin.allBorders
     );
 
@@ -221,6 +222,7 @@ class _QuestionDialog extends _BaseDialog {
     }
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         yesButton,
         SpaSep.sep8,
