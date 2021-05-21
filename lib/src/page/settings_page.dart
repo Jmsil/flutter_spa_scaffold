@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/page.dart';
 import 'package:spa_scaffold/src/page/settings_model.dart';
-import 'package:spa_scaffold/src/ui/radio.dart';
 import 'package:spa_scaffold/src/ui/scroll_view.dart';
+import 'package:spa_scaffold/src/ui/selector.dart';
 import 'package:spa_scaffold/src/ui/separator.dart';
 import 'package:spa_scaffold/src/ui/strings.dart';
-import 'package:spa_scaffold/src/ui/switch.dart';
 import 'package:spa_scaffold/src/ui/text.dart';
 
 class SettingsPage extends SpaPage {
