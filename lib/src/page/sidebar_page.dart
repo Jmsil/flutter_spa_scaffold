@@ -5,8 +5,8 @@ import 'package:meta/meta.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/page.dart';
 import 'package:spa_scaffold/src/page/settings_model.dart';
-import 'package:spa_scaffold/src/ui/list_view.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
+import 'package:spa_scaffold/src/ui/scroll_view.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
 
 abstract class SpaSidebarPage extends SpaPage {

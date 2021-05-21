@@ -8,5 +8,4 @@ class SpaSep {
   static const SizedBox sep12 = SizedBox(width: 12, height: 12);
   static const SizedBox sep16 = SizedBox(width: 16, height: 16);
   static const SizedBox sep24 = SizedBox(width: 24, height: 24);
-  static const SizedBox sep32 = SizedBox(width: 32, height: 32);
 }

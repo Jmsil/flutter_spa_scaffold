@@ -7,6 +7,7 @@ import 'package:spa_scaffold/src/scaffold/main_menu_model.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu_widget.dart';
 import 'package:spa_scaffold/src/scaffold/pages_controller_model.dart';
 import 'package:spa_scaffold/src/scaffold/pages_controller_widget.dart';
+import 'package:spa_scaffold/src/ui/scroll_view.dart';
 import 'package:spa_scaffold/src/ui/strings.dart';
 import 'package:spa_scaffold/src/ui/theme.dart';
 
@@ -43,6 +44,7 @@ void spaRun(
 
         return MaterialApp(
           title: mSets.strings.appName,
+          scrollBehavior: SpaScrollBehavior(),
           home: SafeArea(
             child: Material(
               color: mSets.theme.contentTheme.color,
