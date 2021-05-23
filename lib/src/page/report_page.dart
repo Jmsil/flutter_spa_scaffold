@@ -34,23 +34,23 @@ abstract class SpaReportPageState<T extends SpaReportPage> extends SpaSidebarPag
           (value) => getBarAction(() => setState(() => _tab = value))(),
           [
             Icon(
-              Icons.filter_alt,
+              Icons.filter_alt_outlined,
               color: mSets.theme.headerTheme.tabbarTheme.getIconColor(_tab == 0)
             ),
             Icon(
-              Icons.article,
+              Icons.analytics_outlined,
               color: mSets.theme.headerTheme.tabbarTheme.getIconColor(_tab == 1)
             )
           ]
         )
       ),
       SpaTextButton(
-        Icons.settings, mSets.strings.process, mSets.theme.barTheme.textButtonTheme,
+        Icons.settings_outlined, mSets.strings.process, mSets.theme.barTheme.textButtonTheme,
         getBarAction(_process)
       ),
       SpaSep.sep4,
       SpaTextButton(
-        Icons.print, mSets.strings.print, mSets.theme.barTheme.textButtonTheme,
+        Icons.print_outlined, mSets.strings.print, mSets.theme.barTheme.textButtonTheme,
         getBarAction(_print)
       )
     ];

@@ -7,20 +7,20 @@ import 'package:spa_scaffold/spa_scaffold.dart';
 
 SpaMainMenuGroup getMainMenu(BuildContext context) {
   final AppStrings strings = context.read<SpaSettingsModel>().appStrings;
-  final SpaMainMenuGroup root = SpaMainMenuGroup(Icons.menu, '');
+  final SpaMainMenuGroup root = SpaMainMenuGroup(Icons.menu_outlined, '');
 
-  root.addGroup(SpaMainMenuGroup(Icons.edit, strings.groupMenuItem1))
+  root.addGroup(SpaMainMenuGroup(Icons.edit_outlined, strings.groupMenuItem1))
     ..addAction(
       SpaMainMenuAction(
-        Icons.edit, strings.actionMenuItem1, page1.loadLibrary,
+        Icons.edit_outlined, strings.actionMenuItem1, page1.loadLibrary,
         (icon) => page1.Page1(icon)
       )
     );
 
-  root.addGroup(SpaMainMenuGroup(Icons.article, strings.groupMenuItem2))
+  root.addGroup(SpaMainMenuGroup(Icons.analytics_outlined, strings.groupMenuItem2))
     ..addAction(
       SpaMainMenuAction(
-        Icons.article, strings.actionMenuItem2, page2.loadLibrary,
+        Icons.analytics_outlined, strings.actionMenuItem2, page2.loadLibrary,
         (icon) => page2.Page2(icon)
       )
     );

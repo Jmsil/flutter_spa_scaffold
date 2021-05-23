@@ -22,17 +22,17 @@ abstract class SpaRegistrationPageState<T extends SpaRegistrationPage>
     final SpaSettingsModel mSets = context.watch<SpaSettingsModel>();
     return [
       SpaTextButton(
-        Icons.save, mSets.strings.record, mSets.theme.barTheme.textButtonTheme,
+        Icons.save_outlined, mSets.strings.record, mSets.theme.barTheme.textButtonTheme,
         getBarAction(_record)
       ),
       SpaSep.sep4,
       SpaTextButton(
-        Icons.cancel, mSets.strings.cancel, mSets.theme.barTheme.textButtonTheme,
+        Icons.close_outlined, mSets.strings.cancel, mSets.theme.barTheme.textButtonTheme,
         getBarAction(_cancel)
       ),
       SpaSep.sep4,
       SpaTextButton(
-        Icons.delete_forever, mSets.strings.delete, mSets.theme.textButtonXBarTheme,
+        Icons.delete_outlined, mSets.strings.delete, mSets.theme.textButtonXBarTheme,
         getBarAction(_delete)
       )
     ];

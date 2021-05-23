@@ -168,7 +168,7 @@ class _IconText extends StatelessWidget {
 class _MessageDialog extends _BaseDialog {
   final String message;
 
-  _MessageDialog(String title, this.message) : super(Icons.info, title);
+  _MessageDialog(String title, this.message) : super(Icons.info_outlined, title);
 
   @override
   Widget contentBuilder(BuildContext context) => _IconText(icon, message);
@@ -177,7 +177,7 @@ class _MessageDialog extends _BaseDialog {
   Widget barBuilder(BuildContext context) {
     final SpaSettingsModel mSets = context.read<SpaSettingsModel>();
     return SpaTextButton(
-      Icons.check, mSets.strings.ok, mSets.theme.barTheme.textButtonTheme,
+      Icons.check_outlined, mSets.strings.ok, mSets.theme.barTheme.textButtonTheme,
       () => Navigator.of(context).pop(),
       isCenter: true,
       borders: SpaWin.allBorders
@@ -188,7 +188,7 @@ class _MessageDialog extends _BaseDialog {
 class _QuestionDialog extends _BaseDialog {
   final String question;
 
-  _QuestionDialog(String title, this.question) : super(Icons.help, title);
+  _QuestionDialog(String title, this.question) : super(Icons.contact_support_outlined, title);
 
   @override
   Widget contentBuilder(BuildContext context) => _IconText(icon, question);
@@ -198,14 +198,14 @@ class _QuestionDialog extends _BaseDialog {
     final SpaSettingsModel mSets = context.read<SpaSettingsModel>();
 
     final Widget yesButton = SpaTextButton(
-      Icons.check, mSets.strings.yes, mSets.theme.barTheme.textButtonTheme,
+      Icons.check_outlined, mSets.strings.yes, mSets.theme.barTheme.textButtonTheme,
       () => Navigator.of(context).pop(SpaQuestionDialogReturn.yes),
       isCenter: true,
       borders: SpaWin.allBorders
     );
 
     final Widget noButton = SpaTextButton(
-      Icons.close, mSets.strings.no, mSets.theme.textButtonXBarTheme,
+      Icons.close_outlined, mSets.strings.no, mSets.theme.textButtonXBarTheme,
       () => Navigator.of(context).pop(SpaQuestionDialogReturn.no),
       isCenter: true,
       borders: SpaWin.allBorders

@@ -31,7 +31,7 @@ class PagesControllerWidget extends StatelessWidget {
 
     final List<Widget> appbarChildren = [
       SpaIconButton(
-        Icons.menu, mSets.theme.headerTheme.iconButtonTheme,
+        Icons.menu_outlined, mSets.theme.headerTheme.iconButtonTheme,
         () => _mainMenuKey.currentState?.open()
       )
     ];
@@ -68,7 +68,7 @@ class PagesControllerWidget extends StatelessWidget {
               double maxPageCellWidth = 0;
               final List<Widget> pagesTabChildren = [
                 Icon(
-                  Icons.home,
+                  controllerPages[0].icon,
                   color: mSets.theme.headerTheme.tabbarTheme.getIconColor(
                     mController.isActive(0)
                   )
@@ -124,14 +124,14 @@ class PagesControllerWidget extends StatelessWidget {
       Offstage(
         offstage: overflowMenuAction == null,
         child: SpaIconButton(
-          Icons.adaptive.more, mSets.theme.headerTheme.iconButtonTheme, overflowMenuAction
+          Icons.more_vert_outlined, mSets.theme.headerTheme.iconButtonTheme, overflowMenuAction
         )
       )
     );
 
     appbarChildren.add(
       SpaIconButton(
-        Icons.close, mSets.theme.iconButtonXHeaderTheme,
+        Icons.close_outlined, mSets.theme.iconButtonXHeaderTheme,
         mController.isHome ? null : mController.closeActivePage
       )
     );

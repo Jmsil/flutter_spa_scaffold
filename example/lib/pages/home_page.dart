@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:spa_scaffold/spa_scaffold.dart';
 
 class HomePage extends SpaPage {
-  HomePage() : super(Icons.home);
+  HomePage() : super(Icons.home_outlined);
 
   @override
   _HomePageState createState() => _HomePageState();

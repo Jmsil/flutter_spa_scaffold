@@ -43,7 +43,7 @@ class MainMenuWidget extends StatelessWidget {
         menuChildren.add(
           SpaMenuItem(
             item.icon, item.text,
-            item is SpaMainMenuGroup ? Icons.keyboard_arrow_right : null,
+            item is SpaMainMenuGroup ? Icons.navigate_next_outlined : null,
             mSets.theme.menuItemTheme,
             item is SpaMainMenuGroup
               ? () => mMenu.openGroup(item)
@@ -138,7 +138,9 @@ class MainMenuWidget extends StatelessWidget {
                         )
                       ),
                       SpaSep.sep8,
-                      SpaIconButton(Icons.logout, mSets.theme.headerTheme.iconButtonTheme, () {})
+                      SpaIconButton(
+                        Icons.logout, mSets.theme.headerTheme.iconButtonTheme, () {}
+                      )
                     ]
                   ),
                   isExtendedHeader ? SpaSep.sep24 : SpaSep.sep8,
@@ -148,13 +150,13 @@ class MainMenuWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SpaIconButton(
-                        Icons.arrow_back, mSets.theme.headerTheme.iconButtonTheme,
+                        Icons.arrow_back_outlined, mSets.theme.headerTheme.iconButtonTheme,
                         mMenu.isRoot ? null : mMenu.back
                       ),
 
                       if (currentMenu != null)
                         SpaIconButton(
-                          Icons.home, mSets.theme.headerTheme.iconButtonTheme,
+                          Icons.home_outlined, mSets.theme.headerTheme.iconButtonTheme,
                           mMenu.isRoot ? null : mMenu.reset
                         ),
 
@@ -209,7 +211,7 @@ class MainMenuWidget extends StatelessWidget {
     _openPageFromMainMenu(
       mController,
       SpaMainMenuAction(
-        Icons.settings, '',
+        Icons.settings_outlined, '',
         sets_page.loadLibrary,
         (icon) => sets_page.SettingsPage(icon)
       )
