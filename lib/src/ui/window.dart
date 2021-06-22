@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SpaWin {
-  static const int drawerClosingWait = 250;
-
   static const double _margin = 8;
   static const double _padding = 8;
   static const Radius _radius = Radius.circular(6);

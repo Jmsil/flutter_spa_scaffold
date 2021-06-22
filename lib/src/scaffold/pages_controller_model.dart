@@ -1,10 +1,8 @@
-import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 import 'package:spa_scaffold/src/page/page.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu.dart';
-import 'package:spa_scaffold/src/ui/window.dart';
 
 class PagesControllerModel with ChangeNotifier {
   bool _isOpeningPage = false;
@@ -44,31 +42,26 @@ class PagesControllerModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void openPageFromMainMenu(SpaMainMenuAction action) {
+  void openPageFromAction(SpaMainMenuAction action) async {
     if (_isOpeningPage)
       return;
 
     _isOpeningPage = true;
 
-    Timer(
-      Duration(milliseconds: SpaWin.drawerClosingWait),
-      () async {
-        int newIdx = -1;
-        for (int i = 0; i < _pages.length; i++) {
-          if (action.isPageType(_pages[i].runtimeType)) {
-            newIdx = i;
-            break;
-          }
-        }
-
-        if (newIdx == -1) {
-          _pages.add(await action.buildPage());
-          newIdx = _pages.length - 1;
-        }
-
-        setActivePage(newIdx);
-        _isOpeningPage = false;
+    int newIdx = -1;
+    for (int i = 0; i < _pages.length; i++) {
+      if (action.isPageType(_pages[i].runtimeType)) {
+        newIdx = i;
+        break;
       }
-    );
+    }
+
+    if (newIdx == -1) {
+      _pages.add(await action.buildPage());
+      newIdx = _pages.length - 1;
+    }
+
+    setActivePage(newIdx);
+    _isOpeningPage = false;
   }
 }

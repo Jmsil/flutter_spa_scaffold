@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/page.dart';
@@ -9,10 +7,10 @@ import 'package:spa_scaffold/src/scaffold/main_menu.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu_model.dart';
 import 'package:spa_scaffold/src/scaffold/pages_controller_model.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
+import 'package:spa_scaffold/src/ui/drawer_controller.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
 import 'package:spa_scaffold/src/ui/scroll_view.dart';
 import 'package:spa_scaffold/src/ui/separator.dart';
-import 'package:spa_scaffold/src/ui/strings.dart';
 import 'package:spa_scaffold/src/ui/text.dart';
 import 'package:spa_scaffold/src/ui/theme.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
@@ -20,6 +18,11 @@ import 'package:spa_scaffold/src/ui/window.dart';
 class MainMenuWidget extends StatelessWidget {
   static final EdgeInsets _compactHeaderPaddings = SpaWin.parsePaddings(-1, 16, -1, -1);
   static final EdgeInsets _extendedHeaderPaddings = SpaWin.parsePaddings(-1, 36, -1, -1);
+  static final SpaMainMenuAction _settingsPageAction = SpaMainMenuAction(
+    Icons.settings_outlined, '',
+    sets_page.loadLibrary,
+    (icon) => sets_page.SettingsPage(icon)
+  );
 
   final GlobalKey<DrawerControllerState> _drawerKey;
 
@@ -47,7 +50,9 @@ class MainMenuWidget extends StatelessWidget {
             mSets.theme.menuItemTheme,
             item is SpaMainMenuGroup
               ? () => mMenu.openGroup(item)
-              : () => _openPageFromMainMenu(mController, item as SpaMainMenuAction)
+              : _drawerKey.getAction(
+                  () => mController.openPageFromAction(item as SpaMainMenuAction)
+                )
           )
         );
       }
@@ -59,19 +64,17 @@ class MainMenuWidget extends StatelessWidget {
         SpaMenuItemTheme itemTheme = mController.isActive(i)
           ? mSets.theme.menuItemSelectedPageTheme
           : mSets.theme.menuItemUnselectedPageTheme;
+        Function() action = _drawerKey.getAction(() => mController.setActivePage(i));
 
         if (i == 0) {
           _insertSpacer(menuChildren, itemTheme, mSets);
           menuChildren.add(
-            SpaMenuItem.icon(pages[i].icon, itemTheme, () => _setActivePage(i, mController))
+            SpaMenuItem.icon(pages[i].icon, itemTheme, action)
           );
         }
         else {
           menuChildren.add(
-            SpaMenuItem(
-              pages[i].icon, pages[i].getTitle(mSets.strings), null, itemTheme,
-              () => _setActivePage(i, mController)
-            )
+            SpaMenuItem(pages[i].icon, pages[i].getTitle(mSets.strings), null, itemTheme, action)
           );
         }
       }
@@ -121,7 +124,9 @@ class MainMenuWidget extends StatelessWidget {
                     children: [
                       SpaSep.sep8,
                       GestureDetector(
-                        onTap: () => _openSettingsPage(mController, mSets.strings),
+                        onTap: _drawerKey.getAction(
+                          () => mController.openPageFromAction(_settingsPageAction)
+                        ),
                         child: CircleAvatar(
                           child: SpaText('J', TextStyle(fontSize: 20, color: Colors.blue[100]))
                         )
@@ -192,29 +197,8 @@ class MainMenuWidget extends StatelessWidget {
       children.add(Container(height: 4, color: theme.getSurfaceColor(true)));
   }
 
-  void _openPageFromMainMenu(PagesControllerModel mController, SpaMainMenuAction item) {
-    _drawerKey.currentState?.close();
-    mController.openPageFromMainMenu(item);
-  }
-
   void _drawerCallback(bool isOpened, MainMenuModel mMenu) {
-    if (! isOpened)
-      Timer(Duration(milliseconds: SpaWin.drawerClosingWait), mMenu.reset);
-  }
-
-  void _setActivePage(int idx, PagesControllerModel mController) {
-    _drawerKey.currentState?.close();
-    mController.setActivePage(idx);
-  }
-
-  void _openSettingsPage(PagesControllerModel mController, SpaStrings strings) {
-    _openPageFromMainMenu(
-      mController,
-      SpaMainMenuAction(
-        Icons.settings_outlined, '',
-        sets_page.loadLibrary,
-        (icon) => sets_page.SettingsPage(icon)
-      )
-    );
+    if (!isOpened)
+      _drawerKey.performAction(mMenu.reset);
   }
 }

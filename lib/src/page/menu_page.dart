@@ -1,10 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/page.dart';
 import 'package:spa_scaffold/src/page/settings_page/settings_model.dart';
+import 'package:spa_scaffold/src/ui/drawer_controller.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
 import 'package:spa_scaffold/src/ui/scroll_view.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
@@ -75,10 +74,6 @@ abstract class SpaMenuPage extends SpaPage {
   Function() getMenuAction(BuildContext context, Function() action) {
     if (context.screenWidth >= 1024)
       return action;
-
-    return () {
-      resetOverflowMenuAction();
-      Timer(Duration(milliseconds: SpaWin.drawerClosingWait), action);
-    };
+    return _menuKey.getAction(action);
   }
 }
