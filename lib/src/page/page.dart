@@ -2,23 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:spa_scaffold/src/ui/strings.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
 
-abstract class SpaPage extends StatefulWidget {
+abstract class SpaPage extends StatelessWidget {
   final IconData icon;
 
   SpaPage(this.icon);
 
-  @override
-  SpaPageState createState();
-
-  String getTitle(SpaStrings strings);
-
-  Function()? getOverflowMenuAction(BuildContext context) => null;
-
-  void resetOverflowMenuAction() {}
-}
-
-abstract class SpaPageState<T extends SpaPage> extends State<T> {
-  @override
+  @override @mustCallSuper
   Widget build(BuildContext context) {
     return Padding(
       padding: SpaWin.edgeInsets16,
@@ -28,4 +17,10 @@ abstract class SpaPageState<T extends SpaPage> extends State<T> {
 
   @protected
   Widget contentBuilder(BuildContext context);
+
+  String getTitle(SpaStrings strings);
+
+  Function()? getOverflowMenuAction(BuildContext context) => null;
+
+  void resetOverflowMenuAction() {}
 }

@@ -1,39 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spa_scaffold/src/page/settings_model.dart';
-import 'package:spa_scaffold/src/page/sidebar_page.dart';
+import 'package:spa_scaffold/src/page/menu_page.dart';
+import 'package:spa_scaffold/src/page/settings_page/settings_model.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
 import 'package:spa_scaffold/src/ui/dialogs.dart';
 import 'package:spa_scaffold/src/ui/separator.dart';
 import 'package:spa_scaffold/src/ui/strings.dart';
 
-abstract class SpaRegistrationPage extends SpaSidebarPage {
+abstract class SpaRegistrationPage extends SpaMenuPage {
   SpaRegistrationPage(IconData icon) : super(icon);
 
   @override
-  SpaRegistrationPageState createState();
-}
-
-abstract class SpaRegistrationPageState<T extends SpaRegistrationPage>
-  extends SpaSidebarPageState<T>
-{
-  @override
-  List<Widget> sidebarBuilder(BuildContext context) {
+  List<Widget> menuBuilder(BuildContext context) {
     final SpaSettingsModel mSets = context.watch<SpaSettingsModel>();
     return [
       SpaTextButton(
         Icons.save_outlined, mSets.strings.record, mSets.theme.barTheme.textButtonTheme,
-        getBarAction(_record)
+        getMenuAction(context, () => _record(context, mSets))
       ),
       SpaSep.sep4,
       SpaTextButton(
         Icons.close_outlined, mSets.strings.cancel, mSets.theme.barTheme.textButtonTheme,
-        getBarAction(_cancel)
+        getMenuAction(context, () => _cancel(context, mSets))
       ),
       SpaSep.sep4,
       SpaTextButton(
         Icons.delete_outlined, mSets.strings.delete, mSets.theme.textButtonXBarTheme,
-        getBarAction(_delete)
+        getMenuAction(context, () => _delete(context))
       )
     ];
   }
@@ -51,38 +44,35 @@ abstract class SpaRegistrationPageState<T extends SpaRegistrationPage>
   Future<RegistrationPageActionReturn> onDelete();
 
 
-  void _record() async {
-    final SpaStrings strings = context.read<SpaSettingsModel>().strings;
-
+  void _record(BuildContext context, SpaSettingsModel mSets) async {
     String? validationMessage = onValidate();
     if (validationMessage != null) {
-      SpaDialogs.showMessage(context, strings.invalidData, validationMessage);
+      SpaDialogs.showMessage(context, mSets.strings.invalidData, validationMessage);
       return;
     }
 
     RegistrationPageActionReturn result = await onRecord();
     await SpaDialogs.showMessage(
       context,
-      result.isSuccess ? strings.success : strings.error,
+      result.isSuccess ? mSets.strings.success : mSets.strings.error,
       result.message ??
-        (result.isSuccess ? strings.recordSuccessMessage : strings.recordErrorMessage)
+        (result.isSuccess ? mSets.strings.recordSuccessMessage : mSets.strings.recordErrorMessage)
     );
 
     if (result.isSuccess)
       onClear();
   }
 
-  void _cancel() async {
-    final SpaStrings strings = context.read<SpaSettingsModel>().strings;
+  void _cancel(BuildContext context, SpaSettingsModel mSets) async {
     if (
       await SpaDialogs.showQuestion(
-        context, strings.cancel, strings.editCancelQuestion
+        context, mSets.strings.cancel, mSets.strings.editCancelQuestion
       ) == SpaQuestionDialogReturn.yes
     )
       onClear();
   }
 
-  void _delete() async {
+  void _delete(BuildContext context) async {
     final SpaStrings strings = context.read<SpaSettingsModel>().strings;
 
     if (

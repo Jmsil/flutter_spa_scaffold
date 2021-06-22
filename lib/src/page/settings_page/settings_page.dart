@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/page.dart';
-import 'package:spa_scaffold/src/page/settings_model.dart';
+import 'package:spa_scaffold/src/page/settings_page/settings_model.dart';
 import 'package:spa_scaffold/src/ui/scroll_view.dart';
 import 'package:spa_scaffold/src/ui/selector.dart';
 import 'package:spa_scaffold/src/ui/separator.dart';
@@ -12,13 +12,8 @@ class SettingsPage extends SpaPage {
   SettingsPage(IconData icon) : super(icon);
 
   @override
-  _SettingsPageState createState() => _SettingsPageState();
-
-  @override
   String getTitle(SpaStrings strings) => strings.userPreferences;
-}
 
-class _SettingsPageState extends SpaPageState {
   @override
   Widget contentBuilder(BuildContext context) {
     final SpaSettingsModel mSets = context.watch<SpaSettingsModel>();

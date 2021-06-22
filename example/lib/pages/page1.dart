@@ -6,13 +6,8 @@ class Page1 extends SpaRegistrationPage {
   Page1(IconData icon) : super(icon);
 
   @override
-  _Page1State createState() => _Page1State();
-
-  @override
   String getTitle(SpaStrings strings) => (strings as AppStrings).pageTitle1;
-}
 
-class _Page1State extends SpaRegistrationPageState {
   @override
   Widget contentBuilder(BuildContext context) => Center();
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/page/page.dart';
-import 'package:spa_scaffold/src/page/settings_model.dart';
+import 'package:spa_scaffold/src/page/settings_page/settings_model.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu_model.dart';
 import 'package:spa_scaffold/src/scaffold/main_menu_widget.dart';

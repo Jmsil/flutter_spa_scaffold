@@ -7,13 +7,8 @@ class HomePage extends SpaPage {
   HomePage() : super(Icons.home_outlined);
 
   @override
-  _HomePageState createState() => _HomePageState();
-
-  @override
   String getTitle(SpaStrings strings) => '';
-}
 
-class _HomePageState extends SpaPageState {
   @override
   Widget contentBuilder(BuildContext context) {
     final AppTheme theme = context.watch<SpaSettingsModel>().appTheme;

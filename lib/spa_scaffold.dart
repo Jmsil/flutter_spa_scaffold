@@ -1,10 +1,10 @@
 library spa_scaffold;
 
+export 'src/page/menu_page.dart';
 export 'src/page/page.dart';
 export 'src/page/registration_page.dart';
-export 'src/page/report_page.dart';
-export 'src/page/settings_model.dart';
-export 'src/page/sidebar_page.dart';
+export 'src/page/report_page/report_page.dart';
+export 'src/page/settings_page/settings_model.dart';
 export 'src/scaffold/main_menu.dart';
 export 'src/scaffold/scaffold.dart';
 export 'src/ui/button.dart';

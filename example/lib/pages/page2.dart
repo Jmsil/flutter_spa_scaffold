@@ -6,13 +6,8 @@ class Page2 extends SpaReportPage {
   Page2(IconData icon) : super(icon);
 
   @override
-  _Page2State createState() => _Page2State();
-
-  @override
   String getTitle(SpaStrings strings) => (strings as AppStrings).pageTitle2;
-}
 
-class _Page2State extends SpaReportPageState {
   @override
   Widget filtersBuilder(BuildContext context) => Center();
 

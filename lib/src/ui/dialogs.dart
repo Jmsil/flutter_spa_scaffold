@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spa_scaffold/src/page/settings_model.dart';
+import 'package:spa_scaffold/src/page/settings_page/settings_model.dart';
 import 'package:spa_scaffold/src/ui/button.dart';
 import 'package:spa_scaffold/src/ui/panel.dart';
 import 'package:spa_scaffold/src/ui/scroll_view.dart';
