@@ -8,15 +8,15 @@ import 'package:spa_scaffold/src/ui/panel.dart';
 import 'package:spa_scaffold/src/ui/scroll_view.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
 
-abstract class SpaMenuPage extends SpaPage {
+abstract class SpaMenuPage<T extends ChangeNotifier> extends SpaPage<T> {
   static final EdgeInsets _fixedMenuMargins = SpaWin.parseMargins(-1, -1, 0, -1);
 
   final GlobalKey<DrawerControllerState> _menuKey = GlobalKey();
 
-  SpaMenuPage(IconData icon) : super(icon);
+  SpaMenuPage(IconData icon, [T? model]) : super(icon, model);
 
-  @override
-  Widget build(BuildContext context) {
+  @override @nonVirtual
+  Widget pageBuilder(BuildContext context) {
     final SpaSettingsModel mSets = context.watch<SpaSettingsModel>();
     final bool isFixedMenu = context.screenWidth >= 1024;
 
@@ -39,14 +39,16 @@ abstract class SpaMenuPage extends SpaPage {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           bar,
-          Expanded(child: super.build(context))
+          Expanded(
+            child: contentBuilder(context)
+          )
         ]
       );
     }
 
     return Stack(
       children: [
-        super.build(context),
+        contentBuilder(context),
         DrawerController(
           key: _menuKey,
           alignment: DrawerAlignment.end,
@@ -66,6 +68,9 @@ abstract class SpaMenuPage extends SpaPage {
 
   @override @nonVirtual
   void resetOverflowMenuAction() => _menuKey.currentState?.close();
+
+  @protected
+  Widget contentBuilder(BuildContext context);
 
   @protected
   List<Widget> menuBuilder(BuildContext context);

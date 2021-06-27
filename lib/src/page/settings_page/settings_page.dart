@@ -15,7 +15,7 @@ class SettingsPage extends SpaPage {
   String getTitle(SpaStrings strings) => strings.userPreferences;
 
   @override
-  Widget contentBuilder(BuildContext context) {
+  Widget pageBuilder(BuildContext context) {
     final SpaSettingsModel mSets = context.watch<SpaSettingsModel>();
     int themeRadioIdx = 0;
     int languageRadioIdx = 0;

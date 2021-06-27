@@ -1,5 +1,5 @@
 import 'package:example/pages/page1.dart' deferred as page1;
-import 'package:example/pages/page2.dart' deferred as page2;
+import 'package:example/pages/page_2/page2.dart' deferred as page2;
 import 'package:example/ui/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

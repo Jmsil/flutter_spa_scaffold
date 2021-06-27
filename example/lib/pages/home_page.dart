@@ -10,11 +10,11 @@ class HomePage extends SpaPage {
   String getTitle(SpaStrings strings) => '';
 
   @override
-  Widget contentBuilder(BuildContext context) {
+  Widget pageBuilder(BuildContext context) {
     final AppTheme theme = context.watch<SpaSettingsModel>().appTheme;
     return Center(
       child: Padding(
-        padding: SpaWin.edgeInsets32,
+        padding: SpaWin.edgeInsets48,
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 340, maxHeight: 340),
           child: Image.asset('assets/images/${theme.appLogoAsset}')

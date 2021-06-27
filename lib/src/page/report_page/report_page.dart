@@ -11,22 +11,13 @@ import 'package:spa_scaffold/src/ui/separator.dart';
 import 'package:spa_scaffold/src/ui/tab_control.dart';
 import 'package:spa_scaffold/src/ui/window.dart';
 
-abstract class SpaReportPage extends SpaMenuPage {
-  SpaReportPage(IconData icon) : super(icon);
+abstract class SpaReportPage<T extends ReportPageModel> extends SpaMenuPage<T> {
+  SpaReportPage(IconData icon, T model) : super(icon, model);
 
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ReportPageModel>(
-      create: (context) => ReportPageModel(),
-      builder: (context, child) => super.build(context)
-    );
-  }
-
-  @override
+  @override @nonVirtual
   Widget contentBuilder(BuildContext context) {
-    final ReportPageModel model = context.watch<ReportPageModel>();
     return IndexedStack(
-      index: model.tab,
+      index: model!.tab,
       children: [
         filtersBuilder(context),
         reportBuilder(context)
@@ -37,34 +28,33 @@ abstract class SpaReportPage extends SpaMenuPage {
   @override
   List<Widget> menuBuilder(BuildContext context) {
     final SpaSettingsModel mSets = context.watch<SpaSettingsModel>();
-    final ReportPageModel mReportPage = context.watch<ReportPageModel>();
     return [
       SpaPanel(
         color: mSets.theme.headerTheme.color,
         paddings: null,
         child: SpaTabControl(
-          mReportPage.tab, mSets.theme.headerTheme.tabbarTheme, SpaWin.edgeInsets12,
-          (value) => getMenuAction(context, () => mReportPage.setTab(value))(),
+          model!.tab, mSets.theme.headerTheme.tabbarTheme, SpaWin.edgeInsets12,
+          (value) => getMenuAction(context, () => model!.setTab(value))(),
           [
             Icon(
               Icons.filter_alt_outlined,
-              color: mSets.theme.headerTheme.tabbarTheme.getIconColor(mReportPage.tab == 0)
+              color: mSets.theme.headerTheme.tabbarTheme.getIconColor(model!.tab == 0)
             ),
             Icon(
               Icons.analytics_outlined,
-              color: mSets.theme.headerTheme.tabbarTheme.getIconColor(mReportPage.tab == 1)
+              color: mSets.theme.headerTheme.tabbarTheme.getIconColor(model!.tab == 1)
             )
           ]
         )
       ),
       SpaTextButton(
         Icons.settings_outlined, mSets.strings.process, mSets.theme.barTheme.textButtonTheme,
-        getMenuAction(context, () => _process(context, mSets, mReportPage))
+        getMenuAction(context, () => _process(context, mSets))
       ),
       SpaSep.sep4,
       SpaTextButton(
         Icons.print_outlined, mSets.strings.print, mSets.theme.barTheme.textButtonTheme,
-        getMenuAction(context, () => _print(context, mSets, mReportPage))
+        getMenuAction(context, () => _print(context, mSets))
       )
     ];
   }
@@ -81,17 +71,14 @@ abstract class SpaReportPage extends SpaMenuPage {
   @protected
   void onPrint();
 
-  void _process(
-      BuildContext context, SpaSettingsModel mSets, ReportPageModel mReportPage
-    ) async
-  {
-    mReportPage.setHasData(await onProcess());
-    if (!mReportPage.hasData)
+  void _process(BuildContext context, SpaSettingsModel mSets) async {
+    model!.setHasData(await onProcess());
+    if (!model!.hasData)
       SpaDialogs.showMessage(context, mSets.strings.noData, mSets.strings.noDataFound);
   }
 
-  void _print(BuildContext context, SpaSettingsModel mSets, ReportPageModel mReportPage) {
-    if (!mReportPage.hasData) {
+  void _print(BuildContext context, SpaSettingsModel mSets) {
+    if (!model!.hasData) {
       SpaDialogs.showMessage(context, mSets.strings.noData, mSets.strings.noDataFound);
       return;
     }

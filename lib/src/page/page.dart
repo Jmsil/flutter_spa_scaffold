@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
+import 'package:provider/provider.dart';
 import 'package:spa_scaffold/src/ui/strings.dart';
-import 'package:spa_scaffold/src/ui/window.dart';
 
-abstract class SpaPage extends StatelessWidget {
+abstract class SpaPage<T extends ChangeNotifier> extends StatelessWidget {
   final IconData icon;
+  @protected
+  final T? model;
 
-  SpaPage(this.icon);
+  SpaPage(this.icon, [this.model]);
 
-  @override @mustCallSuper
+  @override @nonVirtual
   Widget build(BuildContext context) {
-    return Padding(
-      padding: SpaWin.edgeInsets16,
-      child: contentBuilder(context)
+    if (model == null)
+      return pageBuilder(context);
+
+    return ChangeNotifierProvider<T>.value(
+      value: model!,
+      builder: (context, child) {
+        context.watch<T>();
+        return pageBuilder(context);
+      }
     );
   }
 
   @protected
-  Widget contentBuilder(BuildContext context);
+  Widget pageBuilder(BuildContext context);
 
   String getTitle(SpaStrings strings);
 

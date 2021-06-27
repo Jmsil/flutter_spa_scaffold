@@ -14,6 +14,7 @@ class SpaWin {
   static const EdgeInsets edgeInsets16 = EdgeInsets.all(16);
   static const EdgeInsets edgeInsets18 = EdgeInsets.all(18);
   static const EdgeInsets edgeInsets32 = EdgeInsets.all(32);
+  static const EdgeInsets edgeInsets48 = EdgeInsets.all(48);
 
   static EdgeInsets parseMargins(double l, double t, double r, double b) =>
     _parse(l, t, r, b, _margin);

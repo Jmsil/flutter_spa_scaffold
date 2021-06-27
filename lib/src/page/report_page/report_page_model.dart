@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-class ReportPageModel with ChangeNotifier {
+abstract class ReportPageModel with ChangeNotifier {
   int _tab = 0;
   bool _hasData = false;
 
